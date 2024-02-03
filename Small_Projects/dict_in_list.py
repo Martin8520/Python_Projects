@@ -22,9 +22,6 @@ travel_log = [
 # to be added to the travel_log.
 def add_new_country(country, visits, list_of_cities):
     new_dict = {}
-    country = country
-    visits = visits
-    list_of_cities = list_of_cities
     new_dict["country"] = country
     new_dict["visits"] = visits
     new_dict["cities"] = list_of_cities
