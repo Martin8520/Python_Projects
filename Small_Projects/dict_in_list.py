@@ -21,10 +21,7 @@ travel_log = [
 # TODO: Write the function that will allow new countries
 # to be added to the travel_log.
 def add_new_country(country, visits, list_of_cities):
-    new_dict = {}
-    new_dict["country"] = country
-    new_dict["visits"] = visits
-    new_dict["cities"] = list_of_cities
+    new_dict = {"country": country, "visits": visits, "cities": list_of_cities}
     travel_log.append(new_dict)
 
 
@@ -32,3 +29,5 @@ def add_new_country(country, visits, list_of_cities):
 add_new_country(country, visits, list_of_cities)
 print(f"I've been to {travel_log[2]['country']} {travel_log[2]['visits']} times.")
 print(f"My favourite city was {travel_log[2]['cities'][0]}.")
+
+#new_dict = {"country": country, "visits": visits, "cities": list_of_cities}
