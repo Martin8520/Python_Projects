@@ -1,0 +1,33 @@
+from turtle import Turtle, Screen
+
+tim = Turtle()
+
+print(tim)
+tim.shape("turtle")
+tim.color("DarkOrchid4")
+
+
+tim.forward(100)
+tim.circle(50)
+tim.right(90)
+tim.forward(50)
+tim.circle(50)
+tim.forward(100)
+tim.circle(50)
+tim.right(90)
+tim.forward(50)
+tim.circle(50)
+tim.forward(100)
+tim.circle(50)
+tim.right(90)
+tim.forward(50)
+tim.circle(50)
+tim.forward(100)
+tim.circle(50)
+tim.right(90)
+tim.forward(50)
+tim.circle(50)
+my_screen = Screen()
+print(my_screen.canvheight)
+print(my_screen.canvwidth)
+my_screen.exitonclick()
