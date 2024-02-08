@@ -88,3 +88,4 @@ key, value = dict_items[key_or_value_index]
 # Print the key and value
 print("Key:", key)
 print("Value:", value)
+
