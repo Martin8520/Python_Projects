@@ -64,3 +64,27 @@ for dictionary in list_of_dicts:
         values_for_keys.append(value)
     # Print the values obtained for the specified keys
     print(values_for_keys)
+
+
+# Define a list of dictionaries
+list_of_dicts = [
+    {'name': 'Alice', 'age': 30, 'city': 'New York'},
+    {'firstname': 'Bob', 'surname': 'Smith', 'age': 25, 'city': 'Los Angeles'},
+    {'first_name': 'Charlie', 'last_name': 'Brown', 'age': 35, 'city': 'Chicago'}
+]
+
+# Specify the index of the dictionary you want to access
+dictionary_index = 1  # Accessing the second dictionary (indexing starts from 0)
+
+# Convert the dictionary's key-value pairs into a list of tuples
+dict_items = list(list_of_dicts[dictionary_index].items())
+
+# Specify the index of the key or value you want to access
+key_or_value_index = 2  # Accessing the third key-value pair (indexing starts from 0)
+
+# Access the key and value using positional indexing
+key, value = dict_items[key_or_value_index]
+
+# Print the key and value
+print("Key:", key)
+print("Value:", value)
