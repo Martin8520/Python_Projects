@@ -1,4 +1,4 @@
-from Small_Projects.calculator_art import logo
+from Small_Projects.Practice_projects.calculator_art import logo
 
 print(logo)
 

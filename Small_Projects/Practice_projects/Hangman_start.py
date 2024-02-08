@@ -1,7 +1,7 @@
 import random
 
-from Small_Projects.hangman_art import stages, logo
-from Small_Projects.hangman_words import word_list
+from Small_Projects.Practice_projects.hangman_art import stages, logo
+from Small_Projects.Practice_projects.hangman_words import word_list
 
 chosen_word = random.choice(word_list)
 word_length = len(chosen_word)

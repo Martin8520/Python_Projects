@@ -1,7 +1,7 @@
 import random
 
-from Small_Projects.higher_lower_art import logo, vs
-from Small_Projects.higher_lower_data import data
+from Small_Projects.Practice_projects.higher_lower_art import logo, vs
+from Small_Projects.Practice_projects.higher_lower_data import data
 
 
 def get_random_account():

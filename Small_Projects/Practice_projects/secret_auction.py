@@ -1,4 +1,4 @@
-from Small_Projects.secret_auction_art import logo
+from Small_Projects.Practice_projects.secret_auction_art import logo
 
 print(logo)
 bid_list = {}

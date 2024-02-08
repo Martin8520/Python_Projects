@@ -1,6 +1,6 @@
 import random
 
-from Small_Projects.blackjack_art import logo
+from Small_Projects.Practice_projects.blackjack_art import logo
 
 
 def deal_card():

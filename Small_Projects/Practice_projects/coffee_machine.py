@@ -1,4 +1,4 @@
-from Small_Projects.coffee_machine_data import resources, MENU
+from Small_Projects.Practice_projects.coffee_machine_data import resources, MENU
 
 
 def is_resource_sufficient(order_ingredients):

@@ -1,4 +1,4 @@
-from Small_Projects.Library_management_sytem.data import Book, Library
+from Small_Projects import Book, Library
 
 library = Library()
 

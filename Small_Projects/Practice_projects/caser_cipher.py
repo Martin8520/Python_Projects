@@ -1,4 +1,4 @@
-from Small_Projects.caesar_art import logo
+from Small_Projects.Practice_projects.caesar_art import logo
 
 print(logo)
 play = True
