@@ -6,7 +6,7 @@ tim.shape("turtle")
 tim.color("red")
 tim.pensize(10)
 angles = [0, 90, 180, 270]
-tim.speed(0.10)
+tim.speed(0)
 
 
 def get_random_color():
