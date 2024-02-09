@@ -9,7 +9,7 @@ angles = [0, 90, 180, 270]
 tim.speed(0.10)
 
 
-def get_rand_color():
+def get_random_color():
     return tuple(randint(0, 255) for _ in range(3))
 
 
@@ -21,7 +21,7 @@ colormode(255)
 
 for _ in range(250):
     tim.forward(25)
-    tim.pencolor(*get_rand_color())
+    tim.pencolor(*get_random_color())
     random_angle()
 screen = Screen()
 screen.exitonclick()
