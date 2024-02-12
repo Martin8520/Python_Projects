@@ -1,5 +1,5 @@
-from turtle import Screen, Turtle
 import time
+from turtle import Screen
 
 from Small_Projects.snake_game.snake import Snake
 
