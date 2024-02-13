@@ -1,7 +1,5 @@
 import random
 
-from Small_Projects.Practice_projects.blackjack_art import logo
-
 
 def deal_card():
     cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
@@ -38,7 +36,6 @@ def compare(user_score, computer_score):
 def play_game():
     global computer_score, user_score
     print("\n" * 100)
-    print(logo)
     user_cards = []
     computer_cards = []
 
