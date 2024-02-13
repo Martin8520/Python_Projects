@@ -1,6 +1,5 @@
 import time
 from turtle import Screen
-
 from paddle import Paddle
 from ball import Ball
 from scoreboard import Scoreboard
