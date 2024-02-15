@@ -40,13 +40,31 @@ import pandas
 # monday_temp_f = monday_temp * 9/5 +32
 # print(monday_temp_f)
 
+# data_dict = {
+#     "students": ["Amy", "James", "Angela"],
+#     "scores": [76, 56, 65]
+# }
+#
+# data = pandas.DataFrame(data_dict)
+#
+# print(data)
+#
+# data.to_csv("new_data.csv")
+
+
+data = pandas.read_csv("squirrel_data.csv")
+squirrel_colors = data["Primary Fur Color"]
+gray_squirrels = len(data[data["Primary Fur Color"] == "Gray"])
+red_squirrels = len(data[data["Primary Fur Color"] == "Cinnamon"])
+black_squirrels = len(data[data["Primary Fur Color"] == "Black"])
+print(gray_squirrels)
+print(red_squirrels)
+print(black_squirrels)
+
 data_dict = {
-    "students": ["Amy", "James", "Angela"],
-    "scores": [76, 56, 65]
+    "Fur Color": ["Gray", "Cinnamon", "Black"],
+    "Count": [gray_squirrels, red_squirrels, black_squirrels]
 }
 
-data = pandas.DataFrame(data_dict)
-
-print(data)
-
-data.to_csv("new_data.csv")
+df = pandas.DataFrame(data_dict)
+df.to_csv("Squirrel Count.csv")
