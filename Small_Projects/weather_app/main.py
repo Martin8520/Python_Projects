@@ -1,0 +1,41 @@
+#
+#
+# import csv
+#
+# with open("weather_data.csv") as csv_file:
+#     data = csv.reader(csv_file)
+#     temperatures = []
+#     for row in data:
+#         if row[1] != "temp":
+#             temperatures.append(int(row[1]))
+#
+#     print(temperatures)
+
+import pandas
+
+data = pandas.read_csv("weather_data.csv")
+# print(type(data))
+# print(data["temp"])
+
+# temp_list = data["temp"].to_list()
+# print(temp_list)
+#
+#
+# avg_temp = sum(temp_list) / len(temp_list)
+# print(f"{avg_temp:.2f}")
+#
+# print(data["temp"].mean())
+#
+# print(data["temp"].max())
+# print(data.condition)
+#
+# print(data[data.day == "Monday"])
+
+# print(data[data.temp == data.temp.max()])
+#
+monday = data[data.day == "Monday"]
+# print(monday.condition)
+
+monday_temp = monday.temp[0]
+monday_temp_f = monday_temp * 9/5 +32
+print(monday_temp_f)
