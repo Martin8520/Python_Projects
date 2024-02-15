@@ -41,7 +41,7 @@ import pandas
 # print(monday_temp_f)
 
 data_dict = {
-    "studednts": ["Amy", "James", "Angela"],
+    "students": ["Amy", "James", "Angela"],
     "scores": [76, 56, 65]
 }
 
