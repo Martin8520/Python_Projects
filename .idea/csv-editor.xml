@@ -3,7 +3,7 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="C:\Users\marti\AppData\Local\Temp\Rar$DRa568.11753\50_states.csv">
+        <entry key="\Small_Projects\Squirrel_census\new_sqr_data.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
@@ -11,41 +11,6 @@
           </value>
         </entry>
         <entry key="\Small_Projects\states_game\states_to_learn.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\Small_Projects\weather_app\Squirrel Count.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\Small_Projects\weather_app\new_data.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\Small_Projects\weather_app\new_sqr_data.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\Small_Projects\weather_app\squirrel_data.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
-        <entry key="\Small_Projects\weather_app\weather_data.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
