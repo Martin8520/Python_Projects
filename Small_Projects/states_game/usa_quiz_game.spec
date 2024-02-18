@@ -5,7 +5,7 @@ a = Analysis(
     ['usa_quiz_game.py'],
     pathex=[],
     binaries=[],
-    datas=[('blank_states_img.gif', '.')],
+    datas=[('50_states.csv', '.'), ('blank_states_img.gif', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
