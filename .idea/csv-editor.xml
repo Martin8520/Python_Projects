@@ -3,14 +3,14 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
-        <entry key="C:\Users\marti\AppData\Local\Temp\Rar$DRa14096.12333\NATO-alphabet-start\nato_phonetic_alphabet.csv">
+        <entry key="\Small_Projects\Squirrel_census\new_sqr_data.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="\Small_Projects\Squirrel_census\new_sqr_data.csv">
+        <entry key="\Small_Projects\Squirrel_census\squirrel_data.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
