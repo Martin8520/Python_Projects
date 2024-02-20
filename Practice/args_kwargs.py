@@ -25,9 +25,11 @@ calculate(2, add=3, multiply=5)
 
 class Car:
     def __init__(self, **kwargs):
-        self.make = kwargs["make"]
-        self.model = kwargs["model"]
+        self.make = kwargs.get("make")
+        self.model = kwargs.get("model")
+        self.seats = kwargs.get("seats")
 
 
-my_car = Car(make="Nissan", model="GT-R")
-print(my_car.model, my_car.make)
+
+my_car = Car(seats=5)
+print(my_car.seats)
