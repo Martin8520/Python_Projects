@@ -27,15 +27,15 @@ canvas.create_image(100, 112, image=tomato)
 canvas.create_text(100, 130, text="00:00:00", fill="white", font=(FONT_NAME, 25, "bold"))
 canvas.grid(row=1, column=1)
 
-timer = Label(text="Timer", fg=GREEN, font=(FONT_NAME, 30, "bold"), highlightthickness=0, bg=YELLOW)
+timer = Label(text="Timer", fg=GREEN, font=(FONT_NAME, 40, "bold"), highlightthickness=0, bg=YELLOW)
 timer.grid(row=0, column=1)
 
 check = Label(text="✔", fg=GREEN, font="bold", bg=YELLOW)
-check.grid(row=4, column=1)
+check.grid(row=3, column=1)
 
-start = Button(text="Start", bg="white", font=(FONT_NAME, 10, "bold"))
-start.grid(row=3, column=0)
+start = Button(text="Start", bg="white", font=(FONT_NAME, 10, "bold"), highlightthickness=0)
+start.grid(row=2, column=0)
 
-reset = Button(text="Reset", bg="white", font=(FONT_NAME, 10, "bold"))
-reset.grid(row=3, column=2)
+reset = Button(text="Reset", bg="white", font=(FONT_NAME, 10, "bold"), highlightthickness=0)
+reset.grid(row=2, column=2)
 window.mainloop()
