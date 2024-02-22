@@ -6,9 +6,11 @@ import os
 script_dir = os.path.dirname(__file__)
 image_path = os.path.join(script_dir, "logo.png")
 
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
 def generate_password():
+    password_entry.delete(0, END)
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
                'v',
                'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q',
@@ -27,6 +29,7 @@ def generate_password():
 
     password = "".join(password_list)
     password_entry.insert(0, password)
+
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
@@ -72,7 +75,6 @@ email_username_entry.grid(row=2, column=1, columnspan=2)
 email_username_entry.insert(0, "useremail@mail.com")
 password_entry = Entry(width=32)
 password_entry.grid(row=3, column=1)
-
 
 password_button = Button(text="Generate Password", command=generate_password)
 password_button.grid(row=3, column=2)
