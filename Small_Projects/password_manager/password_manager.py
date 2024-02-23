@@ -76,7 +76,7 @@ def find_password():
                                 message=f"Email: {data[website]['email']}\nPassword: {data[website]['password']}")
         else:
             messagebox.showinfo(title=f"{website}",
-                                message="No details for the website exists")
+                                message=f"No details for the {website} exists")
 
 
 def copy_password():
