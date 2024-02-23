@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
 import os
+import json
 
 script_dir = os.path.dirname(__file__)
 image_path = os.path.join(script_dir, "logo.png")
@@ -36,15 +37,26 @@ def save():
     website = website_entry.get()
     email_user = email_username_entry.get()
     password = password_entry.get()
+    new_data = {website: {
+        "email": email_user,
+        "password": password,
+    }
+}
+
     if len(website) == 0 or len(email_user) == 0 or len(password) == 0:
         messagebox.showinfo(title="Error", message="Please don't leave any fields empty!")
     else:
-        is_save = messagebox.askyesno(title=website, message=f"These are the details entered: \nEmail: {email_user}"
-                                                             f"\nPassword: {password} \nWould you like to save?")
-        if is_save:
-            with open("data.txt", "a") as data_file:
-                data_file.write(f"\nWebsite: {website}\nEmail/Username: {email_user}\nPassword: {password}\n")
-                data_file.write(f"_" * 20)
+        try:
+            with open("data.json", "r") as data_file:
+                data = json.load(data_file)  # Reading old data
+        except FileNotFoundError:
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            data.update(new_data)  # Updating old data with new data
+            with open("data.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)  # Saving updated data
+        finally:
             website_entry.delete(0, END)
             password_entry.delete(0, END)
 
