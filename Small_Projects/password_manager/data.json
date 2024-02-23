@@ -1,14 +1,10 @@
 {
-    "asdasd": {
-        "email": "useremail@mail.com",
-        "password": "5up01JKRIdb2%%"
+    "Google": {
+        "email": "google@mail.com",
+        "password": "6i7+*(bENcGoe"
     },
-    "asdasda": {
-        "email": "useremail@mail.com",
-        "password": "1z+L8lt)U1u*n2h"
-    },
-    "dfsdfsf": {
-        "email": "useremail@mail.com",
-        "password": "sd1ZR(Q3!o)KL"
+    "Amazon": {
+        "email": "amazon@mail.com",
+        "password": "Va+*mO%S!X8chB2"
     }
 }
