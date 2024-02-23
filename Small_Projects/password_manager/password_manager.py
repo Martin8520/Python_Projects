@@ -3,6 +3,7 @@ from tkinter import messagebox
 from random import choice, randint, shuffle
 import os
 import json
+import pyperclip
 
 script_dir = os.path.dirname(__file__)
 image_path = os.path.join(script_dir, "logo.png")
@@ -41,7 +42,7 @@ def save():
         "email": email_user,
         "password": password,
     }
-}
+    }
 
     if len(website) == 0 or len(email_user) == 0 or len(password) == 0:
         messagebox.showinfo(title="Error", message="Please don't leave any fields empty!")
@@ -76,6 +77,35 @@ def find_password():
         else:
             messagebox.showinfo(title=f"{website}",
                                 message="No details for the website exists")
+
+
+def copy_password():
+    password = password_entry.get()
+    if password:
+        pyperclip.copy(password)
+        messagebox.showinfo(title="Password Copied", message="Password copied to clipboard!")
+    else:
+        messagebox.showinfo(title="No Password", message="No password to copy!")
+
+
+def copy_email():
+    email = email_username_entry.get()
+    if email:
+        pyperclip.copy(email)
+        messagebox.showinfo(title="Email Copied", message="Email copied to clipboard!")
+    else:
+        messagebox.showinfo(title="No Email", message="No email to copy!")
+
+
+def copy_website():
+    website = website_entry.get()
+    if website:
+        pyperclip.copy(website)
+        messagebox.showinfo(title="Website Copied", message="Website copied to clipboard!")
+    else:
+        messagebox.showinfo(title="No Website", message="No website to copy!")
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 window = Tk()
@@ -103,7 +133,7 @@ email_username_entry.insert(0, "useremail@mail.com")
 password_entry = Entry(width=50)
 password_entry.grid(row=3, column=1)
 
-password_button = Button(text="Generate Password", command=generate_password)
+password_button = Button(text="Generate Password", command=generate_password, width=15)
 password_button.grid(row=3, column=2)
 
 add_button = Button(text="Add", width=59, command=save)
@@ -112,4 +142,12 @@ add_button.grid(row=4, column=1, columnspan=2)
 search_button = Button(text="Search", width=15, command=find_password)
 search_button.grid(row=1, column=2)
 
+copy_button_pass = Button(text="Copy Password", command=copy_password, width=11)
+copy_button_pass.grid(row=3, column=3)
+
+copy_button_email = Button(text="Copy Email", command=copy_email, width=11)
+copy_button_email.grid(row=2, column=3)
+
+copy_button_website = Button(text="Copy Website", command=copy_website, width=11)
+copy_button_website.grid(row=1, column=3)
 window.mainloop()
