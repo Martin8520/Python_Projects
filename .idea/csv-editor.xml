@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="C:\Users\marti\AppData\Local\Temp\Rar$DRa17044.38774\birthdays.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Small_Projects\Squirrel_census\new_sqr_data.csv">
           <value>
             <Attribute>
