@@ -54,3 +54,8 @@ while True:
             to_addrs=EMAIL,
             msg="Subject:Look Up\n\nThe ISS is above you"
         )
+        connection.sendmail(
+            from_addr=EMAIL,
+            to_addrs="antnikbog@gmail.com",
+            msg="Subject:Look Up\n\nThe ISS is above you"
+        )
