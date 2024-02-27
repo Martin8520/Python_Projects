@@ -5,7 +5,7 @@ image files in the images directory and adding them dynamically.
 
 Here's how you can achieve that:
 
-
+________________________________________________________________________________________________________________________
 import os
 
 # Get the directory where the script or executable is located
@@ -30,7 +30,7 @@ image_data_str = ",".join(image_data)
 # Now you can use the image_data_str in the PyInstaller command
 pyinstaller_cmd = f"pyinstaller --onefile --add-data {image_data_str} main.py"
 os.system(pyinstaller_cmd)
-
+________________________________________________________________________________________________________________________
 In this code:
 
 We first obtain the directory where the script or executable is located (script_dir).
