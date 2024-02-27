@@ -2,6 +2,12 @@ from question_model import Question
 from data import question_data
 from quiz_brain import QuizBrain
 from ui import QuizInterface
+import os
+
+script_dir = os.path.abspath(os.path.dirname(__file__))
+true_img_path = os.path.join(script_dir, "images", "true.png")
+false_img_path = os.path.join(script_dir, "images", "false.png")
+
 question_bank = []
 for question in question_data:
     question_text = question["question"]
@@ -18,3 +24,6 @@ quiz_ui = QuizInterface(quiz)
 
 print("You've completed the quiz")
 print(f"Your final score was: {quiz.score}/{quiz.question_number}")
+
+print("True image path:", true_img_path)
+print("False image path:", false_img_path)
