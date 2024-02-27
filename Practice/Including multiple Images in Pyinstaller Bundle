@@ -1,0 +1,48 @@
+If you have a large number of image files and you want to include all of them in your PyInstaller bundle,
+manually specifying each image file path can become tedious and impractical.
+Instead, you can automate the process by iterating over the
+image files in the images directory and adding them dynamically.
+
+Here's how you can achieve that:
+
+
+import os
+
+# Get the directory where the script or executable is located
+script_dir = os.path.abspath(os.path.dirname(__file__))
+
+# Construct the full path to the images directory
+images_dir = os.path.join(script_dir, "images")
+
+# Initialize a list to store the data for PyInstaller's --add-data option
+image_data = []
+
+# Iterate over the files in the images directory
+for filename in os.listdir(images_dir):
+    # Construct the full path to each image file
+    image_path = os.path.join(images_dir, filename)
+    # Add the image file to the list of data for PyInstaller
+    image_data.append(f"{image_path};images")
+
+# Join the list of image data into a single string with commas
+image_data_str = ",".join(image_data)
+
+# Now you can use the image_data_str in the PyInstaller command
+pyinstaller_cmd = f"pyinstaller --onefile --add-data {image_data_str} main.py"
+os.system(pyinstaller_cmd)
+
+In this code:
+
+We first obtain the directory where the script or executable is located (script_dir).
+We construct the full path to the images directory within that directory (images_dir).
+We then iterate over the files in the images directory and construct the full path to each image file.
+For each image file, we append the data string in the format "image_path;images" to a list (image_data).
+Finally, we join the list of image data strings into a single string with commas (image_data_str),
+ which can be used in the PyInstaller command.
+This way, you don't need to manually specify each image file path,
+and the code will dynamically include all the image files present in the images directory.
+
+
+
+
+
