@@ -3,12 +3,12 @@ from twilio.rest import Client
 
 account_sid = "ACb04042299677b98d6fd36b6c39eeb53d"
 auth_token = "7e94ebb707d67726001b67189f4db0f0"
-
-
+LAT = 40.712776
+LON = -74.005974
 api_key = "2ff3614a8b5084cec34ba1d3afdc1225"
 parameters = {
-    "lat": 40.712776,
-    "lon": -74.005974,
+    "lat": LAT,
+    "lon": LON,
     "appid": api_key,
     "cnt": 12
 }
@@ -26,7 +26,7 @@ for hour_data in data["list"]:
 if will_rain:
     client = Client(account_sid, auth_token)
     message = client.messages.create(
-        body="It is raining in New York",
+        body=f"It is currently raining at latitude {LAT} and longitude {LON}.",
         from_="+15855801816",
         to="+359889257027"
     )
@@ -34,7 +34,7 @@ if will_rain:
 else:
     client = Client(account_sid, auth_token)
     message = client.messages.create(
-        body="It is not raining in New York.",
+        body=f"It is currently not raining at latitude {LAT} and longitude {LON}.",
         from_="+15855801816",
         to="+359889257027"
     )
