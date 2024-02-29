@@ -7,13 +7,13 @@ VERIFIED_NUMBER = "your own phone number verified with Twilio"
 STOCK_NAME = "TSLA"
 COMPANY_NAME = "Tesla Inc"
 
-STOCK_ENDPOINT = "https://www.alphavantage.co/query"
-NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
+STOCK_ENDPOINT = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=IBM&apikey=demo"
+NEWS_ENDPOINT = "https://newsapi.org/v2/everything?q=tesla&from=2024-01-29&sortBy=publishedAt&apiKey=4b17e3e78d214bcfa5af390307eb4392"
 
-STOCK_API_KEY = "YOUR OWN API KEY FROM ALPHAVANTAGE"
-NEWS_API_KEY = "YOUR OWN API KEY FROM NEWSAPI"
-TWILIO_SID = "YOUR TWILIO ACCOUNT SID"
-TWILIO_AUTH_TOKEN = "YOUR TWILIO AUTH TOKEN"
+STOCK_API_KEY = "3ZE9XH58IDESKJGX"
+NEWS_API_KEY = "4b17e3e78d214bcfa5af390307eb4392"
+TWILIO_SID = "ACb04042299677b98d6fd36b6c39eeb53d"
+TWILIO_AUTH_TOKEN = "7e94ebb707d67726001b67189f4db0f0"
 
 ## STEP 1: Use https://www.alphavantage.co/documentation/#daily
 # When stock price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
