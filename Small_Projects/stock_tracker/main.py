@@ -1,8 +1,8 @@
 import requests
 from twilio.rest import Client
 
-VIRTUAL_TWILIO_NUMBER = "your virtual twilio number"
-VERIFIED_NUMBER = "your own phone number verified with Twilio"
+VIRTUAL_TWILIO_NUMBER = "+15855801816"
+VERIFIED_NUMBER = "+359889257027"
 
 STOCK_NAME = "TSLA"
 COMPANY_NAME = "Tesla Inc"
@@ -54,7 +54,7 @@ print(diff_percent)
 
 #Instead of printing ("Get News"), use the News API to get articles related to the COMPANY_NAME.
 #If difference percentage is greater than 5 then print("Get News").
-if abs(diff_percent) > 1:
+if abs(diff_percent):
     news_params = {
         "apiKey": NEWS_API_KEY,
         "qInTitle": COMPANY_NAME,
