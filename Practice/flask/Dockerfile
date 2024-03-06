@@ -1,14 +1,8 @@
+# In the course we run the app outside Docker
+# until lecture 5.
 FROM python:3.10
-
-# Install Flask and requests module
-RUN pip install flask requests
-
 EXPOSE 5000
-
 WORKDIR /app
-
-# Copy application files
+RUN pip install flask
 COPY . .
-
-# Run Flask application
 CMD ["flask", "run", "--host", "0.0.0.0"]
