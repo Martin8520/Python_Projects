@@ -1,9 +1,4 @@
-h1 {
-    color: blue;
-    margin-bottom: 24px;
-    font-size: 24px;
-}
-
-p{
-    color: red;
+p {
+    background-color: rgb(85, 255, 0);
+    opacity: 50%;
 }
