@@ -1,0 +1,21 @@
+/* This is a comment */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    color: blue;
+}
+
+p {
+    color: green;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: #ff6600;
+}
+
+/* This is another comment */
