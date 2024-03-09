@@ -18,10 +18,12 @@ main{
 
 h1 {
     margin-bottom: 2.5rem;
+    color: rgb(245, 24, 24);
 }
 
 p {
     line-height: 150%;
+    color: #020530;
 }
 
 img {
