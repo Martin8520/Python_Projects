@@ -17,7 +17,7 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    font-size: 24px;
+    font-size3: 24px;
 }
 
 .navbar__brand {
