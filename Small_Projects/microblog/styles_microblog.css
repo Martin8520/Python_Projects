@@ -2,7 +2,15 @@ html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.navbar{
+*, *::after, *::before {
+    box-sizing: inherit;
+}
+
+body {
+    box-sizing: border-box;
+}
+
+.navbar {
     max-width: 640px;
     margin: 50px auto;
     padding: 0 20px;
@@ -12,16 +20,16 @@ html {
     font-size: 24px;
 }
 
-.navbar__brand{
+.navbar__brand {
     display: flex;
     align-items: center;
 }
 
-.navbar__logo{
+.navbar__logo {
     margin-right: 30px;
 }
 
-.navbar__navigation{
+.navbar__navigation {
     list-style: none;
     padding: 0;
     display: flex;
@@ -29,12 +37,59 @@ html {
     color: #5c6b70;
 }
 
-.navbar__navigation-item{
+.navbar__navigation-item {
     margin-left: 50px;
 }
 
 
-.navbar__link{
+.navbar__link {
     text-decoration: none;
     color: inherit;
+}
+
+.main {
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.form__input {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form__textarea {
+    width: inherit;
+    font-size: 18px;
+    padding: 12px 20px;
+    border: none;
+    background-color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+}
+
+.form__submit {
+    background-color: rgb(60, 208, 255);
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 30px;
+    border-radius: 20px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.form__submitbutton:hover {
+    background-color: rgb(24, 193, 225);
+}
+
+.form__label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
