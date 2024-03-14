@@ -1,15 +1,54 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
+    margin: 0;
 }
 
 .container {
     width: 80%;
     margin: 0 auto;
-    text-align: center;
-    padding-top: 100px;
+    padding: 20px 0;
 }
 
-h1 {
-    color: #333;
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+header h1 {
+    margin: 0;
+}
+
+main {
+    padding: 20px 0;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+footer p {
+    margin: 0;
+}
+
+.forum-entries {
+    list-style: none;
+    padding: 0;
+}
+
+.forum-entries li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.forum-entries li h3 {
+    margin-top: 0;
 }
