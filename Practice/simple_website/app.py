@@ -15,7 +15,3 @@ def add_entry():
     content = request.form['content']
     entries.append({'title': title, 'content': content})
     return redirect('/')
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
