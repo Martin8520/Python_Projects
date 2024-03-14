@@ -1,42 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Website</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1>Welcome to Our Website</h1>
-        </div>
-    </header>
+<main>
+    <div class="container">
+        <h2>Forum Entries</h2>
+        <ul class="forum-entries">
+            {% for entry in entries %}
+            <li>
+                <h3>{{ entry.title }}</h3>
+                <p>{{ entry.content }}</p>
+            </li>
+            {% endfor %}
+        </ul>
 
-    <main>
-        <div class="container">
-            <h2>Forum Entries</h2>
-            <ul class="forum-entries">
-                <li>
-                    <h3>Entry 1</h3>
-                    <p>This is the content of entry 1.</p>
-                </li>
-                <li>
-                    <h3>Entry 2</h3>
-                    <p>This is the content of entry 2.</p>
-                </li>
-                <li>
-                    <h3>Entry 3</h3>
-                    <p>This is the content of entry 3.</p>
-                </li>
-            </ul>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Simple Website. All rights reserved.</p>
-        </div>
-    </footer>
-</body>
-</html>
+        <h2>Add New Entry</h2>
+        <form action="/add_entry" method="post">
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="content">Content:</label><br>
+            <textarea id="content" name="content"></textarea><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</main>
