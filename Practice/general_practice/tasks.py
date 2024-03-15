@@ -1,4 +1,4 @@
-from Practice.tasks_command import add_task, change_status, view_list, remove_task, exit_tasks
+from Practice.general_practice.tasks_command import add_task, change_status, view_list, remove_task, exit_tasks
 
 tasks = {}
 
