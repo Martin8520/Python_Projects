@@ -1,0 +1,37 @@
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.header,
+.main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  background: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 6px 6px 0px 0px;
+}
+
+.header__link {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.1s ease-in-out;
+}
+
+.header__link:hover {
+  color: #fbfd68;
+
+}
