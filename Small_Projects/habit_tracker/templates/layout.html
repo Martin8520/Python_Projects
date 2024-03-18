@@ -1,29 +1,42 @@
-{% extends "layout.html" %}
 
-{% block main_content %}
-    <section class="habit-list">
-    {% for habit in habits %}
-        {% set completed = habit["_id"] in completions %}
-        {% if completed %}
-            <div class="habit completed">
-                <p class="habit__name">
-                    {{ habit["name"] }}
-                </p>
-                <svg class="habit__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                </svg>
-            </div>
-        {% else %}
-            <div class="habit">
-                <form method="POST" class="habit__form" action="{{ url_for('habits.complete') }}">
-                <input type="hidden" id="habitId" name="habitId" value="{{ habit['_id'] }}" />
-                <input type="hidden" id="date" name="date" value="{{ selected_date }}" />
-                <button type="submit" class="habit__button">
-                        {{ habit["name"] }}
-                </button>
-                </form>
-            </div>
-        {% endif %}
-    {% endfor %}
-    </section>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>{{ title }}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+
+        {% block head_content %} {% endblock %}
+    </head>
+    
+    <body>
+        <header class="header">
+            <h1 class="header__logo"><a href="{{ url_for('habits.index') }}" class="header__link">Habits</a></h1>
+            {% if "add" not in request.endpoint %}
+                <a href="{{url_for('habits.add_habit')}}" class="header__link">+ Add new</a>
+            {% endif %}
+        </header>
+
+        <main class="main">
+            <section class="dates">
+                {% for date in date_range(selected_date) %}
+                    <a 
+                        class="dates__link {{ 'dates__link--current' if loop.index0 == 3 else ''}}"
+                        href="{{ url_for('habits.index', date=date) }}"
+                    >
+                        <time class="date" datetime="{{ date }}">
+                            <span>{{ date.strftime("%a") }}</span>
+                            <span>{{ date.strftime("%d") }}</span>
+                        </time>
+                    </a>
+                {% endfor %}
+            </section>
+
+            {% block main_content %}
+            {% endblock %}
+        </main>
+    </body>
+</html>
