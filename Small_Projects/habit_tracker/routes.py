@@ -1,9 +1,6 @@
 import datetime
 import uuid
-from flask import Blueprint, request, redirect, url_for, render_template, current_app, Flask
-import os
-from dotenv import load_dotenv
-from pymongo import MongoClient
+from flask import Blueprint, request, redirect, url_for, render_template, current_app
 
 pages = Blueprint(
     "habits", __name__, template_folder="templates", static_folder="static"
