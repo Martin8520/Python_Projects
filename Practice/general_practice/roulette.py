@@ -21,6 +21,7 @@ def check_result(number, bet):
 
 
 def roulette_game():
+    global number_bet
     print("Welcome to Roulette!")
     while True:
         print("\nPlace your bet:")
