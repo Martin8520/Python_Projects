@@ -21,7 +21,6 @@ def check_result(number, bet):
 
 
 def roulette_game():
-    global number_bet
     print("Welcome to Roulette!")
     while True:
         print("\nPlace your bet:")
@@ -45,6 +44,7 @@ def roulette_game():
             bet_amount = int(input("Enter your bet amount: "))
         else:
             bet_amount = int(input("Enter your bet amount: "))
+            number_bet = None
 
         wheel_result = spin_wheel()
         print("The wheel spins... It lands on", wheel_result)
