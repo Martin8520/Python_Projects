@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 
 views = Blueprint(__name__, "views")
 
@@ -13,3 +13,8 @@ def profile():
     args = request.args
     name = args.get('name')
     return render_template("index.html", name=name)
+
+
+@views.route("/json")
+def get_json():
+    return jsonify({"name": "Tim", "age": "35", "address": "125 Homer Street"})
