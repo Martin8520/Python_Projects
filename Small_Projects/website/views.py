@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, redirect ,url_for
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for
 
 views = Blueprint(__name__, "views")
 
