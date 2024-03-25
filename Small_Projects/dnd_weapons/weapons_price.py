@@ -5,7 +5,7 @@ def read_weapons_from_csv(filename):
     weapons = {}
     with open(filename, 'r', newline='') as csvfile:
         reader = csv.reader(csvfile)
-        next(reader)  # Skip the header row
+        next(reader)
         for row in reader:
             weapon_name = ','.join(row[:-1]).strip()
             price = int(row[-1])
@@ -14,7 +14,7 @@ def read_weapons_from_csv(filename):
 
 
 def main():
-    weapons = read_weapons_from_csv('weapons.csv')
+    weapons = read_weapons_from_csv(r'C:\Users\marti\PycharmProjects\self_prep\Small_Projects\dnd_weapons\weapons.csv')
 
     print("List of weapons:")
     for weapon in weapons:
