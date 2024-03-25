@@ -1,4 +1,6 @@
 import csv
+import os
+import sys
 
 
 def read_weapons_from_csv(filename):
@@ -14,7 +16,14 @@ def read_weapons_from_csv(filename):
 
 
 def main():
-    weapons = read_weapons_from_csv(r'C:\Users\marti\PycharmProjects\self_prep\Small_Projects\dnd_weapons\weapons.csv')
+    exe_dir = os.path.dirname(sys.executable)
+    csv_file = os.path.join(exe_dir, r'C:\Users\marti\PycharmProjects\self_prep\Small_Projects\dnd_weapons\weapons.csv')
+
+    if not os.path.exists(csv_file):
+        print("Error: weapons.csv file not found.")
+        return
+
+    weapons = read_weapons_from_csv(csv_file)
 
     print("List of weapons:")
     for weapon in weapons:

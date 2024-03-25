@@ -9,7 +9,7 @@ mace,5
 quarterstaff,2
 sickle,1
 spear,1
-crossbow, light,25
+crossbow light,25
 dart,5
 shortbow,25
 sling,1
@@ -32,8 +32,8 @@ war pick,5
 warhammer,15
 whip,2
 blowgun,10
-crossbow, hand,75
-crossbow, heavy,50
+crossbow hand,75
+crossbow heavy,50
 longbow,50
 net,1
 "dagger of venom",500
