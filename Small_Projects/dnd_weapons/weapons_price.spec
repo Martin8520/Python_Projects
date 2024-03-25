@@ -5,7 +5,7 @@ a = Analysis(
     ['weapons_price.py'],
     pathex=[],
     binaries=[],
-    datas=[('C:\\Users\\marti\\PycharmProjects\\self_prep\\Small_Projects\\dnd_weapons\\weapons.csv', '.')],
+    datas=[('weapons.csv', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

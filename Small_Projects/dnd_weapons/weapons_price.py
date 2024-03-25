@@ -5,19 +5,19 @@ import sys
 
 def read_weapons_from_csv(filename):
     weapons = {}
-    with open(filename, 'r', newline='') as csvfile:
+    with open(filename, 'r', newline='', encoding='utf-8') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)
         for row in reader:
-            weapon_name = ','.join(row[:-1]).strip()
-            price = int(row[-1])
+            weapon_name = row[0].strip()
+            price = int(row[1])
             weapons[weapon_name.lower()] = price
     return weapons
 
 
 def main():
-    exe_dir = os.path.dirname(sys.executable)
-    csv_file = os.path.join(exe_dir, r'C:\Users\marti\PycharmProjects\self_prep\Small_Projects\dnd_weapons\weapons.csv')
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_file = os.path.join(script_dir, 'weapons.csv')
 
     if not os.path.exists(csv_file):
         print("Error: weapons.csv file not found.")
