@@ -2,7 +2,6 @@ import csv
 import os
 
 
-
 def read_weapons_from_csv(filename):
     weapons = {}
     with open(filename, 'r', newline='', encoding='utf-8') as csvfile:
