@@ -20,11 +20,15 @@ def main():
     for weapon in weapons:
         print(weapon.capitalize())
 
-    user_input = input("Enter a weapon name: ").lower()
-    if user_input in weapons:
-        print(f"The price of {user_input.capitalize()} is {weapons[user_input]} gold pieces.")
-    else:
-        print("Weapon not found.")
+    while True:
+        user_input = input("Enter a weapon name (type 'exit' to quit): ").lower()
+        if user_input == 'exit':
+            print("Exiting...")
+            break
+        elif user_input in weapons:
+            print(f"The price of {user_input.capitalize()} is {weapons[user_input]} gold pieces.")
+        else:
+            print("Weapon not found.")
 
 
 if __name__ == "__main__":
