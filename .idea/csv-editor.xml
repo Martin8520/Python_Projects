@@ -45,6 +45,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Small_Projects\d&amp;d_weapons\weapons_list.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Small_Projects\flash_cards\data\french_words.csv">
           <value>
             <Attribute>
