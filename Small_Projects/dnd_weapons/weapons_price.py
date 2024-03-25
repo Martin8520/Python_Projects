@@ -1,6 +1,6 @@
 import csv
 import os
-import sys
+
 
 
 def read_weapons_from_csv(filename):
