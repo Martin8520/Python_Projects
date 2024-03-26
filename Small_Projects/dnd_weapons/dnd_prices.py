@@ -58,25 +58,24 @@ def main():
         if user_input == 'back':
             continue
 
+        found_items = []
         if user_input.isdigit() and 1 <= int(user_input) <= len(items):
             item_name = list(items.keys())[int(user_input) - 1]
-            print(f"The price of {item_name.capitalize()} is {items[item_name]} gold pieces.")
-        elif user_input in items:
-            print(f"The price of {user_input.capitalize()} is {items[user_input]} gold pieces.")
+            found_items.append((item_name, items[item_name]))
         else:
-            found_in_category = None
-            for category_num, category_file in categories.items():
-                if category_file != user_category:
-                    items = read_items_from_csv(os.path.join(script_dir, category_file))
-                    if user_input in items:
-                        found_in_category = category_file[:-4].replace('_', ' ').capitalize()
-                        break
-            if found_in_category:
-                print(f"{user_input.capitalize()} is not found in "
-                      f"{user_category[:-4].replace('_', ' ').capitalize()}"
-                      f", but it's in {found_in_category}.")
+            for item_name, price in items.items():
+                if user_input in item_name:
+                    found_items.append((item_name, price))
+
+        if found_items:
+            if len(found_items) == 1:
+                print(f"The price of {found_items[0][0].capitalize()} is {found_items[0][1]} gold pieces.")
             else:
-                print(f"{user_input.capitalize()} not found in any category.")
+                print("Found items:")
+                for found_item in found_items:
+                    print(f"The price of {found_item[0].capitalize()} is {found_item[1]} gold pieces.")
+        else:
+            print(f"No items found matching '{user_input}' in {user_category[:-4].replace('_', ' ').capitalize()}.")
 
 
 if __name__ == "__main__":
