@@ -1,16 +1,16 @@
 Item Name, Price (in GP)
 Acid (vial), 25
-Airship, Varies
+Airship, 10
 Alchemist's Fire (flask), 50
 Alchemist's Supplies, 50
 Alexandrite, 500
 Alms Box, 1
 Amber, 100
 Amethyst, 100
-Amulet, Varies
+Amulet, 10
 Antitoxin, 50
 Aquamarine, 500
-Arcane Focus, Varies
+Arcane Focus, 10
 Arrows, 1
 Assassin's Blood (Ingested), 150
 Azurite, 10
@@ -19,7 +19,7 @@ Bad News Bullets, 20
 Bagpipes, 30
 Ball Bearings (bag of 1000), 1
 Banded Agate, 10
-Barding, Varies
+Barding, 10
 Barrel, 2
 Basket, 4
 Bedroll, 1
@@ -80,7 +80,7 @@ Coral, 100
 Crawler Mucus (Contact), 200
 Crossbow Bolts, 1
 Crowbar, 2
-Crystal, Varies
+Crystal, 10
 Diamond, 5000
 Dice Set, 1
 Diplomat's Pack, 39
@@ -89,26 +89,26 @@ Donkey (or Mule), 8
 Draft Horse, 50
 Dragonchess Set, 5
 Drow Poison (Injury), 200
-Druidic Focus, Varies
+Druidic Focus, 10
 Drum, 6
 Dulcimer, 25
 Dungeoneer's Pack, 12
 Dynamite (Stick), 10
 Elephant, 200
-Emblem, Varies
+Emblem, 10
 Emerald, 1000
 Energy Cell, 25
 Entertainer's Pack, 40
 Essence of Ether (Inhaled), 500
 Explorer's Pack, 10
 Eye agate, 10
-Feed (per day), Varies
+Feed (per day), 10
 Fire Opal, 1000
 Fishing Tackle, 1
 Flask or Tankard, 2
 Flute, 2
 Forgery Kit, 15
-Galley, Varies
+Galley, 10
 Garnet, 100
 Glassblower's Tools, 30
 Grappling Hook, 2
@@ -121,10 +121,10 @@ Hammer, 1
 Hammer- Sledge, 2
 Hand Mortar Ammunition, 10
 Healer's Kit, 5
-Helm, Varies
+Helm, 10
 Hematite, 10
 Herbalism Kit, 5
-Holy Symbol, Varies
+Holy Symbol, 10
 Holy Water (flask), 25
 Horn, 3
 Hourglass, 25
@@ -170,7 +170,7 @@ Oil (flask), 1
 Oil of Taggit (Contact), 400
 Onyx, 50
 Opal, 100
-Orb, Varies
+Orb, 10
 Painter's Supplies, 10
 Pale Tincture (Ingested), 500
 Palm Pistol Bullets, 20
@@ -204,7 +204,7 @@ Reliquary, 5
 Rhodochrosite, 10
 Riding Horse, 75
 Robes, 1
-Rod, Varies
+Rod, 10
 Rope- Hempen (50 feet), 1
 Rope- Silk (50 feet), 10
 Rowboat, 50
@@ -233,15 +233,15 @@ Soap, 2
 Spellbook, 50
 Spikes- Iron (10), 1
 Spinel, 100
-Sprig of Mistletoe, Varies
+Sprig of Mistletoe, 10
 Spyglass, 1000
-Staff, Varies
+Staff, 10
 Stake (Wooden), 1
 Star Rose Quartz, 50
 Star Ruby, 5000
 Star Sapphire, 5000
 String, 1
-Tej, Varies
+Tej, 10
 Tent- Two-Person, 2
 Thieves' Tools, 25
 Three-Dragon Ante Set, 1
@@ -251,7 +251,7 @@ Tinker's Tools, 50
 Topaz, 50
 Torch, 1
 Torpor (Ingested), 600
-Totem, Varies
+Totem, 10
 Tourmaline, 100
 Truth Serum (Ingested), 150
 Turquoise, 10
@@ -259,15 +259,15 @@ Vestments, 5
 Vial, 1
 Viol, 30
 Wagon, 35
-Wand, Varies
+Wand, 10
 Warhorse, 400
 Warship, 25000
 Waterskin, 2
 Weaver's Tools, 1
 Whetstone, 1
 Woodcarver's Tools, 1
-Wooden Staff, Varies
+Wooden Staff, 10
 Wyvern Poison (Injury), 1200
 Yellow sapphire, 5000
-Yew Wand, Varies
+Yew Wand, 10
 Zircon, 50

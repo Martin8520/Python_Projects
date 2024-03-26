@@ -20,7 +20,8 @@ def main():
         1: 'armors.csv',
         2: 'magical_items.csv',
         3: 'potions.csv',
-        4: 'weapons.csv'
+        4: 'weapons.csv',
+        5: 'misc.csv'
     }
 
     while True:
