@@ -56,7 +56,7 @@ def main():
         for index, item in enumerate(items, start=1):
             print(f"{index}: {item.capitalize()}")
 
-        while True:  # Loop until a valid input is received
+        while True:
             user_input = input("\nEnter an item name or its number to search or type 'back' to go back: ").lower()
 
             if user_input == 'back':
@@ -79,10 +79,9 @@ def main():
                     for found_item in found_items:
                         print(f"The price of {found_item[0].capitalize()} is {found_item[1]} gold pieces.")
             else:
-                # No items found in the chosen category, check other categories
                 found_in_other_categories = []
                 for category_num, category_file in categories.items():
-                    if category_file != user_category:  # Avoid searching in the same category
+                    if category_file != user_category:
                         csv_file = os.path.join(script_dir, category_file)
                         if not os.path.exists(csv_file):
                             print(f"Error: {category_file} file not found.")
