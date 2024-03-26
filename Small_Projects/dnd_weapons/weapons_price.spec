@@ -5,7 +5,7 @@ a = Analysis(
     ['weapons_price.py'],
     pathex=[],
     binaries=[],
-    datas=[('weapons.csv', '.')],
+    datas=[('weapons.csv', '.'), ('potions.csv', '.'), ('magical_items.csv', '.'), ('armors.csv', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

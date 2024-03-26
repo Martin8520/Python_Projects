@@ -1,4 +1,4 @@
-Weapon Name,Price
+Item Name,Price
 club,1
 dagger,2
 greatclub,2
@@ -54,23 +54,6 @@ sword of wounding,500
 trident of fish command,500
 trident of warning,500
 vicious weapon,500
-wand of magic missiles,500
-wand of the war mage +1,500
-wand of the war mage +2,500
-wand of the war mage +3,500
-wand of binding,500
-wand of enemy detection,500
-wand of fear,500
-wand of fireballs,500
-wand of lightning bolts,500
-wand of paralysis,500
-wand of the pact keeper +1,500
-wand of the pact keeper +2,500
-wand of the pact keeper +3,500
-wand of polymorph,500
-wand of secrets,500
-wand of web,500
-wand of wonder,500
 weapon +1,500
 weapon +2,500
 weapon +3,500

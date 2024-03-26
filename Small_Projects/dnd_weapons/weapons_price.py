@@ -52,9 +52,9 @@ def main():
         for index, item in enumerate(items, start=1):
             print(f"{index}: {item.capitalize()}")
 
-        user_input = input("\nEnter an item name or its number to search or type 'exit' to go back: ").lower()
+        user_input = input("\nEnter an item name or its number to search or type 'back' to go back: ").lower()
 
-        if user_input == 'exit':
+        if user_input == 'back':
             continue
 
         if user_input.isdigit() and 1 <= int(user_input) <= len(items):
