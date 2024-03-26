@@ -45,6 +45,27 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Small_Projects\dnd_weapons\armors.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Small_Projects\dnd_weapons\dist\potions.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Small_Projects\dnd_weapons\potions.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Small_Projects\dnd_weapons\weapons.csv">
           <value>
             <Attribute>
