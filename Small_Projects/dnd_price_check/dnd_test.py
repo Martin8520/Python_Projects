@@ -1,6 +1,8 @@
 import csv
 import os
 
+item_number = 0
+
 
 def read_items_from_csv(filename):
     items = {}
@@ -82,11 +84,13 @@ def main():
 
                 if found_items:
                     if len(found_items) == 1:
-                        print(f"The price of {found_items[0][0].title()} is {found_items[0][1]} gold pieces.Item Number: {item_number}")
+                        print(f"The price of {found_items[0][0].title()} is {found_items[0][1]}"
+                              f" gold pieces. \n(Item Number: {item_number})")
                     else:
                         print("Found items:")
                         for found_item in found_items:
-                            print(f"The price of {found_item[0].title()} is {found_item[1]} gold pieces.Item Number: {item_number}")
+                            print(f"The price of {found_item[0].title()} is {found_item[1]} gold pieces."
+                                  f"\n(Item Number: {item_number})")
                 else:
                     found_in_other_categories = []
                     for category_num, category_file in categories.items():
@@ -103,7 +107,8 @@ def main():
                     if found_in_other_categories:
                         print("No items found in the selected category. However, found in other categories:")
                         for found_category_num, found_category_file in found_in_other_categories:
-                            print(f"{found_category_num}: {found_category_file[:-4].replace('_', ' ').title()}")
+                            print(f"{found_category_num}:"
+                                  f" {found_category_file[:-4].replace('_', ' ').title()}")
                         print("b: Back to main menu")
                         user_choice = input("Enter the number of the category or 'b' to go back: ")
 
@@ -133,7 +138,8 @@ def main():
                     original_price = items[item_to_edit]
                     new_price = input("Enter the new price for the item: ")
                     items[item_to_edit] = int(new_price)
-                    print(f"Item '{item_to_edit.title()}'.Item Number: {item_number} (Price: {original_price}) updated to Price: {new_price}.")
+                    print(f"Item '{item_to_edit.title()}'."
+                          f" (Price: {original_price}) updated to Price: {new_price}.\n(Item Number: {item_number})")
                 else:
                     print("Item not found.")
             elif option == "3":
@@ -141,7 +147,8 @@ def main():
                 new_item_price = input("Enter the price of the new item: ")
                 items[new_item_name] = int(new_item_price)
                 item_number = len(items)
-                print(f"New item '{new_item_name.title()}' added with price: {new_item_price} (Item Number: {item_number}).")
+                print(f"New item '{new_item_name.title()}' added with price: {new_item_price}"
+                      f" \n(Item Number: {item_number})")
             elif option == "4":
                 item_to_delete = input("Enter the name or number of the item you want to delete: ").lower()
                 if item_to_delete.isdigit() and 1 <= int(item_to_delete) <= len(items):
@@ -149,7 +156,8 @@ def main():
                 if item_to_delete in items:
                     deleted_price = items[item_to_delete]
                     del items[item_to_delete]
-                    print(f"Item '{item_to_delete.title()}'.Item Number: {item_number} (Price: {deleted_price}) deleted.")
+                    print(f"Item '{item_to_delete.title()}'."
+                          f" (Price: {deleted_price}) deleted.\n(Item Number: {item_number})")
                 else:
                     print("Item not found.")
 
