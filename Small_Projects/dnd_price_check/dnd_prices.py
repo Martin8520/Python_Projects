@@ -8,15 +8,38 @@ def read_items_from_csv(filename):
         reader = csv.reader(csvfile)
         next(reader)
         for row in reader:
-            item_name = row[0].strip()
+            item_name = row[0].strip().lower()
             price = int(row[1])
-            items[item_name.lower()] = price
+            items[item_name] = price
     return items
+
+
+def write_items_to_csv(filename, items):
+    with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Item', 'Price'])
+        for item, price in items.items():
+            writer.writerow([item, price])
 
 
 def display_items_with_numbers(items):
     for index, item in enumerate(items, start=1):
         print(f"{index}: {item.title()} - {items[item]} gold pieces")
+
+
+def delete_item_from_csv(filename, item_name):
+    updated_items = []
+    with open(filename, 'r', newline='', encoding='utf-8') as csvfile:
+        reader = csv.reader(csvfile)
+        header = next(reader)
+        updated_items.append(header)
+        for row in reader:
+            if row[0].strip().lower() != item_name:
+                updated_items.append(row)
+
+    with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerows(updated_items)
 
 
 def main():
@@ -117,15 +140,17 @@ def main():
                 items[new_item_name] = int(new_item_price)
                 item_idx = len(items)
                 print(f"New item {item_idx}: '{new_item_name.title()}' added with price: {new_item_price}.")
+                write_items_to_csv(csv_file, items)
+
             elif option == "4":
                 item_to_delete = input("Enter the name or number of the item you want to delete: ").lower()
                 if item_to_delete.isdigit() and 1 <= int(item_to_delete) <= len(items):
                     item_idx = int(item_to_delete)
                     item_to_delete = list(items.keys())[item_idx - 1]
                 if item_to_delete in items:
-                    deleted_price = items[item_to_delete]
-                    del items[item_to_delete]
-                    print(f"Item {item_idx}: '{item_to_delete.title()}' (Price: {deleted_price}) deleted.")
+                    deleted_price = items.pop(item_to_delete)
+                    delete_item_from_csv(csv_file, item_to_delete)
+                    print(f"Item {item_idx}: '{item_to_delete.title()}' (Price: {deleted_price}) deleted from CSV.")
                 else:
                     print("Item not found.")
             else:
