@@ -1,6 +1,8 @@
 import csv
 import os
 
+item_number = 0
+
 
 def read_items_from_csv(filename):
     items = {}
@@ -15,6 +17,7 @@ def read_items_from_csv(filename):
 
 
 def main():
+    global item_number
     script_dir = os.path.dirname(os.path.abspath(__file__))
     categories = {
         1: 'armors.csv',
@@ -27,7 +30,7 @@ def main():
     while True:
         print("\nCategories:")
         for category_num, category_file in categories.items():
-            print(f"{category_num}: {category_file[:-4].replace('_', ' ').capitalize()}")
+            print(f"{category_num}: {category_file[:-4].replace('_', ' ').title()}")
         print("0: Exit")
         user_choice = input("Enter the number of the category or '0' to quit: ")
 
@@ -52,9 +55,9 @@ def main():
 
         items = read_items_from_csv(csv_file)
 
-        print(f"\nList of {user_category[:-4].replace('_', ' ').capitalize()}:")
+        print(f"\nList of {user_category[:-4].replace('_', ' ').title()}:")
         for index, item in enumerate(items, start=1):
-            print(f"{index}: {item.capitalize()} - {items[item]} gold pieces")
+            print(f"{index}: {item.title()} - {items[item]} gold pieces")
 
         while True:
             print("\nOptions:")
@@ -81,11 +84,13 @@ def main():
 
                 if found_items:
                     if len(found_items) == 1:
-                        print(f"The price of {found_items[0][0].capitalize()} is {found_items[0][1]} gold pieces.")
+                        print(f"The price of {found_items[0][0].title()} is {found_items[0][1]}"
+                              f" gold pieces. \n(Item Number: {item_number})")
                     else:
                         print("Found items:")
                         for found_item in found_items:
-                            print(f"The price of {found_item[0].capitalize()} is {found_item[1]} gold pieces.")
+                            print(f"The price of {found_item[0].title()} is {found_item[1]} gold pieces."
+                                  f"\n(Item Number: {item_number})")
                 else:
                     found_in_other_categories = []
                     for category_num, category_file in categories.items():
@@ -102,7 +107,8 @@ def main():
                     if found_in_other_categories:
                         print("No items found in the selected category. However, found in other categories:")
                         for found_category_num, found_category_file in found_in_other_categories:
-                            print(f"{found_category_num}: {found_category_file[:-4].replace('_', ' ').capitalize()}")
+                            print(f"{found_category_num}:"
+                                  f" {found_category_file[:-4].replace('_', ' ').title()}")
                         print("b: Back to main menu")
                         user_choice = input("Enter the number of the category or 'b' to go back: ")
 
@@ -116,9 +122,9 @@ def main():
                                 continue
                             items = read_items_from_csv(csv_file)
 
-                            print(f"\nList of {user_category[:-4].replace('_', ' ').capitalize()}:")
+                            print(f"\nList of {user_category[:-4].replace('_', ' ').title()}:")
                             for index, item in enumerate(items, start=1):
-                                print(f"{index}: {item.capitalize()} - {items[item]} gold pieces")
+                                print(f"{index}: {item.title()} - {items[item]} gold pieces")
                             continue
                         else:
                             print("Invalid choice. Returning to main menu.")
@@ -129,23 +135,29 @@ def main():
                 if item_to_edit.isdigit() and 1 <= int(item_to_edit) <= len(items):
                     item_to_edit = list(items.keys())[int(item_to_edit) - 1]
                 if item_to_edit in items:
+                    original_price = items[item_to_edit]
                     new_price = input("Enter the new price for the item: ")
                     items[item_to_edit] = int(new_price)
-                    print("Item price updated successfully!")
+                    print(f"Item '{item_to_edit.title()}'."
+                          f" (Price: {original_price}) updated to Price: {new_price}.\n(Item Number: {item_number})")
                 else:
                     print("Item not found.")
             elif option == "3":
                 new_item_name = input("Enter the name of the new item: ").strip().lower()
                 new_item_price = input("Enter the price of the new item: ")
                 items[new_item_name] = int(new_item_price)
-                print("New item added successfully!")
+                item_number = len(items)
+                print(f"New item '{new_item_name.title()}' added with price: {new_item_price}"
+                      f" \n(Item Number: {item_number})")
             elif option == "4":
                 item_to_delete = input("Enter the name or number of the item you want to delete: ").lower()
                 if item_to_delete.isdigit() and 1 <= int(item_to_delete) <= len(items):
                     item_to_delete = list(items.keys())[int(item_to_delete) - 1]
                 if item_to_delete in items:
+                    deleted_price = items[item_to_delete]
                     del items[item_to_delete]
-                    print("Item deleted successfully!")
+                    print(f"Item '{item_to_delete.title()}'."
+                          f" (Price: {deleted_price}) deleted.\n(Item Number: {item_number})")
                 else:
                     print("Item not found.")
 
@@ -153,7 +165,7 @@ def main():
                 writer = csv.writer(csvfile)
                 writer.writerow(['Item', 'Price'])
                 for item_name, price in items.items():
-                    writer.writerow([item_name.capitalize(), price])
+                    writer.writerow([item_name.title(), price])
 
 
 if __name__ == "__main__":
