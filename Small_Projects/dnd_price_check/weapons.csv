@@ -1,87 +1,87 @@
-Item Name,Price
-club,1
-dagger,2
-greatclub,2
-handaxe,5
-javelin,5
-light hammer,2
-mace,5
-quarterstaff,2
-sickle,1
-spear,1
-crossbow light,25
-dart,5
-shortbow,25
-sling,1
-battleaxe,10
-flail,10
-glaive,20
-greataxe,30
-greatsword,50
-halberd,20
-lance,10
-longsword,15
-maul,10
-morningstar,15
-pike,5
-rapier,25
-scimitar,25
-shortsword,10
-trident,5
-war pick,5
-warhammer,15
-whip,2
-blowgun,10
-crossbow hand,75
-crossbow heavy,50
-longbow,50
-net,1
-dagger of venom,500
-dancing sword,500
-flame tongue,500
-frost brand,500
-giant slayer,500
-luck blade,500
-mace of disruption,500
-mace of smiting,500
-mace of terror,500
-vorpal sword,500
-nine lives stealer,500
-oathbow,500
-sun blade,500
-sword of life stealing,500
-sword of wounding,500
-trident of fish command,500
-trident of warning,500
-vicious weapon,500
-weapon +1,500
-weapon +2,500
-weapon +3,500
-Staff of Adornment,500
-Staff of Charming,500
-Staff of Fire,500
-Staff of Frost,500
-Staff of Healing,500
-Staff of Power,500
-Staff of Striking,500
-Staff of Swarming Insects,500
-Staff of the Adder,500
-Staff of the Python,500
-Staff of the Woodlands,500
-Staff of Withering,500
-Wand of Binding,100
-Wand of Enemy Detection,100
-Wand of Fear,100
-Wand of Fireballs,100
-Wand of Lightning Bolts,100
-Wand of Magic Detection,100
-Wand of Magic Missiles,100
-Wand of Paralysis,100
-Wand of Polymorph,100
-Wand of Secrets,100
-Wand of Smiles,100
-Wand of Web,100
-Wand of Wonder,100
-Wand of the War Mage,100
-Wand of Winter,100
-Wand of the Wyrm,100
+Item,Price
+Club,1
+Dagger,2
+Greatclub,2
+Handaxe,5
+Javelin,5
+Light hammer,2
+Mace,5
+Quarterstaff,2
+Sickle,1
+Spear,1
+Crossbow light,25
+Dart,5
+Shortbow,25
+Sling,1
+Battleaxe,10
+Flail,10
+Glaive,20
+Greataxe,30
+Greatsword,50
+Halberd,20
+Lance,10
+Longsword,15
+Maul,10
+Morningstar,15
+Pike,5
+Rapier,25
+Scimitar,25
+Shortsword,10
+Trident,5
+War pick,5
+Warhammer,15
+Whip,2
+Blowgun,10
+Crossbow hand,75
+Crossbow heavy,50
+Longbow,50
+Net,1
+Dagger of venom,500
+Dancing sword,500
+Flame tongue,500
+Frost brand,500
+Giant slayer,500
+Luck blade,500
+Mace of disruption,500
+Mace of smiting,500
+Mace of terror,500
+Vorpal sword,500
+Nine lives stealer,500
+Oathbow,500
+Sun blade,500
+Sword of life stealing,500
+Sword of wounding,500
+Trident of fish command,500
+Trident of warning,500
+Vicious weapon,500
+Weapon +1,500
+Weapon +2,500
+Weapon +3,500
+Staff of adornment,500
+Staff of charming,500
+Staff of fire,500
+Staff of frost,500
+Staff of healing,500
+Staff of power,500
+Staff of striking,500
+Staff of swarming insects,500
+Staff of the adder,500
+Staff of the python,500
+Staff of the woodlands,500
+Staff of withering,500
+Wand of binding,100
+Wand of enemy detection,100
+Wand of fear,100
+Wand of fireballs,100
+Wand of lightning bolts,100
+Wand of magic detection,100
+Wand of magic missiles,100
+Wand of paralysis,100
+Wand of polymorph,100
+Wand of secrets,100
+Wand of smiles,100
+Wand of web,100
+Wand of wonder,100
+Wand of the war mage,100
+Wand of winter,100
+Wand of the wyrm,100

@@ -1,63 +1,39 @@
-Potion of Healing,50
-Potion of Greater Healing,150
-Potion of Superior Healing,450
-Potion of Supreme Healing,1350
-Potion of Climbing,50
-Potion of Invisibility,180
-Potion of Mind Reading,180
-Potion of Animal Friendship,180
-Potion of Fire Breath,180
-Potion of Growth,180
-Potion of Hill Giant Strength,180
-Potion of Frost Giant Strength,180
-Potion of Stone Giant Strength,180
-Potion of Heroism,180
-Potion of Water Breathing,180
-Potion of Diminution,180
-Potion of Gaseous Form,180
-Potion of Resistance,180
-Potion of Speed,180
-Potion of Flying,180
-Potion of Longevity,180
-Potion of Vitality,180
-Potion of Invulnerability,180
-Potion of Mind Control,180
-Potion of Poison,100
-Potion of Sleep,100
-Potion of Acid Resistance,180
-Potion of Cold Resistance,180
-Potion of Fire Resistance,180
-Potion of Force Resistance,180
-Potion of Lightning Resistance,180
-Potion of Necrotic Resistance,180
-Potion of Poison Resistance,180
-Potion of Psychic Resistance,180
-Potion of Radiant Resistance,180
-Potion of Thunder Resistance,180
-Potion of Clairvoyance,180
-Potion of Heroism,180
-Potion of Diminution,180
-Potion of Growth,180
-Potion of Water Breathing,180
-Potion of Animal Friendship,180
-Potion of Fire Giant Strength,180
-Potion of Fire Resistance,180
-Potion of Cold Resistance,180
-Potion of Healing,180
-Potion of Invulnerability,180
-Potion of Mind Reading,180
-Potion of Poison,180
-Potion of Resistance,180
-Potion of Speed,180
-Potion of Vitality,180
-Potion of Climbing,50
-Potion of Invisibility,180
-Potion of Greater Healing,150
-Potion of Hill Giant Strength,180
-Potion of Frost Giant Strength,180
-Potion of Stone Giant Strength,180
-Potion of Supreme Healing,1350
-Potion of Flying,180
-Potion of Longevity,180
-Potion of Mind Control,180
-Potion of Sleep,100
+Item,Price
+Potion of greater healing,150
+Potion of superior healing,450
+Potion of supreme healing,1350
+Potion of climbing,50
+Potion of invisibility,180
+Potion of mind reading,180
+Potion of animal friendship,180
+Potion of fire breath,180
+Potion of growth,180
+Potion of hill giant strength,180
+Potion of frost giant strength,180
+Potion of stone giant strength,180
+Potion of heroism,180
+Potion of water breathing,180
+Potion of diminution,180
+Potion of gaseous form,180
+Potion of resistance,180
+Potion of speed,180
+Potion of flying,180
+Potion of longevity,180
+Potion of vitality,180
+Potion of invulnerability,180
+Potion of mind control,180
+Potion of poison,180
+Potion of sleep,100
+Potion of acid resistance,180
+Potion of cold resistance,180
+Potion of fire resistance,180
+Potion of force resistance,180
+Potion of lightning resistance,180
+Potion of necrotic resistance,180
+Potion of poison resistance,180
+Potion of psychic resistance,180
+Potion of radiant resistance,180
+Potion of thunder resistance,180
+Potion of clairvoyance,180
+Potion of fire giant strength,180
+Potion of healing,180

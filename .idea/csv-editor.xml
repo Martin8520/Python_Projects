@@ -45,35 +45,35 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\Small_Projects\dnd_weapons\armors.csv">
+        <entry key="\Small_Projects\dnd_price_check\armors.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="\Small_Projects\dnd_weapons\magical_items.csv">
+        <entry key="\Small_Projects\dnd_price_check\magical_items.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="\Small_Projects\dnd_weapons\misc.csv">
+        <entry key="\Small_Projects\dnd_price_check\misc.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="\Small_Projects\dnd_weapons\potions.csv">
+        <entry key="\Small_Projects\dnd_price_check\potions.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
             </Attribute>
           </value>
         </entry>
-        <entry key="\Small_Projects\dnd_weapons\weapons.csv">
+        <entry key="\Small_Projects\dnd_price_check\weapons.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />
