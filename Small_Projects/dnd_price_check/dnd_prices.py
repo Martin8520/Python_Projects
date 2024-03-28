@@ -152,16 +152,21 @@ def main():
                     print("Item not found.")
 
             elif option == "2":
-                item_to_edit = input("Enter the name or number of the item you want to edit: ").lower()
+                item_to_edit = input("Enter the name or number of the item you want to edit: ").strip().lower()
                 if item_to_edit.isdigit() and 1 <= int(item_to_edit) <= len(items):
                     item_idx = int(item_to_edit)
                     item_to_edit = list(items.keys())[item_idx - 1]
+                elif item_to_edit.lower() in [name.lower() for name, _ in items.values()]:
+                    item_to_edit = next(
+                        item_id for item_id, (name, _) in items.items() if name.lower() == item_to_edit.lower())
                 if item_to_edit in items:
-                    original_price = items[item_to_edit]
+                    original_price = items[item_to_edit][1]
                     new_price = input("Enter the new price for the item: ")
-                    items[item_to_edit] = int(new_price)
+                    items[item_to_edit] = (items[item_to_edit][0], int(new_price))
                     print(
-                        f"Item {item_idx}: '{item_to_edit.title()}' (Price: {original_price}) updated to Price: {new_price}.")
+                        f"Item {item_to_edit}: '{items[item_to_edit][0].title()}' (Price: {original_price})"
+                        f" updated to Price: {new_price}.")
+                    write_items_to_csv(csv_file, items)
                 else:
                     print("Item not found.")
             elif option == "3":
@@ -172,7 +177,6 @@ def main():
                 item_idx = len(items)
                 print(f"New item {new_item_id}: '{new_item_name.title()}' added with price: {new_item_price}.")
                 write_items_to_csv(csv_file, items)
-
                 items = read_items_from_csv(csv_file)
 
             elif option == "4":
