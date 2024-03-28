@@ -1,31 +1,30 @@
-ID,Item,Price
-7654,Leather,10
-8901,Studded leather,45
-6789,Hide,10
-2109,Chain shirt,50
-4567,Scale mail,50
-9876,Breastplate,400
-5432,Half plate,750
-1234,Ring mail,30
-9012,Chain mail,75
-2345,Splint,200
-7890,Plate,1500
-3210,Shield,10
-8765,+1 armor,500
-2109,+2 armor,500
-5678,+3 armor,500
-1098,Adamantine armor,500
-5432,Animated shield,500
-8901,Armor of resistance,500
-2345,Armor of vulnerability,500
-8765,Dragon scale mail,500
-2109,Elven chain,500
-9876,Mithral armor,500
-6543,Shield of missile attraction,500
-5678,Shield +1,500
-3210,Shield +2,500
-8901,Shield +3,500
-4321,Demon armor,500
-1098,Dwarven plate,500
-6543,Shield sentinel,500
-4567,Test test test,1337
+0001,Leather,10
+0002,Studded leather,45
+0003,Hide,10
+0004,Chain shirt,50
+0005,Scale mail,50
+0006,Breastplate,400
+0007,Half plate,750
+0008,Ring mail,30
+0009,Chain mail,75
+0010,Splint,200
+0011,Plate,1500
+0012,Shield,10
+0013,+1 armor,500
+0014,+2 armor,500
+0015,+3 armor,500
+0016,Adamantine armor,500
+0017,Animated shield,500
+0018,Armor of resistance,500
+0019,Armor of vulnerability,500
+0020,Dragon scale mail,500
+0021,Elven chain,500
+0022,Mithral armor,500
+0023,Shield of missile attraction,500
+0024,Shield +1,500
+0025,Shield +2,500
+0026,Shield +3,500
+0027,Demon armor,500
+0028,Dwarven plate,500
+0029,Shield sentinel,500
+0030,Test test test,1337

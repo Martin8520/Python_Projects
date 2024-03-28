@@ -1,39 +1,38 @@
-ID,Item,Price
-8901,Potion of greater healing,150
-2109,Potion of superior healing,450
-5432,Potion of supreme healing,1350
-1098,Potion of climbing,50
-6543,Potion of invisibility,180
-4321,Potion of mind reading,180
-8765,Potion of animal friendship,180
-3210,Potion of fire breath,180
-5678,Potion of growth,180
-2345,Potion of hill giant strength,180
-9876,Potion of frost giant strength,180
-6789,Potion of stone giant strength,180
-4567,Potion of heroism,180
-7654,Potion of water breathing,180
-5432,Potion of diminution,180
-0987,Potion of gaseous form,180
-2109,Potion of resistance,180
-5678,Potion of speed,180
-8765,Potion of flying,180
-1234,Potion of longevity,180
-8901,Potion of vitality,180
-6789,Potion of invulnerability,180
-3456,Potion of mind control,180
-2109,Potion of poison,180
-4567,Potion of sleep,100
-7890,Potion of acid resistance,180
-5432,Potion of cold resistance,180
-2109,Potion of fire resistance,180
-9876,Potion of force resistance,180
-2345,Potion of lightning resistance,180
-8765,Potion of necrotic resistance,180
-5432,Potion of poison resistance,180
-0987,Potion of psychic resistance,180
-7890,Potion of radiant resistance,180
-4567,Potion of thunder resistance,180
-8901,Potion of clairvoyance,180
-3210,Potion of fire giant strength,180
-2345,Potion of healing,180
+0001,Potion of greater healing,150
+0002,Potion of superior healing,450
+0003,Potion of supreme healing,1350
+0004,Potion of climbing,50
+0005,Potion of invisibility,180
+0006,Potion of mind reading,180
+0007,Potion of animal friendship,180
+0008,Potion of fire breath,180
+0009,Potion of growth,180
+0010,Potion of hill giant strength,180
+0011,Potion of frost giant strength,180
+0012,Potion of stone giant strength,180
+0013,Potion of heroism,180
+0014,Potion of water breathing,180
+0015,Potion of diminution,180
+0016,Potion of gaseous form,180
+0017,Potion of resistance,180
+0018,Potion of speed,180
+0019,Potion of flying,180
+0020,Potion of longevity,180
+0021,Potion of vitality,180
+0022,Potion of invulnerability,180
+0023,Potion of mind control,180
+0024,Potion of poison,180
+0025,Potion of sleep,100
+0026,Potion of acid resistance,180
+0027,Potion of cold resistance,180
+0028,Potion of fire resistance,180
+0029,Potion of force resistance,180
+0030,Potion of lightning resistance,180
+0031,Potion of necrotic resistance,180
+0032,Potion of poison resistance,180
+0033,Potion of psychic resistance,180
+0034,Potion of radiant resistance,180
+0035,Potion of thunder resistance,180
+0036,Potion of clairvoyance,180
+0037,Potion of fire giant strength,180
+0038,Potion of healing,180
