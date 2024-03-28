@@ -1,21 +1,25 @@
 import csv
 import os
 import random
+import pandas as pd
 
 
 def read_items_from_csv(filename):
     items = {}
-    with open(filename, 'r', newline='', encoding='utf-8') as csvfile:
-        reader = csv.reader(csvfile)
-        next(reader)
-        for row in reader:
+    try:
+        df = pd.read_csv(filename, header=None)
+        for index, row in df.iterrows():
             if len(row) >= 3:
-                item_id = row[0].strip()
-                item_name = row[1].strip().lower()
+                item_id = str(row[0]).strip().zfill(4)
+                item_name = str(row[1]).strip().lower()
                 price = int(row[2])
                 items[item_id] = (item_name, price)
             else:
-                print(f"Error: Row {reader.line_num} does not have the expected number of elements.")
+                print(f"Error: Row {index + 1} does not have the expected number of elements.")
+    except pd.errors.EmptyDataError:
+        print("Error: The CSV file is empty.")
+    except pd.errors.ParserError:
+        print("Error: There was a problem parsing the CSV file.")
     return items
 
 
@@ -28,7 +32,8 @@ def write_items_to_csv(filename, items):
 
 
 def display_items_with_numbers(items):
-    for item_id, (item_name, price) in items.items():
+    sorted_items = sorted(items.items(), key=lambda x: int(x[0]))
+    for item_id, (item_name, price) in sorted_items:
         print(f"Item ID {item_id}: {item_name.title()} - {price} gold pieces")
 
 
