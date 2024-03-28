@@ -1,25 +1,23 @@
 ID,Item,Price
-3847,leather,10
-2345,shield +1,500
-5678,hide,10
-1290,chain shirt,50
-8910,scale mail,50
-6789,breastplate,400
-4321,half plate,750
-3456,test,100
-6781,chain mail,75
-9012,splint,200
-4567,plate,1500
-7632,+1 armor,500
-1987,+2 armor,500
-5432,mithral armor,500
-8765,shield +2,500
-2109,shield +3,500
-6543,armor of resistance,500
-9876,armor of vulnerability,500
-3210,dragon scale mail,500
-7654,elven chain,500
-0987,shield of missile attraction,500
-6578,demon armor,500
-1234,dwarven plate,500
-8901,shield sentinel,500
+0002,shield +1,500
+0003,hide,10
+0004,chain shirt,50
+0005,scale mail,50
+0006,breastplate,400
+0007,half plate,750
+0009,chain mail,75
+0010,splint,200
+0011,plate,1500
+0012,+1 armor,500
+0013,+2 armor,500
+0014,mithral armor,500
+0015,shield +2,500
+0016,shield +3,500
+0017,armor of resistance,500
+0018,armor of vulnerability,500
+0019,dragon scale mail,500
+0020,elven chain,500
+0021,shield of missile attraction,500
+0022,demon armor,500
+0023,dwarven plate,500
+0024,shield sentinel,500
