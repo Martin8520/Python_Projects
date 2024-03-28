@@ -1,87 +1,87 @@
-Item,Price
-Club,1
-Dagger,2
-Greatclub,2
-Handaxe,5
-Javelin,5
-Light hammer,2
-Mace,5
-Quarterstaff,2
-Sickle,1
-Spear,1
-Crossbow light,25
-Dart,5
-Shortbow,25
-Sling,1
-Battleaxe,10
-Flail,10
-Glaive,20
-Greataxe,30
-Greatsword,50
-Halberd,20
-Lance,10
-Longsword,15
-Maul,10
-Morningstar,15
-Pike,5
-Rapier,25
-Scimitar,25
-Shortsword,10
-Trident,5
-War pick,5
-Warhammer,15
-Whip,2
-Blowgun,10
-Crossbow hand,75
-Crossbow heavy,50
-Longbow,50
-Net,1
-Dagger of venom,500
-Dancing sword,500
-Flame tongue,500
-Frost brand,500
-Giant slayer,500
-Luck blade,500
-Mace of disruption,500
-Mace of smiting,500
-Mace of terror,500
-Vorpal sword,500
-Nine lives stealer,500
-Oathbow,500
-Sun blade,500
-Sword of life stealing,500
-Sword of wounding,500
-Trident of fish command,500
-Trident of warning,500
-Vicious weapon,500
-Weapon +1,500
-Weapon +2,500
-Weapon +3,500
-Staff of adornment,500
-Staff of charming,500
-Staff of fire,500
-Staff of frost,500
-Staff of healing,500
-Staff of power,500
-Staff of striking,500
-Staff of swarming insects,500
-Staff of the adder,500
-Staff of the python,500
-Staff of the woodlands,500
-Staff of withering,500
-Wand of binding,100
-Wand of enemy detection,100
-Wand of fear,100
-Wand of fireballs,100
-Wand of lightning bolts,100
-Wand of magic detection,100
-Wand of magic missiles,100
-Wand of paralysis,100
-Wand of polymorph,100
-Wand of secrets,100
-Wand of smiles,100
-Wand of web,100
-Wand of wonder,100
-Wand of the war mage,100
-Wand of winter,100
-Wand of the wyrm,100
+ID,Item,Price
+5432,Club,1
+9876,Dagger,2
+1098,Greatclub,2
+2345,Handaxe,5
+6789,Javelin,5
+8901,Light hammer,2
+3210,Mace,5
+4567,Quarterstaff,2
+2109,Sickle,1
+8765,Spear,1
+7654,Crossbow light,25
+5432,Dart,5
+0987,Shortbow,25
+5678,Sling,1
+2345,Battleaxe,10
+8901,Flail,10
+4321,Glaive,20
+7890,Greataxe,30
+8765,Greatsword,50
+6789,Halberd,20
+2109,Lance,10
+0987,Longsword,15
+5432,Maul,10
+4567,Morningstar,15
+8901,Pike,5
+1098,Rapier,25
+2345,Scimitar,25
+8765,Shortsword,10
+3210,Trident,5
+9876,War pick,5
+4567,Warhammer,15
+5678,Whip,2
+5432,Blowgun,10
+0987,Crossbow hand,75
+2109,Crossbow heavy,50
+8765,Longbow,50
+2345,Net,1
+7890,Dagger of venom,500
+5678,Dancing sword,500
+6789,Flame tongue,500
+3210,Frost brand,500
+4567,Giant slayer,500
+9876,Luck blade,500
+1098,Mace of disruption,500
+2109,Mace of smiting,500
+8765,Mace of terror,500
+4567,Vorpal sword,500
+5432,Nine lives stealer,500
+8901,Oathbow,500
+9876,Sun blade,500
+6789,Sword of life stealing,500
+2109,Sword of wounding,500
+8765,Trident of fish command,500
+5432,Trident of warning,500
+0987,Vicious weapon,500
+4567,Weapon +1,500
+1098,Weapon +2,500
+2345,Weapon +3,500
+8901,Staff of adornment,500
+2109,Staff of charming,500
+9876,Staff of fire,500
+8765,Staff of frost,500
+5432,Staff of healing,500
+3210,Staff of power,500
+7890,Staff of striking,500
+5678,Staff of swarming insects,500
+2345,Staff of the adder,500
+6789,Staff of the python,500
+4567,Staff of the woodlands,500
+3210,Staff of withering,500
+8765,Wand of binding,100
+5432,Wand of enemy detection,100
+7890,Wand of fear,100
+2345,Wand of fireballs,100
+8901,Wand of lightning bolts,100
+4567,Wand of magic detection,100
+2109,Wand of magic missiles,100
+1098,Wand of paralysis,100
+8765,Wand of polymorph,100
+5678,Wand of secrets,100
+5432,Wand of smiles,100
+3210,Wand of web,100
+9876,Wand of wonder,100
+4567,Wand of the war mage,100
+8901,Wand of winter,100
+2345,Wand of the wyrm,100
