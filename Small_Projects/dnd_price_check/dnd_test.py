@@ -1,34 +1,38 @@
 import csv
 import os
 import random
+import pandas as pd
 
 
 def read_items_from_csv(filename):
     items = {}
-    with open(filename, 'r', newline='', encoding='utf-8') as csvfile:
-        reader = csv.reader(csvfile)
-        next(reader)
-        for row in reader:
+    try:
+        df = pd.read_csv(filename, header=None)
+        for index, row in df.iterrows():
             if len(row) >= 3:
-                item_id = row[0].strip()
-                item_name = row[1].strip().lower()
+                item_id = str(row[0]).strip().zfill(4)
+                item_name = str(row[1]).strip().lower()
                 price = int(row[2])
                 items[item_id] = (item_name, price)
             else:
-                print(f"Error: Row {reader.line_num} does not have the expected number of elements.")
+                print(f"Error: Row {index + 1} does not have the expected number of elements.")
+    except pd.errors.EmptyDataError:
+        print("Error: The CSV file is empty.")
+    except pd.errors.ParserError:
+        print("Error: There was a problem parsing the CSV file.")
     return items
 
 
 def write_items_to_csv(filename, items):
     with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['ID', 'Item', 'Price'])
         for item_id, (item_name, price) in items.items():
             writer.writerow([item_id, item_name, price])
 
 
 def display_items_with_numbers(items):
-    for item_id, (item_name, price) in items.items():
+    sorted_items = sorted(items.items(), key=lambda x: int(x[0]))
+    for item_id, (item_name, price) in sorted_items:
         print(f"Item ID {item_id}: {item_name.title()} - {price} gold pieces")
 
 
@@ -59,11 +63,10 @@ def delete_item_from_csv(filename, item_id_or_name):
 
 
 def generate_unique_id(existing_ids):
-    if not existing_ids:
-        return '0001'
-    highest_id = max(int(item_id) for item_id in existing_ids)
-    new_id = str(highest_id + 1).zfill(4)
-    return new_id
+    while True:
+        new_id = str(random.randint(1000, 9999))
+        if new_id not in existing_ids:
+            return new_id
 
 
 def main():
@@ -76,14 +79,13 @@ def main():
         5: 'misc.csv'
     }
     all_items = {}
-    existing_ids = {}
+    existing_ids = []
     for category_num, category_file in categories.items():
         csv_file = os.path.join(script_dir, category_file)
         if os.path.exists(csv_file):
             items = read_items_from_csv(csv_file)
-            all_items[category_num] = items
-            existing_ids[category_num] = [item_id for item_id in items.keys() if
-                                          item_id.isdigit() and len(item_id) == 4]
+            all_items.update(items)
+            existing_ids.extend([item_id for item_id in items.keys() if item_id.isdigit() and len(item_id) == 4])
 
     while True:
         print("\nCategories:")
@@ -111,7 +113,7 @@ def main():
             print(f"Error: {user_category} file not found.")
             continue
 
-        items = all_items[user_choice]
+        items = read_items_from_csv(csv_file)
 
         print(f"\nList of {user_category[:-4].replace('_', ' ').title()}:")
         display_items_with_numbers(items)
@@ -126,41 +128,80 @@ def main():
             option = input("Enter your choice: ")
 
             if option == "0":
-                print("Returning to main menu...")
+                break
+
+            if option == "0":
                 break
             elif option == "1":
-                search_term = input("Enter the item name to search for: ").lower()
-                found_items = [(item_id, item) for item_id, (item_name, price) in items.items() if
-                               search_term in item_name.lower()]
-                if found_items:
-                    print("Matching items:")
-                    for item_id, (item_name, price) in found_items:
-                        print(f"Item ID {item_id}: {item_name.title()} - {price} gold pieces")
+                user_input = input("Enter an item name or its number to search or type 'back' to go back: ").lower()
+
+                found_items = []
+                if user_input.isdigit() and any(int(user_input) == int(item_id) for item_id in items):
+                    item_id = user_input
+                    found_items.append((item_id, items[item_id]))
                 else:
-                    print("No matching items found.")
+                    for item_id, (item_name, price) in items.items():
+                        if user_input in item_name.lower():
+                            found_items.append((item_id, (item_name, price)))
+
+                if found_items:
+                    if len(found_items) == 1:
+                        print(
+                            f"Found item: {found_items[0][0]} "
+                            f"- {found_items[0][1][0]}: {found_items[0][1][1]} gold pieces.")
+                    else:
+                        for item_id, (item_name, price) in found_items:
+                            print(f"Found item: {item_id} - {item_name}: {price} gold pieces.")
+                else:
+                    print("Item not found.")
+
             elif option == "2":
-                item_id = input("Enter the ID of the item you want to edit: ")
-                new_price = input("Enter the new price for the item: ")
-                if item_id in items:
-                    items[item_id] = (items[item_id][0], int(new_price))
+                item_to_edit = input("Enter the name or number of the item you want to edit: ").strip().lower()
+                if item_to_edit.isdigit() and 1 <= int(item_to_edit) <= len(items):
+                    item_idx = int(item_to_edit)
+                    item_to_edit = list(items.keys())[item_idx - 1]
+                elif item_to_edit.lower() in [name.lower() for name, _ in items.values()]:
+                    item_to_edit = next(
+                        item_id for item_id, (name, _) in items.items() if name.lower() == item_to_edit.lower())
+                if item_to_edit in items:
+                    original_price = items[item_to_edit][1]
+                    new_price = input("Enter the new price for the item: ")
+                    items[item_to_edit] = (items[item_to_edit][0], int(new_price))
+                    print(
+                        f"Item {item_to_edit}: '{items[item_to_edit][0].title()}' (Price: {original_price})"
+                        f" updated to Price: {new_price}.")
                     write_items_to_csv(csv_file, items)
-                    print("Price updated successfully.")
                 else:
                     print("Item not found.")
             elif option == "3":
-                new_item_name = input("Enter the name of the new item: ")
-                new_item_price = input("Enter the price for the new item: ")
-                new_item_id = generate_unique_id(existing_ids[user_choice])
+                new_item_name = input("Enter the name of the new item: ").strip().lower()
+                new_item_price = input("Enter the price of the new item: ")
+                new_item_id = generate_unique_id(existing_ids)
                 items[new_item_id] = (new_item_name, int(new_item_price))
-                existing_ids[user_choice].append(new_item_id)
-                write_items_to_csv(csv_file, items)
+                item_idx = len(items)
                 print(f"New item {new_item_id}: '{new_item_name.title()}' added with price: {new_item_price}.")
-            elif option == "4":
-                item_id_or_name = input("Enter the ID or name of the item you want to delete: ")
-                delete_item_from_csv(csv_file, item_id_or_name)
+                write_items_to_csv(csv_file, items)
                 items = read_items_from_csv(csv_file)
+
+            elif option == "4":
+                item_to_delete = input("Enter the name or number of the item you want to delete: ").strip().lower()
+                deleted = False
+                for item_id, (name, _) in items.items():
+                    if item_to_delete == name.lower() or item_to_delete == str(item_id):
+                        del items[item_id]
+                        print(f"Item '{item_id}': '{name}' deleted from {csv_file}.")
+                        deleted = True
+                        break
+                if not deleted:
+                    print("Item not found.")
+
+                with open(csv_file, "w", newline="") as file:
+                    writer = csv.writer(file)
+                    writer.writerow(["ID", "Item", "Price"])
+                    for item_id, (name, price) in items.items():
+                        writer.writerow([item_id, name, price])
             else:
-                print("Invalid option. Please enter a number between 0 and 4.")
+                print("Invalid option. Please choose a valid option.")
 
 
 if __name__ == "__main__":

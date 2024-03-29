@@ -1,177 +1,175 @@
-0001,Amulet of proof against detection and location,1000
-0002,Amulet of the planes,5000
-0003,Bag of beans,50
-0004,Bag of holding,5000
-0005,Bag of tricks,1000
-0006,Boots of elvenkind,500
-0007,Boots of levitation,5000
-0008,Boots of speed,5000
-0009,Boots of striding and springing,5000
-0010,Boots of the winterlands,500
-0011,Bowl of commanding water elementals,5000
-0012,Bracers of archery,5000
-0013,Bracers of defense,5000
-0014,Brazier of commanding fire elementals,5000
-0015,Brooch of shielding,1000
-0016,Broom of flying,5000
-0017,Candle of invocation,5000
-0018,Cape of the mountebank,5000
-0019,Carpet of flying,5000
-0020,Censer of controlling air elementals,5000
-0021,Chime of opening,5000
-0022,Cloak of arachnida,5000
-0023,Cloak of displacement,5000
-0024,Cloak of elvenkind,5000
-0025,Cloak of invisibility,5000
-0026,Cloak of protection,5000
-0027,Cloak of the bat,5000
-0028,Cube of force,5000
-0029,Cube of frost resistance,5000
-0030,Cubic gate,5000
-0031,Decanter of endless water,5000
-0032,Deck of illusions,5000
-0033,Dimensional shackles,5000
-0034,Driftglobe,5000
-0035,Dust of disappearance,5000
-0036,Dust of dryness,5000
-0037,Dust of sneezing and choking,5000
-0038,Efreeti bottle,5000
-0039,Eversmoking bottle,5000
-0040,Eyes of charming,5000
-0041,Eyes of minute seeing,5000
-0042,Eyes of petrification,5000
-0043,Eyes of the eagle,5000
-0044,Figurine of wondrous power,5000
-0045,Gem of brightness,5000
-0046,Gem of seeing,5000
-0047,Gloves of missile snaring,5000
-0048,Gloves of swimming and climbing,5000
-0049,Gloves of thievery,5000
-0050,Goggles of night,5000
-0051,Handy haversack,5000
-0052,Hat of disguise,5000
-0053,Headband of intellect,5000
-0054,Helm of brilliance,5000
-0055,Helm of comprehending languages,5000
-0056,Helm of telepathy,5000
-0057,Helm of teleportation,5000
-0058,Heward's handy haversack,5000
-0059,Horn of blasting,5000
-0060,Horn of valhalla,5000
-0061,Horn of water elemental command,5000
-0062,Horn of the tritons,5000
-0063,Horseshoes of speed,5000
-0064,Immovable rod,5000
-0065,Rod of absorption,50000
-0066,Rod of alertness,50000
-0067,Rod of lordly might,50000
-0068,Rod of resurrection,50000
-0069,Rod of rulership,50000
-0070,Rod of security,50000
-0071,Rod of the pact keeper +1,50000
-0072,Rod of the pact keeper +2,50000
-0073,Rod of the pact keeper +3,50000
-0074,Incense of meditation,5000
-0075,Instant fortress,5000
-0076,Ioun stone,5000
-0077,Iron bands of bilarro,5000
-0078,Iron flask,5000
-0079,Keoghtom's ointment,5000
-0080,Lantern of revealing,5000
-0081,Mantle of spell resistance,5000
-0082,Manual of bodily health,5000
-0083,Manual of gainful exercise,5000
-0084,Manual of golems,5000
-0085,Manual of quickness of action,5000
-0086,Medallion of thoughts,5000
-0087,Mirror of life trapping,5000
-0088,Mirror of the past,5000
-0089,Necklace of adaptation,5000
-0090,Necklace of fireballs,5000
-0091,Necklace of prayer beads,5000
-0092,Necklace of strangulation,5000
-0093,Nolzur's marvelous pigments,5000
-0094,Oil of etherealness,5000
-0095,Oil of sharpness,5000
-0096,Oil of slipperiness,5000
-0097,Orb of dragonkind,5000
-0098,Pearl of power,5000
-0099,Periapt of health,5000
-0100,Periapt of proof against poison,5000
-0101,Periapt of wound closure,5000
-0102,Pipes of haunting,5000
-0103,Pipes of the sewers,5000
-0104,Portable hole,5000
-0105,Quaal's feather token,5000
-0106,Quiver of ehlonna,5000
-0107,Rope of climbing,5000
-0108,Rope of entanglement,5000
-0109,Saddle of the cavalier,5000
-0110,Saddle of the mastiff,5000
-0111,Saddle of the mariner,5000
-0112,Saddle of the phantom steed,5000
-0113,Saddle of the rhino,5000
-0114,Saddle of the valiant charger,5000
-0115,Scimitar of speed,5000
-0116,Sending stones,5000
-0117,Shrieker bulb,100
-0118,Silversheen,100
-0119,Spellshard,100
-0120,Sword of answering,100
-0121,Universal solvent,150
-0122,Vest of escape,100
-0123,Vial of icy breath,100
-0124,Well of many worlds,100
-0125,Wind fan,100
-0126,Winged boots,1000
-0127,Wings of flying,1000
-0128,Wand of binding,100
-0129,Wand of enemy detection,100
-0130,Wand of fear,100
-0131,Wand of fireballs,100
-0132,Wand of lightning bolts,100
-0133,Wand of magic detection,100
-0134,Wand of magic missiles,100
-0135,Wand of paralysis,100
-0136,Wand of polymorph,100
-0137,Wand of secrets,100
-0138,Wand of smiles,100
-0139,Wand of web,100
-0140,Wand of wonder,100
-0141,Wand of the war mage,100
-0142,Wand of winter,100
-0143,Wand of the wyrm,100
-0144,Ring of animal influence,20000
-0145,Ring of djinni summoning,50000
-0146,Ring of elemental command,20000
-0147,Ring of evasion,20000
-0148,Ring of feather falling,20000
-0149,Ring of free action,20000
-0150,Ring of invisibility,20000
-0151,Ring of jumping,20000
-0152,Ring of mind shielding,20000
-0153,Ring of protection,20000
-0154,Ring of regeneration,20000
-0155,Ring of resistance,20000
-0156,Ring of shooting stars,20000
-0157,Ring of spell storing,20000
-0158,Ring of spell turning,20000
-0159,Ring of swimming,20000
-0160,Ring of telekinesis,20000
-0161,Ring of the ram,20000
-0162,Ring of three wishes,20000
-0163,Ring of warmth,20000
-0164,Ring of water walking,20000
-0165,Amulet of health,5000
-0166,Spell scroll cantrip,500
-0167,Spell scroll 1st level,500
-0168,Spell scroll 2nd level,500
-0169,Spell scroll 3rd level,500
-0170,Scroll of protection,500
-0171,Spell scroll 4th level,500
-0172,Spell scroll 5th level,500
-0173,Spell scroll 6th level,500
-0174,Spell scroll 7th level,500
-0175,Spell scroll 8th level,500
-0176,Spell scroll 9th level,500
-
+0001,amulet of the planes,5000
+0002,bag of beans,50
+0003,bag of holding,5000
+0004,bag of tricks,1000
+0005,boots of elvenkind,500
+0006,boots of levitation,5000
+0007,boots of speed,5000
+0008,boots of striding and springing,5000
+0009,boots of the winterlands,500
+0010,bowl of commanding water elementals,5000
+0011,bracers of archery,5000
+0012,bracers of defense,5000
+0013,brazier of commanding fire elementals,5000
+0014,brooch of shielding,1000
+0015,broom of flying,5000
+0016,candle of invocation,5000
+0017,cape of the mountebank,5000
+0018,carpet of flying,5000
+0019,censer of controlling air elementals,5000
+0020,chime of opening,5000
+0021,cloak of arachnida,5000
+0022,cloak of displacement,5000
+0023,cloak of elvenkind,5000
+0024,cloak of invisibility,5000
+0025,cloak of protection,5000
+0026,cloak of the bat,5000
+0027,cube of force,5000
+0028,cube of frost resistance,5000
+0029,cubic gate,5000
+0030,decanter of endless water,5000
+0031,deck of illusions,5000
+0032,dimensional shackles,5000
+0033,driftglobe,5000
+0034,dust of disappearance,5000
+0035,dust of dryness,5000
+0036,dust of sneezing and choking,5000
+0037,efreeti bottle,5000
+0038,eversmoking bottle,5000
+0039,eyes of charming,5000
+0040,eyes of minute seeing,5000
+0041,eyes of petrification,5000
+0042,eyes of the eagle,5000
+0043,figurine of wondrous power,5000
+0044,gem of brightness,5000
+0045,gem of seeing,5000
+0046,gloves of missile snaring,5000
+0047,gloves of swimming and climbing,5000
+0048,gloves of thievery,5000
+0049,goggles of night,5000
+0050,handy haversack,5000
+0051,hat of disguise,5000
+0052,headband of intellect,5000
+0053,helm of brilliance,5000
+0054,helm of comprehending languages,5000
+0055,helm of telepathy,5000
+0056,helm of teleportation,5000
+0057,heward's handy haversack,5000
+0058,horn of blasting,5000
+0059,horn of valhalla,5000
+0060,horn of water elemental command,5000
+0061,horn of the tritons,5000
+0062,horseshoes of speed,5000
+0063,immovable rod,5000
+0064,rod of absorption,50000
+0065,rod of alertness,50000
+0066,rod of lordly might,50000
+0067,rod of resurrection,50000
+0068,rod of rulership,50000
+0069,rod of security,50000
+0070,rod of the pact keeper +1,50000
+0071,rod of the pact keeper +2,50000
+0072,rod of the pact keeper +3,50000
+0073,incense of meditation,5000
+0074,instant fortress,5000
+0075,ioun stone,5000
+0076,iron bands of bilarro,5000
+0077,iron flask,5000
+0078,keoghtom's ointment,5000
+0079,lantern of revealing,5000
+0080,mantle of spell resistance,5000
+0081,manual of bodily health,5000
+0082,manual of gainful exercise,5000
+0083,manual of golems,5000
+0084,manual of quickness of action,5000
+0085,medallion of thoughts,5000
+0086,mirror of life trapping,5000
+0087,mirror of the past,5000
+0088,necklace of adaptation,5000
+0089,necklace of fireballs,5000
+0090,necklace of prayer beads,5000
+0091,necklace of strangulation,5000
+0092,nolzur's marvelous pigments,5000
+0093,oil of etherealness,5000
+0094,oil of sharpness,5000
+0095,oil of slipperiness,5000
+0096,orb of dragonkind,5000
+0097,pearl of power,5000
+0098,periapt of health,5000
+0099,periapt of proof against poison,5000
+0100,periapt of wound closure,5000
+0101,pipes of haunting,5000
+0102,pipes of the sewers,5000
+0103,portable hole,5000
+0104,quaal's feather token,5000
+0105,quiver of ehlonna,5000
+0106,rope of climbing,5000
+0107,rope of entanglement,5000
+0108,saddle of the cavalier,5000
+0109,saddle of the mastiff,5000
+0110,saddle of the mariner,5000
+0111,saddle of the phantom steed,5000
+0112,saddle of the rhino,5000
+0113,saddle of the valiant charger,5000
+0114,scimitar of speed,5000
+0115,sending stones,5000
+0116,shrieker bulb,100
+0117,silversheen,100
+0118,spellshard,100
+0119,sword of answering,100
+0120,universal solvent,150
+0121,vest of escape,100
+0122,vial of icy breath,100
+0123,well of many worlds,100
+0124,wind fan,100
+0125,winged boots,1000
+0126,wings of flying,1000
+0127,wand of binding,100
+0128,wand of enemy detection,100
+0129,wand of fear,100
+0130,wand of fireballs,100
+0131,wand of lightning bolts,100
+0132,wand of magic detection,100
+0133,wand of magic missiles,100
+0134,wand of paralysis,100
+0135,wand of polymorph,100
+0136,wand of secrets,100
+0137,wand of smiles,100
+0138,wand of web,100
+0139,wand of wonder,100
+0140,wand of the war mage,100
+0141,wand of winter,100
+0142,wand of the wyrm,100
+0143,ring of animal influence,20000
+0144,ring of djinni summoning,50000
+0145,ring of elemental command,20000
+0146,ring of evasion,20000
+0147,ring of feather falling,20000
+0148,ring of free action,20000
+0149,ring of invisibility,20000
+0150,ring of jumping,20000
+0151,ring of mind shielding,20000
+0152,ring of protection,20000
+0153,ring of regeneration,20000
+0154,ring of resistance,20000
+0155,ring of shooting stars,20000
+0156,ring of spell storing,20000
+0157,ring of spell turning,20000
+0158,ring of swimming,20000
+0159,ring of telekinesis,20000
+0160,ring of the ram,20000
+0161,ring of three wishes,20000
+0162,ring of warmth,20000
+0163,ring of water walking,20000
+0164,amulet of health,5000
+0165,spell scroll cantrip,500
+0166,spell scroll 1st level,500
+0167,spell scroll 2nd level,500
+0168,spell scroll 3rd level,500
+0169,scroll of protection,500
+0170,spell scroll 4th level,500
+0171,spell scroll 5th level,500
+0172,spell scroll 6th level,500
+0173,spell scroll 7th level,500
+0174,spell scroll 8th level,500
+0175,spell scroll 9th level,500
