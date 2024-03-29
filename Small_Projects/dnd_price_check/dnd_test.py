@@ -57,7 +57,6 @@ def delete_item_from_csv(filename, item_id_or_name):
 
     with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['ID', 'Item', 'Price'])
         for item_id, (item_name, price) in updated_items.items():
             writer.writerow([item_id, item_name, price])
 
@@ -197,7 +196,6 @@ def main():
 
                 with open(csv_file, "w", newline="") as file:
                     writer = csv.writer(file)
-                    writer.writerow(["ID", "Item", "Price"])
                     for item_id, (name, price) in items.items():
                         writer.writerow([item_id, name, price])
             else:

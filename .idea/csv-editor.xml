@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="C:\Users\marti\OneDrive\Desktop\D&amp;D items - Sheet1.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Practice\general_practice\python_to_csv\input_data.csv">
           <value>
             <Attribute>
