@@ -17,7 +17,7 @@ def read_items_from_csv(filename):
             else:
                 print(f"Error: Row {str(index)} does not have the expected number of elements.")
     except pd.errors.EmptyDataError:
-        print("Error: The CSV file is empty.")
+        print("Error: There are no items in this category.")
     except pd.errors.ParserError:
         print("Error: There was a problem parsing the CSV file.")
     return items
