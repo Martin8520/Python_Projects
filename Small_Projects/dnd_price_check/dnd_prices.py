@@ -15,7 +15,7 @@ def read_items_from_csv(filename):
                 price = int(row[2])
                 items[item_id] = (item_name, price)
             else:
-                print(f"Error: Row {index + 1} does not have the expected number of elements.")
+                print(f"Error: Row {str(index)} does not have the expected number of elements.")
     except pd.errors.EmptyDataError:
         print("Error: The CSV file is empty.")
     except pd.errors.ParserError:
@@ -174,7 +174,6 @@ def main():
                 new_item_price = input("Enter the price of the new item: ")
                 new_item_id = generate_unique_id(existing_ids)
                 items[new_item_id] = (new_item_name, int(new_item_price))
-                item_idx = len(items)
                 print(f"New item {new_item_id}: '{new_item_name.title()}' added with price: {new_item_price}.")
                 write_items_to_csv(csv_file, items)
                 items = read_items_from_csv(csv_file)
