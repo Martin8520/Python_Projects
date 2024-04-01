@@ -128,9 +128,6 @@ def main():
 
             if option == "0":
                 break
-
-            if option == "0":
-                break
             elif option == "1":
                 user_input = input("Enter an item name or its number to search or type 'back' to go back: ").lower()
 
@@ -155,7 +152,7 @@ def main():
                     print("Item not found.")
 
             elif option == "2":
-                item_to_edit = input("Enter the name or number of the item you want to edit: ").strip().lower()
+                item_to_edit = input("Enter the name or item ID of the item you want to edit: ").strip().lower()
                 if item_to_edit.isdigit() and 1 <= int(item_to_edit) <= len(items):
                     item_idx = int(item_to_edit)
                     item_to_edit = list(items.keys())[item_idx - 1]
