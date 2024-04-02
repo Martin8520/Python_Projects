@@ -1,8 +1,9 @@
 import csv
 import random
 import tkinter as tk
-from tkinter import messagebox
-
+from tkinter import messagebox, filedialog
+import os
+import sys
 
 class InventoryManagementApp(tk.Tk):
     def __init__(self):
@@ -11,12 +12,17 @@ class InventoryManagementApp(tk.Tk):
         self.title("D&D Price Checker")
         self.geometry("800x600")
 
+        if getattr(sys, 'frozen', False):
+            self.base_path = sys._MEIPASS
+        else:
+            self.base_path = os.path.abspath(os.path.dirname(__file__))
+
         self.categories = {
-            'Armors': 'armors.csv',
-            'Magical Items': 'magical_items.csv',
-            'Potions': 'potions.csv',
-            'Weapons': 'weapons.csv',
-            'Miscellaneous': 'misc.csv'
+            'Armors': os.path.join(self.base_path, 'armors.csv'),
+            'Magical Items': os.path.join(self.base_path, 'magical_items.csv'),
+            'Potions': os.path.join(self.base_path, 'potions.csv'),
+            'Weapons': os.path.join(self.base_path, 'weapons.csv'),
+            'Miscellaneous': os.path.join(self.base_path, 'misc.csv')
         }
 
         self.current_category = tk.StringVar(self)
@@ -50,6 +56,9 @@ class InventoryManagementApp(tk.Tk):
 
         self.add_item_button = tk.Button(self, text="Add Item", command=self.add_item)
         self.add_item_button.pack()
+
+        self.csv_location_button = tk.Button(self, text="CSV File Location", command=self.open_csv_folder)
+        self.csv_location_button.pack()
 
     def load_items(self, event=None):
         filename = self.categories[self.current_category.get()]
@@ -226,6 +235,15 @@ class InventoryManagementApp(tk.Tk):
             return selected_item_name, selected_item_price, selected_item_id
         else:
             return None
+
+    def open_csv_folder(self):
+        csv_folder = os.path.dirname(self.categories[self.current_category.get()])
+        if sys.platform.startswith('darwin'):
+            os.system('open "%s"' % csv_folder)
+        elif os.name == 'nt':
+            os.startfile(csv_folder)
+        elif os.name == 'posix':
+            os.system('xdg-open "%s"' % csv_folder)
 
 
 if __name__ == "__main__":
