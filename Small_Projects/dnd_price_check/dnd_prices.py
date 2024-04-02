@@ -89,7 +89,8 @@ class InventoryManagementApp(tk.Tk):
     def display_items(self, items):
         self.item_listbox.delete(0, tk.END)
         for item_id, (item_name, price) in items.items():
-            self.item_listbox.insert(tk.END, f"Item ID {item_id}: {item_name.title()} - {price} gold pieces")
+            displayed_name = f"Item ID {item_id}: {item_name.title()} - {price} gold pieces"
+            self.item_listbox.insert(tk.END, displayed_name)
 
     def edit_item(self):
         selected_item = self.get_selected_item()
@@ -113,6 +114,9 @@ class InventoryManagementApp(tk.Tk):
 
         item_name_label = tk.Label(edit_window, text="Item Name:")
         item_name_label.pack()
+
+        # Remove trailing dashes from the item name
+        selected_item_name = selected_item_name.rstrip('-')
 
         new_item_name_entry = tk.Entry(edit_window)
         new_item_name_entry.pack()
