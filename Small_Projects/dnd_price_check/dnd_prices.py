@@ -115,7 +115,6 @@ class InventoryManagementApp(tk.Tk):
         item_name_label = tk.Label(edit_window, text="Item Name:")
         item_name_label.pack()
 
-        # Remove trailing dashes from the item name
         selected_item_name = selected_item_name.rstrip('-')
 
         new_item_name_entry = tk.Entry(edit_window)
