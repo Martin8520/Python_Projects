@@ -1,202 +1,251 @@
 import csv
-import os
 import random
-import pandas as pd
+import tkinter as tk
+from tkinter import messagebox, filedialog
+import os
+import sys
 
+class InventoryManagementApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
 
-def read_items_from_csv(filename):
-    items = {}
-    try:
-        df = pd.read_csv(filename, header=None)
-        for index, row in df.iterrows():
-            if len(row) >= 3:
-                item_id = str(row[0]).strip().zfill(4)
-                item_name = str(row[1]).strip().lower()
-                price = int(row[2])
-                items[item_id] = (item_name, price)
-            else:
-                print(f"Error: Row {str(index)} does not have the expected number of elements.")
-    except pd.errors.EmptyDataError:
-        print("Error: There are no items in this category.")
-    except pd.errors.ParserError:
-        print("Error: There was a problem parsing the CSV file.")
-    return items
+        self.title("D&D Price Checker")
+        self.geometry("800x600")
 
+        if getattr(sys, 'frozen', False):
+            self.base_path = sys._MEIPASS
+        else:
+            self.base_path = os.path.abspath(os.path.dirname(__file__))
 
-def write_items_to_csv(filename, items):
-    with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-        writer = csv.writer(csvfile)
-        for item_id, (item_name, price) in items.items():
-            writer.writerow([item_id, item_name, price])
+        self.categories = {
+            'Armors': os.path.join(self.base_path, 'armors.csv'),
+            'Magical Items': os.path.join(self.base_path, 'magical_items.csv'),
+            'Potions': os.path.join(self.base_path, 'potions.csv'),
+            'Weapons': os.path.join(self.base_path, 'weapons.csv'),
+            'Miscellaneous': os.path.join(self.base_path, 'misc.csv')
+        }
 
+        self.current_category = tk.StringVar(self)
+        self.current_category.set('Armors')
 
-def display_items_with_numbers(items):
-    sorted_items = sorted(items.items(), key=lambda x: int(x[0]))
-    for item_id, (item_name, price) in sorted_items:
-        print(f"Item ID {item_id}: {item_name.title()} - {price} gold pieces")
+        self.category_label = tk.Label(self, text="Select Category:")
+        self.category_label.pack()
 
+        self.category_menu = tk.OptionMenu(self, self.current_category, *list(self.categories.keys()), command=self.load_items)
+        self.category_menu.pack()
 
-def delete_item_from_csv(filename, item_id_or_name):
-    updated_items = {}
-    found = False
-    with open(filename, 'r', newline='', encoding='utf-8') as csvfile:
-        reader = csv.reader(csvfile)
-        header = next(reader)
-        updated_items[header[0]] = header[1:]
-        for row in reader:
-            if row[0].strip() == item_id_or_name:
-                found = True
-            elif row[1].strip().lower() == item_id_or_name.lower():
-                found = True
-            else:
-                updated_items[row[0].strip()] = [row[1], row[2]]
+        self.search_label = tk.Label(self, text="Search Item:")
+        self.search_label.pack()
 
-    if not found:
-        print(f"Item '{item_id_or_name}' not found.")
-        return
+        self.search_entry = tk.Entry(self)
+        self.search_entry.pack()
 
-    with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
-        writer = csv.writer(csvfile)
-        for item_id, (item_name, price) in updated_items.items():
-            writer.writerow([item_id, item_name, price])
+        self.search_button = tk.Button(self, text="Search", command=self.search_item)
+        self.search_button.pack()
 
+        self.item_listbox = tk.Listbox(self, height=20, width=70)
+        self.item_listbox.pack()
 
-def generate_unique_id(existing_ids):
-    while True:
-        new_id = str(random.randint(1000, 9999))
-        if new_id not in existing_ids:
-            return new_id
+        self.load_items()
 
+        self.edit_item_button = tk.Button(self, text="Edit Item", command=self.edit_item)
+        self.edit_item_button.pack()
 
-def main():
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    categories = {
-        1: 'armors.csv',
-        2: 'magical_items.csv',
-        3: 'potions.csv',
-        4: 'weapons.csv',
-        5: 'misc.csv'
-    }
-    all_items = {}
-    existing_ids = []
-    for category_num, category_file in categories.items():
-        csv_file = os.path.join(script_dir, category_file)
-        if os.path.exists(csv_file):
-            items = read_items_from_csv(csv_file)
-            all_items.update(items)
-            existing_ids.extend([item_id for item_id in items.keys() if item_id.isdigit() and len(item_id) == 4])
+        self.delete_item_button = tk.Button(self, text="Delete Item", command=self.delete_item)
+        self.delete_item_button.pack()
 
-    while True:
-        print("\nCategories:")
-        for category_num, category_file in categories.items():
-            print(f"{category_num}: {category_file[:-4].replace('_', ' ').title()}")
-        print("0: Exit")
-        user_choice = input("Enter the number of the category or '0' to quit: ")
+        self.add_item_button = tk.Button(self, text="Add Item", command=self.add_item)
+        self.add_item_button.pack()
 
-        if user_choice == "0":
-            print("Exiting...")
-            break
+        self.csv_location_button = tk.Button(self, text="CSV File Location", command=self.open_csv_folder)
+        self.csv_location_button.pack()
 
+    def load_items(self, event=None):
+        filename = self.categories[self.current_category.get()]
+        items = self.read_items_from_csv(filename)
+        self.display_items(items)
+
+    def read_items_from_csv(self, filename):
+        items = {}
         try:
-            user_choice = int(user_choice)
-            if user_choice not in categories:
-                raise ValueError
-        except ValueError:
-            print("Invalid choice. Please enter a valid number.")
-            continue
-
-        user_category = categories[user_choice]
-        csv_file = os.path.join(script_dir, user_category)
-
-        if not os.path.exists(csv_file):
-            print(f"Error: {user_category} file not found.")
-            continue
-
-        items = read_items_from_csv(csv_file)
-
-        print(f"\nList of {user_category[:-4].replace('_', ' ').title()}:")
-        display_items_with_numbers(items)
-
-        while True:
-            print("\nOptions:")
-            print("1: Search for an item")
-            print("2: Edit item price")
-            print("3: Add a new item")
-            print("4: Delete an item")
-            print("0: Go back to main menu")
-            option = input("Enter your choice: ")
-
-            if option == "0":
-                break
-            elif option == "1":
-                user_input = input("Enter an item name or its number to search or type 'back' to go back: ").lower()
-
-                found_items = []
-                if user_input.isdigit() and any(int(user_input) == int(item_id) for item_id in items):
-                    item_id = user_input
-                    found_items.append((item_id, items[item_id]))
-                else:
-                    for item_id, (item_name, price) in items.items():
-                        if user_input in item_name.lower():
-                            found_items.append((item_id, (item_name, price)))
-
-                if found_items:
-                    if len(found_items) == 1:
-                        print(
-                            f"Found item: {found_items[0][0]} "
-                            f"- {found_items[0][1][0]}: {found_items[0][1][1]} gold pieces.")
+            with open(filename, 'r', newline='', encoding='utf-8') as csvfile:
+                reader = csv.reader(csvfile)
+                for row in reader:
+                    if len(row) >= 3:
+                        item_id = row[0].strip()
+                        item_name = row[1].strip()
+                        price = int(row[2].split()[0])
+                        items[item_id] = (item_name, price)
                     else:
-                        for item_id, (item_name, price) in found_items:
-                            print(f"Found item: {item_id} - {item_name}: {price} gold pieces.")
-                else:
-                    print("Item not found.")
+                        print("Error: Row does not have the expected number of elements.")
+        except FileNotFoundError:
+            print("Error: File not found.")
+        except ValueError:
+            print("Error: Unable to convert price to integer.")
+        except Exception as e:
+            print(f"Error: {e}")
+        return items
 
-            elif option == "2":
-                item_to_edit = input("Enter the name or item ID of the item you want to edit: ").strip().lower()
-                if item_to_edit.isdigit() and 1 <= int(item_to_edit) <= len(items):
-                    item_idx = int(item_to_edit)
-                    item_to_edit = list(items.keys())[item_idx - 1]
-                elif item_to_edit.lower() in [name.lower() for name, _ in items.values()]:
-                    item_to_edit = next(
-                        item_id for item_id, (name, _) in items.items() if name.lower() == item_to_edit.lower())
-                if item_to_edit in items:
-                    original_price = items[item_to_edit][1]
-                    new_price = input("Enter the new price for the item: ")
-                    items[item_to_edit] = (items[item_to_edit][0], int(new_price))
-                    print(
-                        f"Item {item_to_edit}: '{items[item_to_edit][0].title()}' (Price: {original_price})"
-                        f" updated to Price: {new_price}.")
-                    write_items_to_csv(csv_file, items)
-                else:
-                    print("Item not found.")
-            elif option == "3":
-                new_item_name = input("Enter the name of the new item: ").strip().lower()
-                new_item_price = input("Enter the price of the new item: ")
-                new_item_id = generate_unique_id(existing_ids)
-                items[new_item_id] = (new_item_name, int(new_item_price))
-                print(f"New item {new_item_id}: '{new_item_name.title()}' added with price: {new_item_price}.")
-                write_items_to_csv(csv_file, items)
-                items = read_items_from_csv(csv_file)
+    def display_items(self, items):
+        self.item_listbox.delete(0, tk.END)
+        for item_id, (item_name, price) in items.items():
+            self.item_listbox.insert(tk.END, f"Item ID {item_id}: {item_name.title()} - {price} gold pieces")
 
-            elif option == "4":
-                item_to_delete = input("Enter the name or number of the item you want to delete: ").strip().lower()
-                deleted = False
-                for item_id, (name, _) in items.items():
-                    if item_to_delete == name.lower() or item_to_delete == str(item_id):
-                        del items[item_id]
-                        print(f"Item '{item_id}': '{name}' deleted.")
-                        deleted = True
-                        break
-                if not deleted:
-                    print("Item not found.")
+    def edit_item(self):
+        selected_item = self.get_selected_item()
+        if not selected_item:
+            messagebox.showerror("Error", "Please select an item to edit.")
+            return
 
-                with open(csv_file, "w", newline="") as file:
-                    writer = csv.writer(file)
-                    for item_id, (name, price) in items.items():
-                        writer.writerow([item_id, name, price])
+        filename = self.categories[self.current_category.get()]
+
+        items = self.read_items_from_csv(filename)
+        selected_item_id = selected_item[2]
+        if selected_item_id not in items:
+            messagebox.showerror("Error", "Selected item does not exist.")
+            return
+
+        selected_item_name, selected_item_price = selected_item[0], selected_item[1]
+
+        edit_window = tk.Toplevel(self)
+        edit_window.title("Edit Item")
+        edit_window.geometry("300x200")
+
+        item_name_label = tk.Label(edit_window, text="Item Name:")
+        item_name_label.pack()
+
+        new_item_name_entry = tk.Entry(edit_window)
+        new_item_name_entry.pack()
+
+        price_label = tk.Label(edit_window, text="Price:")
+        price_label.pack()
+
+        new_price_entry = tk.Entry(edit_window)
+        new_price_entry.pack()
+
+        new_item_name_entry.insert(0, selected_item_name)
+        new_price_entry.insert(0, selected_item_price)
+
+        def save_changes():
+            new_name = new_item_name_entry.get().strip()
+            new_price = new_price_entry.get().strip()
+            if new_name and new_price:
+                try:
+                    new_price = int(new_price)
+                except ValueError:
+                    messagebox.showerror("Error", "Price must be an integer.")
+                    return
+
+                items[selected_item_id] = (new_name, new_price)
+                self.write_items_to_csv(filename, items)
+                self.load_items()
+                edit_window.destroy()
             else:
-                print("Invalid option. Please choose a valid option.")
+                messagebox.showerror("Error", "Please fill in all fields.")
+
+        save_button = tk.Button(edit_window, text="Save", command=save_changes)
+        save_button.pack()
+
+    def delete_item(self):
+        selected_item = self.get_selected_item()
+        if selected_item:
+            confirmation = messagebox.askyesno("Confirm Deletion", "Are you sure you want to delete this item?")
+            if confirmation:
+                filename = self.categories[self.current_category.get()]
+                items = self.read_items_from_csv(filename)
+                del items[selected_item[2]]
+                self.write_items_to_csv(filename, items)
+                self.load_items()
+        else:
+            messagebox.showerror("Error", "Please select an item to delete.")
+
+    def add_item(self):
+        add_window = tk.Toplevel(self)
+        add_window.title("Add Item")
+        add_window.geometry("300x200")
+
+        item_name_label = tk.Label(add_window, text="Item Name:")
+        item_name_label.pack()
+
+        new_item_name_entry = tk.Entry(add_window)
+        new_item_name_entry.pack()
+
+        price_label = tk.Label(add_window, text="Price:")
+        price_label.pack()
+
+        new_price_entry = tk.Entry(add_window)
+        new_price_entry.pack()
+
+        def save_item():
+            new_name = new_item_name_entry.get().strip()
+            new_price = new_price_entry.get().strip()
+            if new_name and new_price:
+                try:
+                    new_price = int(new_price)
+                except ValueError:
+                    messagebox.showerror("Error", "Price must be an integer.")
+                    return
+
+                filename = self.categories[self.current_category.get()]
+                items = self.read_items_from_csv(filename)
+                new_item_id = self.generate_unique_id(items.keys())
+                items[new_item_id] = (new_name, new_price)
+                self.write_items_to_csv(filename, items)
+                self.load_items()
+                add_window.destroy()
+            else:
+                messagebox.showerror("Error", "Please fill in all fields.")
+
+        save_button = tk.Button(add_window, text="Save", command=save_item)
+        save_button.pack()
+
+    def search_item(self):
+        search_text = self.search_entry.get().strip().lower()
+        filename = self.categories[self.current_category.get()]
+        items = self.read_items_from_csv(filename)
+        search_results = {}
+        for item_id, (item_name, price) in items.items():
+            if search_text in item_name.lower() or search_text == item_id:
+                search_results[item_id] = (item_name, price)
+        if search_results:
+            self.display_items(search_results)
+        else:
+            messagebox.showinfo("Search Results", "No matching items found.")
+
+    def write_items_to_csv(self, filename, items):
+        with open(filename, 'w', newline='', encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile)
+            for item_id, (item_name, price) in items.items():
+                writer.writerow([item_id, item_name, price])
+
+    def generate_unique_id(self, existing_ids):
+        while True:
+            new_id = str(random.randint(1000, 9999))
+            if new_id not in existing_ids:
+                return new_id
+
+    def get_selected_item(self):
+        selected_item_index = self.item_listbox.curselection()
+        if selected_item_index:
+            selected_item_index = selected_item_index[0]
+            selected_item_parts = self.item_listbox.get(selected_item_index).split()
+            selected_item_id = selected_item_parts[2].rstrip(':')
+            selected_item_name = ' '.join(selected_item_parts[3:-3])
+            selected_item_price = selected_item_parts[-2]
+            return selected_item_name, selected_item_price, selected_item_id
+        else:
+            return None
+
+    def open_csv_folder(self):
+        csv_folder = os.path.dirname(self.categories[self.current_category.get()])
+        if sys.platform.startswith('darwin'):
+            os.system('open "%s"' % csv_folder)
+        elif os.name == 'nt':
+            os.startfile(csv_folder)
+        elif os.name == 'posix':
+            os.system('xdg-open "%s"' % csv_folder)
 
 
 if __name__ == "__main__":
-    main()
+    app = InventoryManagementApp()
+    app.mainloop()
