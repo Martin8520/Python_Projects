@@ -37,7 +37,7 @@ class InventoryManagementApp(tk.Tk):
         self.search_button = tk.Button(self, text="Search", command=self.search_item)
         self.search_button.pack()
 
-        self.item_listbox = tk.Listbox(self)
+        self.item_listbox = tk.Listbox(self, height=20, width=70)
         self.item_listbox.pack()
 
         self.load_items()
