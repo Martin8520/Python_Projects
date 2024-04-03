@@ -1,29 +1,273 @@
-0001,leather,10
-0002,studded leather,45
-0003,hide,10
-0004,chain shirt,50
-0005,scale mail,50
-0006,breastplate,400
-0007,half plate,750
-0008,ring mail,30
-0009,chain mail,75
-0010,splint,200
-0011,plate,1500
-0012,shield,10
-0013,+1 armor,500
-0014,+2 armor,500
-0015,+3 armor,500
-0016,adamantine armor,500
-0017,animated shield,500
-0018,armor of resistance,500
-0019,armor of vulnerability,500
-0020,dragon scale mail,500
-0021,elven chain,500
-0022,mithral armor,500
-0023,shield of missile attraction,500
-0024,shield +1,500
-0025,shield +2,500
-0026,shield +3,500
-0027,demon armor,500
-0028,dwarven plate,500
-0029,shield sentinel,500
+0001,Abacus,2
+0002,Acid (vial),25
+0003,Airship,10000
+0004,Alchemist's Fire (flask),50
+0005,Alchemist's Supplies,50
+0006,Alexandrite,500
+0007,Alms Box,1
+0008,Amber,100
+0009,Amethyst,100
+0010,Amulet,5
+0011,Antitoxin,50
+0012,Aquamarine,500
+0013,Arcane Focus,5
+0014,Arrows,1
+0015,Assassin's Blood (Ingested),150
+0016,Azurite,10
+0017,Backpack,2
+0018,Bad News Bullets,10
+0019,Bagpipes,30
+0020,Ball Bearings (bag of 1000),1
+0021,Banded Agate,10
+0022,Barding,4
+0023,Barrel,2
+0024,Basket,4
+0025,Bedroll,1
+0026,Bell,1
+0027,Bit and Bridle,2
+0028,Black Opal,1000
+0029,Black Pearl,500
+0030,Black Sapphire,500
+0031,Blanket,5
+0032,Block and Tackle,1
+0033,Block of Incense,1
+0034,Bloodstone,50
+0035,Blowgun Needles,1
+0036,Blue Sapphire,1000
+0037,Blue quartz,10
+0038,Blue spinel,10
+0039,Blunderbuss Bullets,10
+0040,Bomb,50
+0041,Book,25
+0042,Boots,2
+0043,Bottle Glass,2
+0044,Brewer's Supplies,20
+0045,Bucket,5
+0046,Bullets Modern,10
+0047,Bullets Renaissance,10
+0048,Burglar's Pack,16
+0049,Burnt Othur Fumes (Inhaled),500
+0050,Calligrapher's Supplies,10
+0051,Caltrops (bag of 20),1
+0052,Camel,50
+0053,Candle,1
+0054,Canoe,50
+0055,Carnelian,50
+0056,Carpenter's Tools,8
+0057,Carriage,100
+0058,Cart,15
+0059,Cartographer's Tools,15
+0060,Case Crossbow Bolt,1
+0061,Case Map or Scroll,1
+0062,Censer,5
+0063,Chain (10 feet),5
+0064,Chalcedony,10
+0065,Chalk (1 piece),1
+0066,Chariot,250
+0067,Chest,5
+0068,Chrysoberyl,10
+0069,Chrysoprase,50
+0070,Citrine,50
+0071,Climber's Kit,25
+0072,Clothes Common,5
+0073,Clothes Costume,5
+0074,Clothes Fine,15
+0075,Clothes Traveler's,2
+0076,Cobbler's Tools,5
+0077,Component Pouch,25
+0078,Cook's Utensils,1
+0079,Coral,50
+0080,Crawler Mucus (Contact),200
+0081,Crossbow Bolts,1
+0082,Crowbar,2
+0083,Crystal,10
+0084,Diamond,5000
+0085,Dice Set,1
+0086,Diplomat's Pack,39
+0087,Disguise Kit,25
+0088,Donkey (or Mule),8
+0089,Draft Horse,50
+0090,Dragonchess Set,25
+0091,Drow Poison (Injury),200
+0092,Druidic Focus,5
+0093,Drum,6
+0094,Dulcimer,25
+0095,Dungeoneer's Pack,12
+0096,Dynamite (Stick),5
+0097,Elephant,200
+0098,Emblem,5
+0099,Emerald,1000
+0100,Energy Cell,10
+0101,Entertainer's Pack,40
+0102,Essence of Ether (Inhaled),300
+0103,Explorer's Pack,10
+0104,Eye agate,10
+0105,Feed (per day),5
+0106,Fire Opal,1000
+0107,Fishing Tackle,1
+0108,Flask or Tankard,2
+0109,Flute,2
+0110,Forgery Kit,15
+0111,Galley,30000
+0112,Garnet,100
+0113,Glassblower's Tools,30
+0114,Grappling Hook,2
+0115,Grenade Launcher,500
+0116,Grenade Fragmentation,50
+0117,Grenade Smoke,50
+0118,Gunpowder Keg,100
+0119,Gunpowder Powder Horn,50
+0120,Hammer,1
+0121,Hammer Sledge,2
+0122,Hand Mortar Ammunition,10
+0123,Healer's Kit,5
+0124,Helm,2
+0125,Hematite,10
+0126,Herbalism Kit,5
+0127,Holy Symbol,5
+0128,Holy Water (flask),25
+0129,Horn,3
+0130,Hourglass,25
+0131,Hunting Trap,5
+0132,Ink (1 ounce bottle),10
+0133,Ink Pen,2
+0134,Insect Repellent-Incense,1
+0135,Insect Repellent-Salve,1
+0136,Jacinth,1000
+0137,Jade,100
+0138,Jasper,50
+0139,Jet,100
+0140,Jeweler's Tools,25
+0141,Jug or Pitcher,2
+0142,Keelboat,3000
+0143,Ladder (10 foot),1
+0144,Lamp,5
+0145,Lantern Bullseye,10
+0146,Lantern Hooded,5
+0147,Lapis Lazuli,10
+0148,Leatherworker's Tools,5
+0149,Little Bag of Sand,1
+0150,Lock,10
+0151,Longship,10000
+0152,Lute,35
+0153,Lyre,30
+0154,Magnifying Glass,100
+0155,Malachite,10
+0156,Malice (Inhaled),300
+0157,Manacles,2
+0158,Mason's Tools,10
+0159,Mastiff,25
+0160,Mess Kit,2
+0161,Midnight Tears (Ingested),150
+0162,Mirror Steel,5
+0163,Monster Hunter's Pack,58
+0164,Moonstone,50
+0165,Moss agate,10
+0166,Musket (Exandria) Bullets,10
+0167,Navigator's Tools,25
+0168,Obsidian,10
+0169,Oil (flask),1
+0170,Oil of Taggit (Contact),200
+0171,Onyx,50
+0172,Opal,100
+0173,Orb,20
+0174,Painter's Supplies,10
+0175,Pale Tincture (Ingested),300
+0176,Palm Pistol Bullets,10
+0177,Pan Flute,12
+0178,Paper (one sheet),2
+0179,Parchment (one sheet),1
+0180,Pearl,100
+0181,Pepperbox Bullets,10
+0182,Perfume (vial),5
+0183,Peridot,50
+0184,Pick Miner's,2
+0185,Pistol (Exandria) Bullets,10
+0186,Piton,5
+0187,Playing Card Set,5
+0188,Poison Basic (vial),100
+0189,Poisoner's Kit,50
+0190,Pole (10-foot),5
+0191,Pony,30
+0192,Pot Iron,2
+0193,Potion of Healing,50
+0194,Potter's Tools,10
+0195,Pouch,5
+0196,Priest's Pack,19
+0197,Purple Worm Poison (Injury),200
+0198,Quartz,10
+0199,Quiver,1
+0200,Rain Catcher,1
+0201,Ram Portable,4
+0202,Rations (1 day),5
+0203,Reliquary,5
+0204,Rhodochrosite,10
+0205,Riding Horse,75
+0206,Robes,1
+0207,Rod,10
+0208,Rope Hempen (50 feet),1
+0209,Rope Silk (50 feet),10
+0210,Rowboat,50
+0211,Ruby,1000
+0212,Sack,1
+0213,Saddle Exotic,60
+0214,Saddle Military,20
+0215,Saddle Pack,5
+0216,Saddle Riding,10
+0217,Saddlebags,4
+0218,Sailing Ship,10000
+0219,Sardonyx,50
+0220,Scale Merchant's,5
+0221,Scholar's Pack,40
+0222,Sealing Wax,1
+0223,Serpent Venom (Injury),200
+0224,Shawm,2
+0225,Shovel,2
+0226,Signal Whistle,2
+0227,Signet Ring,5
+0228,Sled,20
+0229,Sling Bullets,4
+0230,Small Knife,1
+0231,Smith's Tools,20
+0232,Soap,1
+0233,Spellbook,25
+0234,Spikes Iron (10),1
+0235,Spinel,10
+0236,Sprig of Mistletoe,1
+0237,Spyglass,1000
+0238,Staff,5
+0239,Stake (Wooden),2
+0240,Star Rose Quartz,50
+0241,Star Ruby,500
+0242,Star Sapphire,500
+0243,String,1
+0244,Tej,1
+0245,Tent Two-Person,2
+0246,Thieves' Tools,25
+0247,Three-Dragon Ante Set,1
+0248,Tiger Eye,10
+0249,Tinderbox,5
+0250,Tinker's Tools,50
+0251,Topaz,500
+0252,Torch,1
+0253,Torpor (Ingested),300
+0254,Totem,5
+0255,Tourmaline,100
+0256,Truth Serum (Ingested),150
+0257,Turquoise,10
+0258,Vestments,30
+0259,Vial,1
+0260,Viol,30
+0261,Wagon,35
+0262,Wand,10
+0263,Warhorse,400
+0264,Warship,20000
+0265,Waterskin,1
+0266,Weaver's Tools,1
+0267,Whetstone,1
+0268,Woodcarver's Tools,1
+0269,Wooden Staff,5
+0270,Wyvern Poison (Injury),1200
+0271,Yellow sapphire,1000
+0272,Yew Wand,10
+0273,Zircon,50
