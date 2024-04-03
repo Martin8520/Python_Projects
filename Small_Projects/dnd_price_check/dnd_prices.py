@@ -1,9 +1,10 @@
 import csv
 import random
 import tkinter as tk
-from tkinter import messagebox, filedialog
+from tkinter import messagebox
 import os
 import sys
+
 
 class InventoryManagementApp(tk.Tk):
     def __init__(self):
@@ -31,7 +32,8 @@ class InventoryManagementApp(tk.Tk):
         self.category_label = tk.Label(self, text="Select Category:")
         self.category_label.pack()
 
-        self.category_menu = tk.OptionMenu(self, self.current_category, *list(self.categories.keys()), command=self.load_items)
+        self.category_menu = tk.OptionMenu(self, self.current_category, *list(self.categories.keys()),
+                                           command=self.load_items)
         self.category_menu.pack()
 
         self.search_label = tk.Label(self, text="Search Item:")
