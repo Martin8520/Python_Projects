@@ -108,6 +108,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Small_Projects\task_tracker\TEST.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Small_Projects\task_tracker\Task.csv">
           <value>
             <Attribute>
@@ -116,6 +123,13 @@
           </value>
         </entry>
         <entry key="\Small_Projects\task_tracker\Task2.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Small_Projects\task_tracker\test2.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

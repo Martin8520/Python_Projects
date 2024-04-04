@@ -19,6 +19,8 @@ class TaskManager:
     def create_new_file(self):
         self.file_name = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
         if self.file_name:
+            self.tasks = []
+            self.save_tasks()
             self.setup_ui()
 
     def open_existing_file(self):
@@ -31,6 +33,7 @@ class TaskManager:
         self.tasks.clear()
         try:
             with open(self.file_name, mode="r") as file:
+                print("File contents:")
                 file.seek(0)
                 reader = csv.DictReader(file)
                 for row in reader:
@@ -75,6 +78,7 @@ class TaskManager:
                 new_task = {"Task": task_name, "Status": "Not started",
                             "Time Added": datetime.now().strftime("%d/%m/%Y %H:%M"), "Time Completed": ""}
                 self.tasks.append(new_task)
+                self.save_tasks()
                 self.setup_ui()
                 dialog.destroy()
 
@@ -101,12 +105,13 @@ class TaskManager:
         self.save_task()
         self.setup_ui()
 
-    def save_task(self):
+    def save_tasks(self):
         with open(self.file_name, mode="w", newline="") as file:
             writer = csv.DictWriter(file, fieldnames=["Task", "Status", "Time Added", "Time Completed"])
             writer.writeheader()
             for task in self.tasks:
                 writer.writerow(task)
+
 
 root = tk.Tk()
 app = TaskManager(root)
