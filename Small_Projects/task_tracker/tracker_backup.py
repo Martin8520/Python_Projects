@@ -20,12 +20,11 @@ class TaskManager:
     def create_new_file(self):
         self.file_name = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
         if self.file_name:
-            self.save_tasks()  # Save an empty list of tasks to the new file
+            self.save_tasks()
             self.setup_ui()
 
     def open_existing_file(self):
         self.file_name = filedialog.askopenfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
-        print("File name:", self.file_name)  # Debug print
         if self.file_name:
             self.load_tasks()
             self.setup_ui()
@@ -36,7 +35,6 @@ class TaskManager:
             with open(self.file_name, mode="r") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    # Convert the price to float if it's not empty
                     if row["Price (BGN)"]:
                         row["Price (BGN)"] = float(row["Price (BGN)"])
                     self.tasks.append(row)
@@ -54,7 +52,7 @@ class TaskManager:
                     "Status": task["Status"],
                     "Time Added": task["Time Added"],
                     "Time Completed": task["Time Completed"],
-                    "Price (BGN)": task.get("Price (BGN)", ""),  # Include the price in the saved data
+                    "Price (BGN)": task.get("Price (BGN)", ""),
                     "Start Date": task["Start Date"],
                     "End Date": task["End Date"]
                 }
@@ -62,7 +60,7 @@ class TaskManager:
 
     def setup_ui(self):
         self.clear_ui()
-        self.price_entries = []  # List to store references to price entry widgets
+        self.price_entries = []
 
         add_task_button = ttk.Button(self.root, text="Add Task", command=self.add_task)
         add_task_button.pack(pady=10)
@@ -83,15 +81,14 @@ class TaskManager:
             price_label = ttk.Label(task_frame, text="Price (BGN):")
             price_label.pack(side="left", padx=5)
 
-            # Set initial value of price field
             price_var = tk.StringVar(value=task.get("Price (BGN)", ""))
             price_entry = ttk.Entry(task_frame, textvariable=price_var)
             price_entry.pack(side="left", padx=5)
-            self.price_entries.append(price_entry)  # Add price entry widget to the list
+            self.price_entries.append(price_entry)
 
-            # Bind update_price method to FocusOut event of price entry
-            price_entry.bind("<FocusOut>",
-                             lambda event, task=task, price_var=price_var: self.update_price(task, price_var))
+            task_ = task
+            price_var_ = price_var
+            price_entry.bind("<FocusOut>", lambda event, task=task_, price_var=price_var_: self.update_price(event, task, price_var))
 
             start_date_label = ttk.Label(task_frame, text="Start Date:")
             start_date_label.pack(side="left", padx=5)
@@ -107,13 +104,13 @@ class TaskManager:
             end_date_label_value = ttk.Label(task_frame, text=end_date_text)
             end_date_label_value.pack(side="left", padx=5)
 
-            status_combobox.bind("<<ComboboxSelected>>",
-                                 lambda event, task=task, status_var=status_var,
-                                        price_var=price_var: self.update_status(task, status_var, price_var))
+            task_ = task
+            status_var_ = status_var
+            price_var_ = price_var
+            status_combobox.bind("<<ComboboxSelected>>", lambda event, task=task_, status_var=status_var_, price_var=price_var_: self.update_status(event, task, status_var, price_var))
 
             task_text.config(state="normal")
 
-            # Pack the task frame containing all widgets
             task_frame.pack(fill="x", padx=10, pady=5)
 
         calculate_total_button = ttk.Button(self.root, text="Calculate Total", command=self.calculate_total)
@@ -132,45 +129,24 @@ class TaskManager:
         price_label = ttk.Label(dialog, text="Price (BGN):")
         price_label.pack(pady=5)
 
-        price_var = tk.StringVar()  # Create a StringVar to store the price value
+        price_var = tk.StringVar()
 
-        price_entry = ttk.Entry(dialog, textvariable=price_var)  # Use the StringVar for the price entry
+        price_entry = ttk.Entry(dialog, textvariable=price_var)
         price_entry.pack(pady=5)
 
-        # Automatically set the start date
         start_date = datetime.now().strftime("%d/%m/%Y %H:%M")
 
         def add_task_to_list():
             task_name = task_entry.get("1.0", "end-1c")
-            price = price_var.get()  # Retrieve the price from the StringVar
+            price = price_var.get()
             if task_name:
                 new_task = {
                     "Task": task_name,
                     "Status": "Not started",
-                    "Time Added": start_date,  # Set the start date
+                    "Time Added": start_date,
                     "Time Completed": "",
-                    "Price (BGN)": price,  # Set the price
-                    "Start Date": start_date,  # Set the start date
-                    "End Date": ""
-                }
-                self.tasks.append(new_task)
-                self.save_tasks()
-                self.setup_ui()
-                dialog.destroy()
-
-        add_button = ttk.Button(dialog, text="Add Task", command=add_task_to_list)
-        add_button.pack(pady=10)
-
-        def add_task_to_list():
-            task_name = task_entry.get("1.0", "end-1c")
-            if task_name:
-                new_task = {
-                    "Task": task_name,
-                    "Status": "Not started",
-                    "Time Added": start_date,  # Set the start date
-                    "Time Completed": "",
-                    "Price (BGN)": price_entry.get(),  # Set the initial price
-                    "Start Date": start_date,  # Set the start date
+                    "Price (BGN)": price,
+                    "Start Date": start_date,
                     "End Date": ""
                 }
                 self.tasks.append(new_task)
@@ -191,10 +167,9 @@ class TaskManager:
         self.open_file_button = ttk.Button(self.root, text="Open Existing File", command=self.open_existing_file)
         self.open_file_button.pack(pady=10)
 
-    def update_status(self, task, status_var, price_var):
+    def update_status(self, event, task, status_var, price_var):
         new_status = status_var.get()
-        new_price = price_var.get().strip()  # Remove leading/trailing whitespace
-        print("New price:", new_price)  # Debug print
+        new_price = price_var.get().strip()
         if (new_status == "Completed" or new_status == "Approved") and not task["Time Completed"]:
             task["Status"] = new_status
             task["Time Completed"] = datetime.now().strftime("%d/%m/%Y %H:%M")
@@ -202,7 +177,7 @@ class TaskManager:
         else:
             task["Status"] = new_status
         task["Price (BGN)"] = new_price if new_price else task.get("Price (BGN)",
-                                                                   "")  # Update the price in the task dictionary
+                                                                   "")
         self.save_tasks()
         self.setup_ui()
 
@@ -210,12 +185,11 @@ class TaskManager:
         total = sum(float(task_entry.get()) for task_entry in self.price_entries if task_entry.get().strip())
         messagebox.showinfo("Total Sum", f"Total Sum of Tasks: {total} BGN", default="ok")
 
-    def update_price(self, task, price_var):
-        new_price = price_var.get().strip()  # Remove leading/trailing whitespace
-        print("New price:", new_price)  # Debug print
+    def update_price(self, event, task, price_var):
+        new_price = price_var.get().strip()
         task["Price (BGN)"] = new_price if new_price else task.get("Price (BGN)",
-                                                                   "")  # Update the price in the task dictionary
-        self.save_tasks()  # Save the tasks to the CSV file
+                                                                   "")
+        self.save_tasks()
 
 
 root = tk.Tk()
