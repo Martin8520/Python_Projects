@@ -100,7 +100,13 @@ class TaskManager:
                                                                                                          status_var,
                                                                                                          price_var))
             task_text.config(state="normal")
+            task_text.bind("<FocusOut>",
+                           lambda event, task_index=task_index, task=task, task_text=task_text: self.update_task_text(
+                               event, task_index, task, task_text))
+
             task_frame.pack(fill="x", padx=10, pady=5)
+        save_changes_button = ttk.Button(self.root, text="Save Changes", command=self.save_changes)
+        save_changes_button.pack(pady=10)
         calculate_total_button = ttk.Button(self.root, text="Calculate Total", command=self.calculate_total)
         calculate_total_button.pack(pady=10)
         total_price_label = ttk.Label(self.root, text="Total Price: ")
@@ -109,6 +115,16 @@ class TaskManager:
         total_price_entry = ttk.Entry(self.root, textvariable=self.total_price_var, state="readonly", width=10)
         total_price_entry.pack(side="left", padx=5)
         self.update_total_price()
+
+    def save_changes(self):
+        for task in self.tasks:
+            for task_frame in self.root.winfo_children():
+                if isinstance(task_frame, ttk.Frame):
+                    task_text = task_frame.winfo_children()[0]
+                    if task_text.get("1.0", "end-1c") == task["Task"]:
+                        task["Task"] = task_text.get("1.0", "end-1c").strip()
+        self.save_tasks()
+        self.setup_ui()
 
     def delete_task(self, index):
         del self.tasks[index]
@@ -178,11 +194,17 @@ class TaskManager:
         task["Price (BGN)"] = new_price if new_price else task.get("Price (BGN)", "")
         self.save_tasks()
 
+    def update_task_text(self, event, task_index, task, task_text):
+        new_value = task_text.get("1.0", "end-1c").strip()
+        task["Task"] = new_value
+
     def update_total_price(self):
         total = sum(float(task_entry.get()) for task_entry in self.price_entries if task_entry.get().strip())
         self.total_price_var.set(f"{total} BGN")
 
 
 root = tk.Tk()
+root.geometry("1400x500")
 app = TaskManager(root)
 root.mainloop()
+
