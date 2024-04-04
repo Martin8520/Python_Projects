@@ -29,7 +29,7 @@ class TaskManager:
     def load_tasks(self):
         self.tasks.clear()
         try:
-            with open(self.file_name, mode="r") as file:
+            with open(self.file_name, mode="r", newline="", encoding="utf-8") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
                     if row["Price (BGN)"]:
@@ -39,7 +39,7 @@ class TaskManager:
             print("Error loading tasks:", e)
 
     def save_tasks(self):
-        with open(self.file_name, mode="w", newline="") as file:
+        with open(self.file_name, mode="w", newline="", encoding="utf-8") as file:
             writer = csv.DictWriter(file, fieldnames=["Task", "Status", "Time Added", "Time Completed", "Price (BGN)", "Start Date", "End Date"])
             writer.writeheader()
             for task in self.tasks:
@@ -204,7 +204,6 @@ class TaskManager:
 
 
 root = tk.Tk()
-root.geometry("1400x500")
+root.geometry("1400x600")
 app = TaskManager(root)
 root.mainloop()
-
