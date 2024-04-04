@@ -59,6 +59,13 @@ class TaskManager:
         add_task_button = ttk.Button(self.root, text="Add Task", command=self.add_task)
         add_task_button.pack(pady=10)
 
+        # Initialize last_added_price to 0
+        last_added_price = 0
+
+        # Get the last added price if available
+        if self.tasks:
+            last_added_price = self.tasks[-1].get("Price (BGN)", 0)
+
         for task in self.tasks:
             task_frame = ttk.Frame(self.root)
             task_frame.pack(padx=10, pady=5, fill="x")
@@ -75,7 +82,8 @@ class TaskManager:
             price_label = ttk.Label(task_frame, text="Price (BGN):")
             price_label.pack(side="left", padx=5)
 
-            price_var = tk.StringVar(value=task.get("Price (BGN)", ""))
+            # Set initial value of price field to last added price or 0
+            price_var = tk.StringVar(value=last_added_price)
             price_entry = ttk.Entry(task_frame, textvariable=price_var)
             price_entry.pack(side="left", padx=5)
 
@@ -120,19 +128,8 @@ class TaskManager:
         price_entry = ttk.Entry(dialog)
         price_entry.pack(pady=5)
 
-        start_date_label = ttk.Label(dialog, text="Start Date:")
-        start_date_label.pack(pady=5)
-
+        # Automatically set the start date
         start_date = datetime.now().strftime("%d/%m/%Y %H:%M")
-        start_date_entry = ttk.Entry(dialog, state="readonly")
-        start_date_entry.insert(tk.END, start_date)
-        start_date_entry.pack(pady=5)
-
-        end_date_label = ttk.Label(dialog, text="End Date:")
-        end_date_label.pack(pady=5)
-
-        end_date_entry = ttk.Entry(dialog, state="readonly")
-        end_date_entry.pack(pady=5)
 
         def add_task_to_list():
             task_name = task_entry.get("1.0", "end-1c")
@@ -140,10 +137,10 @@ class TaskManager:
                 new_task = {
                     "Task": task_name,
                     "Status": "Not started",
-                    "Time Added": datetime.now().strftime("%d/%m/%Y %H:%M"),
+                    "Time Added": start_date,  # Set the start date
                     "Time Completed": "",
                     "Price (BGN)": price_entry.get(),
-                    "Start Date": start_date,
+                    "Start Date": start_date,  # Set the start date
                     "End Date": ""
                 }
                 self.tasks.append(new_task)
@@ -166,18 +163,19 @@ class TaskManager:
 
     def update_status(self, task, status_var):
         new_status = status_var.get()
-        if (new_status == "Completed" or new_status == "Approved") and not task["Time Completed"]:
+        if new_status in ["Completed", "Approved"]:
             task["Status"] = new_status
             task["Time Completed"] = datetime.now().strftime("%d/%m/%Y %H:%M")
-            task["End Date"] = task["Time Completed"]  # Set end date when task is completed
+            task["End Date"] = task["Time Completed"]  # Set end date to the time completed
         else:
             task["Status"] = new_status
         self.save_tasks()
         self.setup_ui()
 
     def calculate_total(self):
-        total = sum(float(task.get("Price (BGN)", 0)) for task in self.tasks)
+        total = sum(float(task.get("Price (BGN)", 0)) for task in self.tasks if task.get("Price (BGN)").strip())
         messagebox.showinfo("Total Sum", f"Total Sum of Tasks: {total} BGN")
+
 
 root = tk.Tk()
 app = TaskManager(root)
