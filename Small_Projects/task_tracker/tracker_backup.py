@@ -2,7 +2,13 @@ import tkinter as tk
 from tkinter import ttk, filedialog
 from datetime import datetime
 import csv
-
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from reportlab.lib import colors
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
+from reportlab.lib.styles import getSampleStyleSheet
+import os
 
 class TaskManager:
     def __init__(self, root):
@@ -24,7 +30,8 @@ class TaskManager:
         self.create_file_button.pack(pady=10)
         self.open_file_button = ttk.Button(root, text="Отвори съществуващ файл", command=self.open_existing_file)
         self.open_file_button.pack(pady=10)
-
+        self.export_pdf_button = ttk.Button(root, text="Export to PDF", command=self.export_to_pdf)
+        self.export_pdf_button.pack(pady=10)
     def on_frame_configure(self, event):
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
@@ -137,6 +144,37 @@ class TaskManager:
         self.update_total_price()
         self.canvas.update_idletasks()
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
+    def export_to_pdf(self):
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        font_path = os.path.join(script_dir, "fonts", "arial-unicode-ms.ttf")
+
+        pdfmetrics.registerFont(TTFont('CustomFont', font_path))
+
+        pdf_file_name = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
+        if pdf_file_name:
+            doc = SimpleDocTemplate(pdf_file_name, pagesize=letter)
+            data = [["Задача", "Статус", "Време на добавяне", "Време на завършване",
+                     "Цена (BGN)", "Начална дата", "Крайна дата"]]
+            for task in self.tasks:
+                data.append([task["Task"], task["Status"], task.get("Time Added", ""),
+                             task.get("Time Completed", ""), task.get("Price (BGN)", ""),
+                             task["Start Date"], task["End Date"]])
+
+            table_style = [
+                ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                ('FONTNAME', (0, 0), (-1, -1), 'CustomFont'),
+            ]
+
+            table = Table(data)
+            table.setStyle(TableStyle(table_style))
+
+            doc.build([table])
 
     def save_changes(self):
         edited_tasks = []
