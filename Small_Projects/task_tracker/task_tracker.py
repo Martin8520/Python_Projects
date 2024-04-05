@@ -130,26 +130,30 @@ class TaskManager:
         save_changes_button.pack(pady=10)
         calculate_total_button = ttk.Button(self.frame, text="Изчисли общо", command=self.calculate_total)
         calculate_total_button.pack(pady=10)
-        self.total_price_var = tk.StringVar()
-        total_price_label = ttk.Label(self.frame, text="Обща цена: ", textvariable=self.total_price_var)
+        total_price_var = tk.StringVar()
+        total_price_label = ttk.Label(self.frame, text="Обща цена: ", textvariable=total_price_var)
         total_price_label.pack(side="left", padx=5)
-        total_price_entry = ttk.Entry(self.frame, textvariable=self.total_price_var, state="readonly", width=10)
-        total_price_entry.pack(side="left", padx=5)
+        self.total_price_var = total_price_var
         self.update_total_price()
         self.canvas.update_idletasks()
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def save_changes(self):
+        edited_tasks = []
         for task_frame in self.frame.winfo_children():
             if isinstance(task_frame, ttk.Frame):
                 task_text = task_frame.winfo_children()[0]
                 price_entry = task_frame.winfo_children()[3]
-                for task in self.tasks:
-                    if task_text.get("1.0", "end-1c") == task["Task"]:
-                        task["Task"] = task_text.get("1.0", "end-1c").strip()
-                        task["Price (BGN)"] = price_entry.get().strip()
+                task_name = task_text.get("1.0", "end-1c").strip()
+                price = price_entry.get().strip()
+                edited_tasks.append((task_name, price))
+
+        for task in self.tasks:
+            for edited_task in edited_tasks:
+                if edited_task[0] == task["Task"]:
+                    task["Price (BGN)"] = edited_task[1]
+
         self.save_tasks()
-        self.setup_ui()
 
     def delete_task(self, index):
         del self.tasks[index]
@@ -194,7 +198,6 @@ class TaskManager:
     def clear_ui(self):
         for widget in self.frame.winfo_children():
             widget.destroy()
-
 
     def update_status(self, event, task, status_var, price_var):
         new_status = status_var.get()
