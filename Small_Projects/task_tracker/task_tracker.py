@@ -223,6 +223,6 @@ class TaskManager:
 
 
 root = tk.Tk()
-root.geometry("1400x600")
+root.geometry("1600x600")
 app = TaskManager(root)
 root.mainloop()
