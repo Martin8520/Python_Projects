@@ -7,8 +7,8 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from reportlab.lib import colors
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
-from reportlab.lib.styles import getSampleStyleSheet
 import os
+
 
 class TaskManager:
     def __init__(self, root):
@@ -32,6 +32,7 @@ class TaskManager:
         self.open_file_button.pack(pady=10)
         self.export_pdf_button = ttk.Button(root, text="Export to PDF", command=self.export_to_pdf)
         self.export_pdf_button.pack(pady=10)
+
     def on_frame_configure(self, event):
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
@@ -60,11 +61,9 @@ class TaskManager:
                     task = {
                         "Task": row.get("Задача", ""),
                         "Status": row.get("Статус", ""),
-                        "Time Added": row.get("Време на добавяне", ""),
-                        "Time Completed": row.get("Време на завършване", ""),
                         "Price (BGN)": row.get("Цена (BGN)", ""),
                         "Start Date": row.get("Начална дата", ""),
-                        "End Date": row.get("Крайна дата", ""),
+                        "End Date": row.get("Крайна дата", "")
                     }
                     self.tasks.append(task)
         except Exception as e:
@@ -72,15 +71,12 @@ class TaskManager:
 
     def save_tasks(self):
         with open(self.file_name, mode="w", newline="", encoding="utf-8-sig") as file:
-            writer = csv.DictWriter(file, fieldnames=["Задача", "Статус", "Време на добавяне", "Време на завършване",
-                                                      "Цена (BGN)", "Начална дата", "Крайна дата"])
+            writer = csv.DictWriter(file, fieldnames=["Задача", "Статус", "Цена (BGN)", "Начална дата", "Крайна дата"])
             writer.writeheader()
             for task in self.tasks:
                 task_data = {
                     "Задача": task["Task"],
                     "Статус": task["Status"],
-                    "Време на добавяне": task.get("Time Added", ""),
-                    "Време на завършване": task.get("Time Completed", ""),
                     "Цена (BGN)": task.get("Price (BGN)", ""),
                     "Начална дата": task["Start Date"],
                     "Крайна дата": task["End Date"]
@@ -154,12 +150,17 @@ class TaskManager:
         pdf_file_name = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
         if pdf_file_name:
             doc = SimpleDocTemplate(pdf_file_name, pagesize=letter)
-            data = [["Задача", "Статус", "Време на добавяне", "Време на завършване",
-                     "Цена (BGN)", "Начална дата", "Крайна дата"]]
+            data = [["Задача", "Статус", "Цена (BGN)", "Начална дата", "Крайна дата"]]
+            total_price = 0  # Initialize total price variable
+
             for task in self.tasks:
-                data.append([task["Task"], task["Status"], task.get("Time Added", ""),
-                             task.get("Time Completed", ""), task.get("Price (BGN)", ""),
+                data.append([task["Task"], task["Status"], task.get("Price (BGN)", ""),
                              task["Start Date"], task["End Date"]])
+                # Calculate total price
+                if task.get("Price (BGN)"):
+                    total_price += float(task["Price (BGN)"])
+
+            data.append(["Обща цена", "", f"{total_price} BGN", "", ""])
 
             table_style = [
                 ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
@@ -219,8 +220,6 @@ class TaskManager:
                 new_task = {
                     "Task": task_name,
                     "Status": "Не е започната",
-                    "Time Added": start_date,
-                    "Time Completed": "",
                     "Price (BGN)": price,
                     "Start Date": start_date,
                     "End Date": ""
@@ -240,10 +239,9 @@ class TaskManager:
     def update_status(self, event, task, status_var, price_var):
         new_status = status_var.get()
         new_price = price_var.get().strip()
-        if (new_status == "Завършена" or new_status == "Одобрена") and not task["Time Completed"]:
+        if (new_status == "Завършена" or new_status == "Одобрена") and not task["End Date"]:
             task["Status"] = new_status
-            task["Time Completed"] = datetime.now().strftime("%d/%m/%Y %H:%M")
-            task["End Date"] = task["Time Completed"]
+            task["End Date"] = datetime.now().strftime("%d/%m/%Y %H:%M")
         else:
             task["Status"] = new_status
         task["Price (BGN)"] = new_price if new_price else task.get("Price (BGN)", "")
