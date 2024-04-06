@@ -1,8 +1,8 @@
 import pandas
 
-data = pandas.read_csv("nato_phonetic_alphabet.csv")
+data = pandas.read_csv("_internal/nato_phonetic_alphabet.csv")
 
-phonetic_dict = {row.letter: row.code for (index, row) in data.iterrows()}
+phonetic_dict = {row.letter: row.code for (_, row) in data.iterrows()}
 
 
 def gen_phonetic():
@@ -16,5 +16,8 @@ def gen_phonetic():
         for letter in output:
             print(letter)
 
+    input("Press Enter to exit...")
 
-gen_phonetic()
+
+if __name__ == "__main__":
+    gen_phonetic()
