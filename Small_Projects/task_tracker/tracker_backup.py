@@ -151,12 +151,11 @@ class TaskManager:
         if pdf_file_name:
             doc = SimpleDocTemplate(pdf_file_name, pagesize=letter)
             data = [["Задача", "Статус", "Цена (BGN)", "Начална дата", "Крайна дата"]]
-            total_price = 0  # Initialize total price variable
+            total_price = 0
 
             for task in self.tasks:
                 data.append([task["Task"], task["Status"], task.get("Price (BGN)", ""),
                              task["Start Date"], task["End Date"]])
-                # Calculate total price
                 if task.get("Price (BGN)"):
                     total_price += float(task["Price (BGN)"])
 
