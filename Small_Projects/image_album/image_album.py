@@ -74,6 +74,7 @@ class ImageAlbumApp:
 
 
 def main():
+    os.environ["PATH"] += os.pathsep + 'C:\Program Files\gs\gs10.03.0\bin'
     root = tk.Tk()
     app = ImageAlbumApp(root)
     root.geometry("800x600")
