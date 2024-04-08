@@ -28,22 +28,22 @@ class ImageAlbumApp:
         self.btn_upload.pack(side=tk.BOTTOM, pady=10)
 
     def upload_image(self):
-        file_path = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.eps")])
-        if file_path:
-            if file_path.lower().endswith('.eps'):
-                try:
-                    with WandImage(filename=file_path, resolution=300) as img:
-                        img.format = 'png'
-                        png_data = img.make_blob(format='png')
-                    image = Image.open(BytesIO(png_data))
+        file_paths = filedialog.askopenfilenames(filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.eps")])
+        if file_paths:
+            for file_path in file_paths:
+                if file_path.lower().endswith('.eps'):
+                    try:
+                        with WandImage(filename=file_path, resolution=300) as img:
+                            img.format = 'png'
+                            png_data = img.make_blob(format='png')
+                        image = Image.open(BytesIO(png_data))
+                        self.images.append(image)
+                    except Exception as e:
+                        print("Error converting EPS:", e)
+                else:
+                    image = Image.open(file_path)
                     self.images.append(image)
-                    self.show_current_image()
-                except Exception as e:
-                    print("Error converting EPS:", e)
-            else:
-                image = Image.open(file_path)
-                self.images.append(image)
-                self.show_current_image()
+            self.show_current_image()
 
     def show_current_image(self):
         if self.images:
