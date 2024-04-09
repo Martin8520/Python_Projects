@@ -27,6 +27,9 @@ class ImageAlbumApp:
         self.btn_upload = tk.Button(self.master, text="Upload Image", command=self.upload_image)
         self.btn_upload.pack(side=tk.BOTTOM, pady=10)
 
+        self.master.bind("<Left>", lambda event: self.prev_image())
+        self.master.bind("<Right>", lambda event: self.next_image())
+
     def upload_image(self):
         file_paths = filedialog.askopenfilenames(filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.eps")])
         if file_paths:
