@@ -1,29 +1,284 @@
-0001,leather,10
-0002,studded leather,45
-0003,hide,10
-0004,chain shirt,50
-0005,scale mail,50
-0006,breastplate,400
-0007,half plate,750
-0008,ring mail,30
-0009,chain mail,75
-0010,splint,200
-0011,plate,1500
-0012,shield,10
-0013,+1 armor,500
-0014,+2 armor,500
-0015,+3 armor,500
-0016,adamantine armor,500
-0017,animated shield,500
-0018,armor of resistance,500
-0019,armor of vulnerability,500
-0020,dragon scale mail,500
-0021,elven chain,500
-0022,mithral armor,500
-0023,shield of missile attraction,500
-0024,shield +1,500
-0025,shield +2,500
-0026,shield +3,500
-0027,demon armor,500
-0028,dwarven plate,500
-0029,shield sentinel,500
+0001,Armor of Gleaming Breastplate,500
+0002,Armor of Gleaming Chain Mail,500
+0003,Armor of Gleaming Chain Shirt,500
+0004,Armor of Gleaming Half Plate,500
+0005,Armor of Gleaming Hide,500
+0006,Armor of Gleaming Plate,500
+0007,Armor of Gleaming Ring Mail,500
+0008,Armor of Gleaming Scale Mail,500
+0009,"Armor of Gleaming, Spiked Armor",500
+0010,Armor of Gleaming Splint,500
+0011,Breastplate,400
+0012,Cast-Off Armor Breastplate,100
+0013,Cast-Off Armor Chain Mail,150
+0014,Cast-Off Armor Chain Shirt,125
+0015,Cast-Off Armor Half Plate,750
+0016,Cast-Off Armor Hide,50
+0017,Cast-Off Armor Leather,25
+0018,Cast-Off Armor Padded,25
+0019,Cast-Off Armor Plate,1500
+0020,Cast-Off Armor Ring Mail,75
+0021,Cast-Off Armor Scale Mail,100
+0022,Cast-Off Armor Spiked Armor,200
+0023,Cast-Off Armor Splint,200
+0024,Cast-Off Armor Studded Leather,75
+0025,Chain Mail,75
+0026,Chain Shirt,50
+0027,Half Plate,750
+0028,Hide,10
+0029,Leather,10
+0030,Padded,5
+0031,Plate,1500
+0032,Pride Silk Outfit,100
+0033,Ring Mail,30
+0034,Scale Mail,50
+0035,Shield,10
+0036,Shield of Expression,5000
+0037,Smoldering Armor Breastplate,500
+0038,Smoldering Armor Chain Mail,500
+0039,Smoldering Armor Chain Shirt,500
+0040,Smoldering Armor Half Plate,500
+0041,Smoldering Armor Hide,500
+0042,Smoldering Armor Leather,500
+0043,Smoldering Armor Padded,500
+0044,Smoldering Armor Plate,500
+0045,Smoldering Armor Ring Mail,500
+0046,Smoldering Armor Scale Mail,500
+0047,Smoldering Armor Spiked Armor,500
+0048,Smoldering Armor Splint,500
+0049,Smoldering Armor Studded Leather,500
+0050,Spiked Armor,200
+0051,Splint,200
+0052,Studded Leather,45
+0053,Adamantine Breastplate,5000
+0054,Adamantine Chain Mail,5000
+0055,Adamantine Chain Shirt,5000
+0056,Adamantine Half Plate,5000
+0057,Adamantine Plate,5000
+0058,Adamantine Ring Mail,5000
+0059,Adamantine Scale Mail,5000
+0060,Adamantine Splint,5000
+0061,Mariner's Breastplate,5000
+0062,Mariner's Chain Mail,750
+0063,Mariner's Chain Shirt,500
+0064,Mariner's Half Plate,7500
+0065,Mariner's Hide,100
+0066,Mariner's Padded,50
+0067,Mariner's Plate,8000
+0068,Mariner's Ring Mail,300
+0069,Mariner's Scale Mail,500
+0070,Mariner's Splint,6500
+0071,Mariner's Studded Leather,450
+0072,Mariner’s Leather,100
+0073,Mithral Breastplate,5000
+0074,Mithral Chain Mail,5000
+0075,Mithral Chain Shirt,5000
+0076,Mithral Half Plate,5000
+0077,Mithral Plate,5000
+0078,Mithral Ring Mail,5000
+0079,Mithral Scale Mail,5000
+0080,Mithral Splint,5000
+0081,Sentinel Shield,500
+0082,Shield +1,1000
+0083,Armor of Acid Resistance Breastplate,1500
+0084,Armor of Acid Resistance Chain Mail,1500
+0085,Armor of Acid Resistance Chain Shirt,1500
+0086,Armor of Acid Resistance Half Plate,1500
+0087,Armor of Acid Resistance Hide,1500
+0088,Armor of Acid Resistance Leather,1500
+0089,Armor of Acid Resistance Padded,1500
+0090,Armor of Acid Resistance Plate,1500
+0091,Armor of Acid Resistance Ring Mail,1500
+0092,Armor of Acid Resistance Scale Mail,1500
+0093,Armor of Acid Resistance Splint,1500
+0094,Armor of Acid Resistance Studded Leather,1500
+0095,Armor of Cold Resistance Breastplate,1500
+0096,Armor of Cold Resistance Chain Mail,1500
+0097,Armor of Cold Resistance Chain Shirt,1500
+0098,Armor of Cold Resistance Half Plate,1500
+0099,Armor of Cold Resistance Hide,1500
+0100,Armor of Cold Resistance Leather,1500
+0101,Armor of Cold Resistance Padded,1500
+0102,Armor of Cold Resistance Plate,1500
+0103,Armor of Cold Resistance Ring Mail,1500
+0104,Armor of Cold Resistance Scale Mail,1500
+0105,Armor of Cold Resistance Splint,1500
+0106,Armor of Cold Resistance Studded Leather,1500
+0107,Armor of Fire Resistance Breastplate,1500
+0108,Armor of Fire Resistance Chain Mail,1500
+0109,Armor of Fire Resistance Chain Shirt,1500
+0110,Armor of Fire Resistance Half Plate,1500
+0111,Armor of Fire Resistance Hide,1500
+0112,Armor of Fire Resistance Leather,1500
+0113,Armor of Fire Resistance Padded,1500
+0114,Armor of Fire Resistance Plate,1500
+0115,Armor of Fire Resistance Ring Mail,1500
+0116,Armor of Fire Resistance Scale Mail,1500
+0117,Armor of Fire Resistance Splint,1500
+0118,Armor of Fire Resistance Studded Leather,1500
+0119,Armor of Force Resistance Breastplate,1500
+0120,Armor of Force Resistance Chain Mail,1500
+0121,Armor of Force Resistance Chain Shirt,1500
+0122,Armor of Force Resistance Half Plate,1500
+0123,Armor of Force Resistance Hide,1500
+0124,Armor of Force Resistance Leather,1500
+0125,Armor of Force Resistance Padded,1500
+0126,Armor of Force Resistance Plate,1500
+0127,Armor of Force Resistance Ring Mail,1500
+0128,Armor of Force Resistance Scale Mail,1500
+0129,Armor of Force Resistance Splint,1500
+0130,Armor of Force Resistance Studded Leather,1500
+0131,Armor of Lightning Resistance Breastplate,1500
+0132,Armor of Lightning Resistance Chain Mail,1500
+0133,Armor of Lightning Resistance Chain Shirt,1500
+0134,Armor of Lightning Resistance Half Plate,1500
+0135,Armor of Lightning Resistance Hide,1500
+0136,Armor of Lightning Resistance Leather,1500
+0137,Armor of Lightning Resistance Padded,1500
+0138,Armor of Lightning Resistance Plate,1500
+0139,Armor of Lightning Resistance Ring Mail,1500
+0140,Armor of Lightning Resistance Scale Mail,1500
+0141,Armor of Lightning Resistance Splint,1500
+0142,Armor of Lightning Resistance Studded Leather,1500
+0143,Armor of Necrotic Resistance Breastplate,1500
+0144,Armor of Necrotic Resistance Chain Mail,1500
+0145,Armor of Necrotic Resistance Chain Shirt,1500
+0146,Armor of Necrotic Resistance Half Plate,1500
+0147,Armor of Necrotic Resistance Hide,1500
+0148,Armor of Necrotic Resistance Leather,1500
+0149,Armor of Necrotic Resistance Padded,1500
+0150,Armor of Necrotic Resistance Plate,1500
+0151,Armor of Necrotic Resistance Ring Mail,1500
+0152,Armor of Necrotic Resistance Scale Mail,1500
+0153,Armor of Necrotic Resistance Splint,1500
+0154,Armor of Necrotic Resistance Studded Leather,1500
+0155,Armor of Poison Resistance Breastplate,1500
+0156,Armor of Poison Resistance Chain Mail,1500
+0157,Armor of Poison Resistance Chain Shirt,1500
+0158,Armor of Poison Resistance Half Plate,1500
+0159,Armor of Poison Resistance Hide,1500
+0160,Armor of Poison Resistance Leather,1500
+0161,Armor of Poison Resistance Padded,1500
+0162,Armor of Poison Resistance Plate,1500
+0163,Armor of Poison Resistance Ring Mail,1500
+0164,Armor of Poison Resistance Scale Mail,1500
+0165,Armor of Poison Resistance Splint,1500
+0166,Armor of Poison Resistance Studded Leather,1500
+0167,Armor of Psychic Resistance Breastplate,1500
+0168,Armor of Psychic Resistance Chain Mail,1500
+0169,Armor of Psychic Resistance Chain Shirt,1500
+0170,Armor of Psychic Resistance Half Plate,1500
+0171,Armor of Psychic Resistance Hide,1500
+0172,Armor of Psychic Resistance Leather,1500
+0173,Armor of Psychic Resistance Padded,1500
+0174,Armor of Psychic Resistance Plate,1500
+0175,Armor of Psychic Resistance Ring Mail,1500
+0176,Armor of Psychic Resistance Scale Mail,1500
+0177,Armor of Psychic Resistance Splint,1500
+0178,Armor of Psychic Resistance Studded Leather,1500
+0179,Armor of Radiant Resistance Breastplate,1500
+0180,Armor of Radiant Resistance Chain Mail,1500
+0181,Armor of Radiant Resistance Chain Shirt,1500
+0182,Armor of Radiant Resistance Half Plate,1500
+0183,Armor of Radiant Resistance Hide,1500
+0184,Armor of Radiant Resistance Leather,1500
+0185,Armor of Radiant Resistance Padded,1500
+0186,Armor of Radiant Resistance Plate,1500
+0187,Armor of Radiant Resistance Ring Mail,1500
+0188,Armor of Radiant Resistance Scale Mail,1500
+0189,Armor of Radiant Resistance Splint,1500
+0190,Armor of Radiant Resistance Studded Leather,1500
+0191,Armor of Thunder Resistance Breastplate,1500
+0192,Armor of Thunder Resistance Chain Mail,1500
+0193,Armor of Thunder Resistance Chain Shirt,1500
+0194,Armor of Thunder Resistance Half Plate,1500
+0195,Armor of Thunder Resistance Hide,1500
+0196,Armor of Thunder Resistance Leather,1500
+0197,Armor of Thunder Resistance Padded,1500
+0198,Armor of Thunder Resistance Plate,1500
+0199,Armor of Thunder Resistance Ring Mail,1500
+0200,Armor of Thunder Resistance Scale Mail,1500
+0201,Armor of Thunder Resistance Splint,1500
+0202,Armor of Thunder Resistance Studded Leather,1500
+0203,Armor of Vulnerability (Bludgeoning),1500
+0204,Armor of Vulnerability (Piercing),1500
+0205,Armor of Vulnerability (Slashing),1500
+0206,Arrow-Catching Shield,100
+0207,Battering Shield,100
+0208,Breastplate +1,5000
+0209,Chain Mail +1,5000
+0210,Chain Shirt +1,5000
+0211,Dragonguard,5000
+0212,Elven Chain,1200
+0213,Glamoured Studded Leather,5000
+0214,Half Plate +1,5000
+0215,Hide +1,5000
+0216,Leather +1,5000
+0217,Padded +1,5000
+0218,Plate +1,5000
+0219,Ring Mail +1,5000
+0220,Scale Mail +1,5000
+0221,Scorpion Armor,20000
+0222,Shield of Missile Attraction,1000
+0223,Shield +2,25000
+0224,Splint +1,5000
+0225,Studded Leather +1,5000
+0226,Animated Shield,10000
+0227,Breastplate +2,25000
+0228,Chain Mail +2,25000
+0229,Chain Shirt +2,25000
+0230,Demon Armor,20000
+0231,Dragon Scale Mail (Black),25000
+0232,Dragon Scale Mail (Blue),25000
+0233,Dragon Scale Mail (Brass),25000
+0234,Dragon Scale Mail (Bronze),25000
+0235,Dragon Scale Mail (Copper),25000
+0236,Dragon Scale Mail (Gold),25000
+0237,Dragon Scale Mail (Green),25000
+0238,Dragon Scale Mail (Red),25000
+0239,Dragon Scale Mail (Silver),25000
+0240,Dragon Scale Mail (White),25000
+0241,Dwarven Plate,50000
+0242,Half Plate +2,25000
+0243,Hide +2,25000
+0244,Hunter's Coat,3000
+0245,Last Stand Armor Breastplate,2000
+0246,Last Stand Armor Chain Mail,2000
+0247,Last Stand Armor Chain Shirt,2000
+0248,Last Stand Armor Half Plate,2000
+0249,Last Stand Armor Hide,2000
+0250,Last Stand Armor Leather,2000
+0251,Last Stand Armor Padded,2000
+0252,Last Stand Armor Plate,2000
+0253,Last Stand Armor Ring Mail,2000
+0254,Last Stand Armor Scale Mail,2000
+0255,Last Stand Armor Spiked Armor,2000
+0256,Last Stand Armor Splint,2000
+0257,Last Stand Armor Studded Leather,2000
+0258,Leather +2,25000
+0259,Padded +2,25000
+0260,Plate +2,25000
+0261,Ring Mail +2,25000
+0262,Scale Mail +2,25000
+0263,Shield +3,50000
+0264,Spellguard Shield,5000
+0265,Splint +2,25000
+0266,Studded Leather +2,25000
+0267,Armor of Invulnerability,50000
+0268,Breastplate +3,50000
+0269,Chain Mail +3,50000
+0270,Chain Shirt +3,50000
+0271,Efreeti Chain,50000
+0272,Half Plate +3,50000
+0273,Hide of the Feral Guardian (Awakened),50000
+0274,Hide of the Feral Guardian (Dormant),50000
+0275,Hide of the Feral Guardian (Exalted),50000
+0276,Hide +3,50000
+0277,Leather +3,50000
+0278,Padded +3,50000
+0279,Plate Armor of Etherealness,50000
+0280,Plate +3,50000
+0281,Ring Mail +3,50000
+0282,Scale Mail +3,50000
+0283,Splint  +3,50000
+0284,Studded Leather +3,50000
