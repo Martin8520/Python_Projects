@@ -1,9 +1,7 @@
 import os
-import subprocess
 import tkinter as tk
 from tkinter import filedialog
 from PIL import Image, ImageTk
-import requests
 from io import BytesIO
 from wand.image import Image as WandImage
 
