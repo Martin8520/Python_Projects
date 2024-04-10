@@ -25,6 +25,9 @@ class ImageAlbumApp:
         self.btn_upload = tk.Button(self.master, text="Upload Image", command=self.upload_image)
         self.btn_upload.pack(side=tk.BOTTOM, pady=10)
 
+        self.btn_convert_save = tk.Button(self.master, text="Convert & Save as PNG", command=self.convert_save_png)
+        self.btn_convert_save.pack(side=tk.BOTTOM, pady=10)
+
         self.master.bind("<Left>", lambda event: self.prev_image())
         self.master.bind("<Right>", lambda event: self.next_image())
 
@@ -45,6 +48,14 @@ class ImageAlbumApp:
                     image = Image.open(file_path)
                     self.images.append(image)
             self.show_current_image()
+
+    def convert_save_png(self):
+        if self.images:
+            save_dir = filedialog.askdirectory()
+            if save_dir:
+                for i, img in enumerate(self.images):
+                    filename = os.path.join(save_dir, f"image_{i}.png")
+                    img.save(filename, format="PNG")
 
     def show_current_image(self):
         if self.images:
