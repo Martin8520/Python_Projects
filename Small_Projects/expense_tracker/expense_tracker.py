@@ -28,7 +28,7 @@ class ExpenseTracker:
         self.add_button = tk.Button(master, text="Add Expense", command=self.add_expense)
         self.add_button.pack()
 
-        self.expense_listbox = tk.Listbox(master, width=50)
+        self.expense_listbox = tk.Listbox(master, width=100)
         self.expense_listbox.pack(pady=10)
 
         self.delete_button = tk.Button(master, text="Delete Expense", command=self.delete_expense)
@@ -48,7 +48,6 @@ class ExpenseTracker:
             self.expenses.append([expense, amount, category])
             self.save_expenses()
             self.display_expenses()
-            messagebox.showinfo("Success", "Expense added successfully.")
             self.clear_entries()
         else:
             messagebox.showwarning("Warning", "Please fill out all fields.")
@@ -108,7 +107,7 @@ class ExpenseTracker:
 def main():
     root = tk.Tk()
     app = ExpenseTracker(root)
-    root.geometry("600x600")
+    root.geometry("700x600")
     root.mainloop()
 
 
