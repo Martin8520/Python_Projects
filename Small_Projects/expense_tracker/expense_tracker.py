@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import csv
+from datetime import datetime
 
 
 class ExpenseTracker:
@@ -28,7 +29,7 @@ class ExpenseTracker:
         self.add_button = tk.Button(master, text="Add Expense", command=self.add_expense)
         self.add_button.pack()
 
-        self.expense_listbox = tk.Listbox(master, width=100)
+        self.expense_listbox = tk.Listbox(master, width=70)
         self.expense_listbox.pack(pady=10)
 
         self.delete_button = tk.Button(master, text="Delete Expense", command=self.delete_expense)
@@ -43,9 +44,10 @@ class ExpenseTracker:
         expense = self.expense_entry.get()
         amount = self.amount_entry.get()
         category = self.category_entry.get()
+        date_added = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         if expense and amount and category:
-            self.expenses.append([expense, amount, category])
+            self.expenses.append([expense, amount, category, date_added])
             self.save_expenses()
             self.display_expenses()
             self.clear_entries()
@@ -85,7 +87,7 @@ class ExpenseTracker:
     def save_expenses(self):
         with open("expenses.csv", "w", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow(["Expense", "Amount", "Category"])
+            writer.writerow(["Expense", "Amount", "Category", "Date Added"])
             writer.writerows(self.expenses)
 
     def load_expenses(self):
@@ -101,13 +103,13 @@ class ExpenseTracker:
     def display_expenses(self):
         self.expense_listbox.delete(0, tk.END)
         for expense in self.expenses:
-            self.expense_listbox.insert(tk.END, f"{expense[0]} - {expense[1]} - {expense[2]}")
+            self.expense_listbox.insert(tk.END, f"{expense[0]} - {expense[1]} - {expense[2]} ({expense[3]})")
 
 
 def main():
     root = tk.Tk()
     app = ExpenseTracker(root)
-    root.geometry("700x600")
+    root.geometry("600x600")
     root.mainloop()
 
 
