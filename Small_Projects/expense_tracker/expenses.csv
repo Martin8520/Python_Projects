@@ -1,2 +1,4 @@
-Expense,Amount,Category,Date Added
-sdasdasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd,sdaads,dsadadaa,2024-04-11 14:26:39
+Expense,Amount,Currency,Category,Date Added
+test,250,USD,testr,2024-04-11 14:53:12
+asdas,210,EUR,test,2024-04-11 14:53:32
+test,2.55,JPY,test,2024-04-11 14:53:57
