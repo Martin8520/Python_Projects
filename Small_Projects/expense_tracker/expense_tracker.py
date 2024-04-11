@@ -29,8 +29,13 @@ class ExpenseTracker:
         self.add_button = tk.Button(master, text="Add Expense", command=self.add_expense)
         self.add_button.pack()
 
-        self.expense_listbox = tk.Listbox(master, width=70)
+        self.xscrollbar = tk.Scrollbar(master, orient=tk.HORIZONTAL)
+        self.xscrollbar.pack(side=tk.BOTTOM, fill=tk.X)
+
+        self.expense_listbox = tk.Listbox(master, width=70, xscrollcommand=self.xscrollbar.set)
         self.expense_listbox.pack(pady=10)
+
+        self.xscrollbar.config(command=self.expense_listbox.xview)
 
         self.delete_button = tk.Button(master, text="Delete Expense", command=self.delete_expense)
         self.delete_button.pack()
@@ -109,7 +114,7 @@ class ExpenseTracker:
 def main():
     root = tk.Tk()
     app = ExpenseTracker(root)
-    root.geometry("600x600")
+    root.geometry("600x400")
     root.mainloop()
 
 
