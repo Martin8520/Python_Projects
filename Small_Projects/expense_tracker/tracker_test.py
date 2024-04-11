@@ -59,11 +59,15 @@ class ExpenseTracker:
         category = self.category_entry.get()
         date_added = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        if expense and amount and category:
-            self.expenses.append([expense, amount, currency, category, date_added])
-            self.save_expenses()
-            self.display_expenses()
-            self.clear_entries()
+        if expense and category:
+            try:
+                amount = float("{:.2f}".format(float(amount)))  # Format the amount to have two decimal places
+                self.expenses.append([expense, amount, currency, category, date_added])
+                self.save_expenses()
+                self.display_expenses()
+                self.clear_entries()
+            except ValueError:
+                messagebox.showwarning("Warning", "Amount must be a valid number.")
         else:
             messagebox.showwarning("Warning", "Please fill out all fields.")
 
@@ -109,7 +113,10 @@ class ExpenseTracker:
             with open("expenses.csv", "r") as f:
                 reader = csv.reader(f)
                 next(reader)
-                self.expenses = [row for row in reader]
+                self.expenses = []
+                for row in reader:
+                    row[1] = float(row[1])
+                    self.expenses.append(row)
                 self.display_expenses()
         except FileNotFoundError:
             pass
@@ -117,8 +124,9 @@ class ExpenseTracker:
     def display_expenses(self):
         self.expense_listbox.delete(0, tk.END)
         for expense in self.expenses:
+            formatted_amount = "{:.2f}".format(expense[1])
             self.expense_listbox.insert(tk.END,
-                                        f"{expense[0]} - {expense[1]} {expense[2]} - {expense[3]} ({expense[4]})")
+                                        f"{expense[0]} - {formatted_amount} {expense[2]} - {expense[3]} ({expense[4]})")
 
 
 def main():
