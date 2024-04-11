@@ -61,7 +61,7 @@ class ExpenseTracker:
 
         if expense and category:
             try:
-                amount = float("{:.2f}".format(float(amount)))  # Format the amount to have two decimal places
+                amount = float("{:.2f}".format(float(amount)))
                 self.expenses.append([expense, amount, currency, category, date_added])
                 self.save_expenses()
                 self.display_expenses()
