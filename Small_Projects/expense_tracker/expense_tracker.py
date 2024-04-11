@@ -21,6 +21,13 @@ class ExpenseTracker:
         self.amount_entry = tk.Entry(master, width=40)
         self.amount_entry.pack()
 
+        self.currency_label = tk.Label(master, text="Currency:")
+        self.currency_label.pack()
+        self.currency_var = tk.StringVar(master)
+        self.currency_var.set("BGN")
+        self.currency_menu = tk.OptionMenu(master, self.currency_var, "USD", "EUR", "GBP", "JPY", "BGN")
+        self.currency_menu.pack()
+
         self.category_label = tk.Label(master, text="Category:")
         self.category_label.pack()
         self.category_entry = tk.Entry(master, width=40)
@@ -48,14 +55,19 @@ class ExpenseTracker:
     def add_expense(self):
         expense = self.expense_entry.get()
         amount = self.amount_entry.get()
+        currency = self.currency_var.get()
         category = self.category_entry.get()
         date_added = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        if expense and amount and category:
-            self.expenses.append([expense, amount, category, date_added])
-            self.save_expenses()
-            self.display_expenses()
-            self.clear_entries()
+        if expense and category:
+            try:
+                amount = float("{:.2f}".format(float(amount)))
+                self.expenses.append([expense, amount, currency, category, date_added])
+                self.save_expenses()
+                self.display_expenses()
+                self.clear_entries()
+            except ValueError:
+                messagebox.showwarning("Warning", "Amount must be a valid number.")
         else:
             messagebox.showwarning("Warning", "Please fill out all fields.")
 
@@ -74,10 +86,11 @@ class ExpenseTracker:
             expense = self.expenses[selection]
             self.expense_entry.delete(0, tk.END)
             self.amount_entry.delete(0, tk.END)
+            self.currency_var.set(expense[2])
             self.category_entry.delete(0, tk.END)
             self.expense_entry.insert(0, expense[0])
             self.amount_entry.insert(0, expense[1])
-            self.category_entry.insert(0, expense[2])
+            self.category_entry.insert(0, expense[3])
             del self.expenses[selection]
             self.save_expenses()
             self.display_expenses()
@@ -92,7 +105,7 @@ class ExpenseTracker:
     def save_expenses(self):
         with open("expenses.csv", "w", newline="") as f:
             writer = csv.writer(f)
-            writer.writerow(["Expense", "Amount", "Category", "Date Added"])
+            writer.writerow(["Expense", "Amount", "Currency", "Category", "Date Added"])
             writer.writerows(self.expenses)
 
     def load_expenses(self):
@@ -100,7 +113,10 @@ class ExpenseTracker:
             with open("expenses.csv", "r") as f:
                 reader = csv.reader(f)
                 next(reader)
-                self.expenses = [row for row in reader]
+                self.expenses = []
+                for row in reader:
+                    row[1] = float(row[1])
+                    self.expenses.append(row)
                 self.display_expenses()
         except FileNotFoundError:
             pass
@@ -108,13 +124,15 @@ class ExpenseTracker:
     def display_expenses(self):
         self.expense_listbox.delete(0, tk.END)
         for expense in self.expenses:
-            self.expense_listbox.insert(tk.END, f"{expense[0]} - {expense[1]} - {expense[2]} ({expense[3]})")
+            formatted_amount = "{:.2f}".format(expense[1])
+            self.expense_listbox.insert(tk.END,
+                                        f"{expense[0]} - {formatted_amount} {expense[2]} - {expense[3]} ({expense[4]})")
 
 
 def main():
     root = tk.Tk()
     app = ExpenseTracker(root)
-    root.geometry("600x400")
+    root.geometry("500x500")
     root.mainloop()
 
 
