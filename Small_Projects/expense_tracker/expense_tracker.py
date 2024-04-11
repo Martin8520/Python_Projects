@@ -49,8 +49,20 @@ class ExpenseTracker:
 
         self.edit_button = tk.Button(master, text="Edit Expense", command=self.edit_expense)
         self.edit_button.pack()
+        currency = self.currency_var.get()
+        self.total_expenses_label = tk.Label(master, text=f"Total Expenses: {currency} 0.00")
+        self.total_expenses_label.pack()
+
+        self.calculate_total_button = tk.Button(master, text="Calculate Total", command=self.calculate_total)
+        self.calculate_total_button.pack()
 
         self.load_expenses()
+
+    def calculate_total(self):
+        currency = self.currency_var.get()
+        total = sum(expense[1] for expense in self.expenses)
+        formatted_total = "{:.2f}".format(total)
+        self.total_expenses_label.config(text=f"Total Expenses: {currency} {formatted_total}")
 
     def add_expense(self):
         expense = self.expense_entry.get()
