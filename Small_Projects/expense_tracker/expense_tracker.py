@@ -1,10 +1,11 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 import csv
 from datetime import datetime
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from reportlab.lib import colors
+
 
 class ExpenseTracker:
     def __init__(self, master):
@@ -63,8 +64,13 @@ class ExpenseTracker:
         self.export_button.pack()
         self.load_expenses()
 
+    from tkinter import filedialog
+
     def export_to_pdf(self):
-        filename = "expenses.pdf"
+        filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
+        if not filename:
+            return
+
         doc = SimpleDocTemplate(filename, pagesize=letter)
         elements = []
 
