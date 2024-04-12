@@ -2,7 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 import csv
 from datetime import datetime
-
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from reportlab.lib import colors
 
 class ExpenseTracker:
     def __init__(self, master):
@@ -57,8 +59,41 @@ class ExpenseTracker:
         self.calculate_total_button.pack()
 
         self.currency_var.trace_add('write', self.update_total_label)
-
+        self.export_button = tk.Button(master, text="Export to PDF", command=self.export_to_pdf)
+        self.export_button.pack()
         self.load_expenses()
+
+    def export_to_pdf(self):
+        filename = "expenses.pdf"
+        doc = SimpleDocTemplate(filename, pagesize=letter)
+        elements = []
+
+        # Table Header
+        header = ["Expense", "Amount", "Currency", "Category", "Date Added"]
+        data = [header]
+
+        # Add expenses data to table
+        for expense in self.expenses:
+            data.append(expense)
+
+        # Create table
+        table = Table(data)
+
+        # Add style to table
+        style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.gray),
+                            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                            ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+                            ('GRID', (0, 0), (-1, -1), 1, colors.black)])
+
+        table.setStyle(style)
+        elements.append(table)
+
+        # Write PDF
+        doc.build(elements)
+        messagebox.showinfo("Success", f"Expenses exported to {filename}")
 
     def update_total_label(self, *args):
         currency = self.currency_var.get()
@@ -150,7 +185,7 @@ class ExpenseTracker:
 def main():
     root = tk.Tk()
     app = ExpenseTracker(root)
-    root.geometry("500x500")
+    root.geometry("500x550")
     root.mainloop()
 
 
