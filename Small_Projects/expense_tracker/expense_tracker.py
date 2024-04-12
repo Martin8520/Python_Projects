@@ -68,18 +68,21 @@ class ExpenseTracker:
         doc = SimpleDocTemplate(filename, pagesize=letter)
         elements = []
 
-        # Table Header
         header = ["Expense", "Amount", "Currency", "Category", "Date Added"]
         data = [header]
 
-        # Add expenses data to table
         for expense in self.expenses:
             data.append(expense)
 
-        # Create table
+        currency = self.currency_var.get()
+        total = sum(expense[1] for expense in self.expenses)
+        formatted_total = "{:.2f}".format(total)
+
+        total_row = ["Total", formatted_total, currency, "", ""]
+        data.append(total_row)
+
         table = Table(data)
 
-        # Add style to table
         style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.gray),
                             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
                             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
@@ -91,7 +94,6 @@ class ExpenseTracker:
         table.setStyle(style)
         elements.append(table)
 
-        # Write PDF
         doc.build(elements)
         messagebox.showinfo("Success", f"Expenses exported to {filename}")
 
