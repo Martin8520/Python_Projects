@@ -11,7 +11,6 @@ class ExpenseTracker:
     def __init__(self, master):
         self.master = master
         self.master.title("Expense Tracker")
-
         self.expenses = []
 
         self.expense_label = tk.Label(master, text="Expense:")
@@ -52,8 +51,8 @@ class ExpenseTracker:
 
         self.edit_button = tk.Button(master, text="Edit Expense", command=self.edit_expense)
         self.edit_button.pack()
-        currency = self.currency_var.get()
-        self.total_expenses_label = tk.Label(master, text=f"Total Expenses: {currency} 0.00")
+
+        self.total_expenses_label = tk.Label(master, text="Total Expenses: BGN 0.00")
         self.total_expenses_label.pack()
 
         self.calculate_total_button = tk.Button(master, text="Calculate Total", command=self.calculate_total)
@@ -62,33 +61,32 @@ class ExpenseTracker:
         self.currency_var.trace_add('write', self.update_total_label)
         self.export_button = tk.Button(master, text="Export to PDF", command=self.export_to_pdf)
         self.export_button.pack()
-        self.load_expenses()
 
-    from tkinter import filedialog
+        self.search_label = tk.Label(master, text="Search:")
+        self.search_label.pack()
+        self.search_entry = tk.Entry(master, width=40)
+        self.search_entry.pack()
+        self.search_button = tk.Button(master, text="Search", command=self.search_expenses)
+        self.search_button.pack()
+
+        self.load_expenses()
 
     def export_to_pdf(self):
         filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
         if not filename:
             return
-
         doc = SimpleDocTemplate(filename, pagesize=letter)
         elements = []
-
         header = ["Expense", "Amount", "Currency", "Category", "Date Added"]
         data = [header]
-
         for expense in self.expenses:
             data.append(expense)
-
         currency = self.currency_var.get()
         total = sum(expense[1] for expense in self.expenses)
         formatted_total = "{:.2f}".format(total)
-
         total_row = ["Total", formatted_total, currency, "", ""]
         data.append(total_row)
-
         table = Table(data)
-
         style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.gray),
                             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
                             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
@@ -96,10 +94,8 @@ class ExpenseTracker:
                             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
                             ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
                             ('GRID', (0, 0), (-1, -1), 1, colors.black)])
-
         table.setStyle(style)
         elements.append(table)
-
         doc.build(elements)
         messagebox.showinfo("Success", f"Expenses exported to {filename}")
 
@@ -119,7 +115,6 @@ class ExpenseTracker:
         currency = self.currency_var.get()
         category = self.category_entry.get()
         date_added = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
         if expense and category:
             try:
                 amount = float("{:.2f}".format(float(amount)))
@@ -182,18 +177,29 @@ class ExpenseTracker:
         except FileNotFoundError:
             pass
 
-    def display_expenses(self):
+    def display_expenses(self, expenses=None):
         self.expense_listbox.delete(0, tk.END)
-        for expense in self.expenses:
+        if expenses is None:
+            expenses = self.expenses
+        for expense in expenses:
             formatted_amount = "{:.2f}".format(expense[1])
             self.expense_listbox.insert(tk.END,
                                         f"{expense[0]} - {formatted_amount} {expense[2]} - {expense[3]} ({expense[4]})")
+
+    def search_expenses(self):
+        query = self.search_entry.get().lower()
+        if query:
+            filtered_expenses = [expense for expense in self.expenses
+                                 if query in expense[0].lower() or query in expense[3].lower()]
+            self.display_expenses(filtered_expenses)
+        else:
+            self.display_expenses(self.expenses)
 
 
 def main():
     root = tk.Tk()
     app = ExpenseTracker(root)
-    root.geometry("500x550")
+    root.geometry("500x600")
     root.mainloop()
 
 
