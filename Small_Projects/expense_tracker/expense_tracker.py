@@ -128,7 +128,7 @@ class ExpenseTracker:
                 self.save_expenses()
                 self.display_expenses()
                 self.clear_entries()
-                self.update_total_label()  # Update total label after adding expense
+                self.update_total_label()
             except ValueError:
                 messagebox.showwarning("Warning", "Amount must be a valid number.")
         else:
