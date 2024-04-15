@@ -1,10 +1,13 @@
-import tkinter as tk
-from tkinter import messagebox, filedialog
 import csv
+import tkinter as tk
 from datetime import datetime
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from tkinter import messagebox, filedialog
+
 from reportlab.lib import colors
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 
 
 class ExpenseTracker:
@@ -68,7 +71,7 @@ class ExpenseTracker:
         self.search_entry.pack()
         self.search_button = tk.Button(master, text="Search", command=self.search_expenses)
         self.search_button.pack()
-
+        pdfmetrics.registerFont(TTFont('Times-Roman', 'times.ttf'))
         self.load_expenses()
 
     def export_to_pdf(self):
@@ -86,22 +89,25 @@ class ExpenseTracker:
         formatted_total = "{:.2f}".format(total)
         total_row = ["Total", formatted_total, currency, "", ""]
         data.append(total_row)
-        table = Table(data)
+        table_data = []
+        for row in data:
+            table_row = []
+            for item in row:
+                table_row.append(str(item))
+            table_data.append(table_row)
+        table = Table(table_data)
         style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.gray),
                             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
                             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+                            ('FONTNAME', (0, 0), (-1, -1), 'Times-Roman'),
                             ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
                             ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
                             ('GRID', (0, 0), (-1, -1), 1, colors.black)])
         table.setStyle(style)
         elements.append(table)
+
         doc.build(elements)
         messagebox.showinfo("Success", f"Expenses exported to {filename}")
-
-    def update_total_label(self, *args):
-        currency = self.currency_var.get()
-        self.total_expenses_label.config(text=f"Total Expenses: {currency} 0.00")
 
     def calculate_total(self):
         currency = self.currency_var.get()
@@ -122,10 +128,15 @@ class ExpenseTracker:
                 self.save_expenses()
                 self.display_expenses()
                 self.clear_entries()
+                self.update_total_label()  # Update total label after adding expense
             except ValueError:
                 messagebox.showwarning("Warning", "Amount must be a valid number.")
         else:
             messagebox.showwarning("Warning", "Please fill out all fields.")
+
+    def update_total_label(self):
+        currency = self.currency_var.get()
+        self.total_expenses_label.config(text=f"Total Expenses: {currency} 0.00")
 
     def delete_expense(self):
         try:
