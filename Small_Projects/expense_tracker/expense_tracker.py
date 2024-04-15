@@ -159,14 +159,14 @@ class ExpenseTracker:
         self.category_entry.delete(0, tk.END)
 
     def save_expenses(self):
-        with open("expenses.csv", "w", newline="") as f:
+        with open("expenses.csv", "w", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow(["Expense", "Amount", "Currency", "Category", "Date Added"])
             writer.writerows(self.expenses)
 
     def load_expenses(self):
         try:
-            with open("expenses.csv", "r") as f:
+            with open("expenses.csv", "r", encoding="utf-8") as f:
                 reader = csv.reader(f)
                 next(reader)
                 self.expenses = []
