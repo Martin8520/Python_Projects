@@ -13,7 +13,6 @@ class ShoppingListApp:
         self.frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
         self.items = []
-
         self.create_widgets()
 
     def load_items(self, filename):

@@ -80,13 +80,6 @@
             </Attribute>
           </value>
         </entry>
-        <entry key="\Small_Projects\expense_tracker\expenses.csv">
-          <value>
-            <Attribute>
-              <option name="separator" value="," />
-            </Attribute>
-          </value>
-        </entry>
         <entry key="\Small_Projects\flash_cards\data\french_words.csv">
           <value>
             <Attribute>
