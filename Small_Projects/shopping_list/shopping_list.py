@@ -19,17 +19,17 @@ class ShoppingListApp:
         self.create_widgets()
 
     def load_items(self):
-        try:
-            filename = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
-            if filename:
+        filename = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+        if filename:
+            try:
                 with open(filename, "r", newline="", encoding="utf-8") as file:
                     reader = csv.reader(file)
                     self.items = list(reader)
                     self.refresh_listbox()
-        except FileNotFoundError:
-            pass
-        except Exception as e:
-            messagebox.showerror("Error", str(e))
+            except FileNotFoundError:
+                pass
+            except Exception as e:
+                messagebox.showerror("Error", str(e))
 
     def save_items(self):
         try:
