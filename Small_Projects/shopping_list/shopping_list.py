@@ -14,22 +14,18 @@ class ShoppingListApp:
 
         self.items = []
 
-        self.load_items()
-
         self.create_widgets()
 
-    def load_items(self):
-        filename = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
-        if filename:
-            try:
-                with open(filename, "r", newline="", encoding="utf-8") as file:
-                    reader = csv.reader(file)
-                    self.items = list(reader)
-                    self.refresh_listbox()
-            except FileNotFoundError:
-                pass
-            except Exception as e:
-                messagebox.showerror("Error", str(e))
+    def load_items(self, filename):
+        try:
+            with open(filename, "r", newline="", encoding="utf-8") as file:
+                reader = csv.reader(file)
+                self.items = list(reader)
+                self.refresh_listbox()
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
 
     def save_items(self):
         try:
@@ -53,7 +49,6 @@ class ShoppingListApp:
 
         self.listbox = tk.Listbox(self.frame, width=50)
         self.listbox.grid(row=1, columnspan=3)
-        self.listbox.bind("<Double-Button-1>", self.edit_item_from_listbox)
 
         self.refresh_listbox()
 
@@ -63,8 +58,11 @@ class ShoppingListApp:
         self.delete_button = tk.Button(self.frame, text="Delete Item", command=self.delete_item)
         self.delete_button.grid(row=2, column=1)
 
+        self.open_csv_button = tk.Button(self.frame, text="Open CSV", command=self.open_csv)
+        self.open_csv_button.grid(row=3, column=0)
+
         self.save_button = tk.Button(self.frame, text="Save to CSV", command=self.save_items)
-        self.save_button.grid(row=3, column=0, columnspan=3)
+        self.save_button.grid(row=3, column=1)
 
     def add_item(self):
         item = self.item_entry.get()
@@ -103,20 +101,10 @@ class ShoppingListApp:
         for item in self.items:
             self.listbox.insert(tk.END, item[0])
 
-    def edit_item_from_listbox(self, event):
-        selected_index = self.listbox.curselection()
-        if selected_index:
-            item = self.listbox.get(selected_index)
-            self.item_entry.delete(0, tk.END)
-            self.item_entry.insert(0, item)
-            self.item_entry.focus_set()
-            self.delete_button.config(command=lambda: self.delete_item_from_listbox(selected_index[0]))
-        else:
-            messagebox.showwarning("Warning", "Please select an item to edit.")
-
-    def delete_item_from_listbox(self, index):
-        del self.items[index]
-        self.refresh_listbox()
+    def open_csv(self):
+        filename = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+        if filename:
+            self.load_items(filename)
 
 
 if __name__ == "__main__":
