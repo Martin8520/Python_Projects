@@ -3,6 +3,9 @@ from tkinter import *
 from tkinter import messagebox, filedialog
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer
+from reportlab.lib import colors
+
 
 class TaskManager:
     def __init__(self, master):
@@ -46,11 +49,14 @@ class TaskManager:
         self.button_open_csv = Button(master, text="Open CSV", command=self.open_csv)
         self.button_open_csv.grid(row=7, column=0, columnspan=2)
 
+        self.button_save_changes = Button(master, text="Save Changes", command=self.save_changes)
+        self.button_save_changes.grid(row=8, column=0, columnspan=2)
+
         self.task_listbox = Listbox(master, width=50, height=10)
-        self.task_listbox.grid(row=8, column=0, columnspan=2)
+        self.task_listbox.grid(row=9, column=0, columnspan=2)
 
         self.label_total_price = Label(master, text="Total Price: 0 BGN")
-        self.label_total_price.grid(row=9, column=0, columnspan=2)
+        self.label_total_price.grid(row=10, column=0, columnspan=2)
 
         self.selected_index = None
 
@@ -125,27 +131,28 @@ class TaskManager:
     def export_to_pdf(self):
         filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
         if filename:
-            c = canvas.Canvas(filename, pagesize=letter)
-            c.drawString(100, 750, "Task Manager Report")
-            c.drawString(100, 730, f"Total Price: {self.total_price} BGN")
-            y = 700
+            doc = SimpleDocTemplate(filename)
+            data = [["Task", "Hours", "Price per Hour (BGN)"]]
             for task, hours, price in self.tasks:
                 if hours is not None and price is not None:
-                    c.drawString(100, y, f"Task: {task}, Hours: {hours}, Price per Hour: {price} BGN")
-                    y -= 20
-            c.save()
+                    data.append([task, str(hours), str(price)])
+            data.append(["Total Price", "", str(self.total_price) + " BGN"])
+            table = Table(data)
+            table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+                                       ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+                                       ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                                       ('FONTNAME', (0, 0), (-1, 0), 'Times-Roman'),
+                                       ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                                       ('BACKGROUND', (0, 1), (-1, -2), colors.beige),
+                                       ('GRID', (0, 0), (-1, -1), 1, colors.black)]))
+            doc.build([table])
             messagebox.showinfo("Success", "PDF exported successfully!")
 
     def create_csv(self):
         filename = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
         if filename:
             self.csv_filename = filename
-            with open(self.csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
-                csv_writer = csv.writer(csvfile)
-                csv_writer.writerow(['Task', 'Hours', 'Price per hour (BGN)'])
-                for task, hours, price in self.tasks:
-                    csv_writer.writerow([task, hours if hours is not None else '', price if price is not None else ''])
-            messagebox.showinfo("Success", "CSV file created successfully!")
+            self.save_changes()
 
     def open_csv(self):
         filename = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
@@ -154,7 +161,7 @@ class TaskManager:
             self.tasks = []
             with open(self.csv_filename, 'r', newline='', encoding='utf-8') as csvfile:
                 csv_reader = csv.reader(csvfile)
-                next(csv_reader)  # Skip header
+                next(csv_reader)
                 for row in csv_reader:
                     task = row[0]
                     hours = float(row[1]) if row[1] else None
@@ -163,6 +170,17 @@ class TaskManager:
             self.update_task_listbox()
             self.calculate_total()
             messagebox.showinfo("Success", f"CSV file '{filename}' opened successfully!")
+
+    def save_changes(self):
+        if not self.csv_filename:
+            messagebox.showerror("Error", "No CSV file has been created or opened.")
+            return
+        with open(self.csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
+            csv_writer = csv.writer(csvfile)
+            csv_writer.writerow(['Task', 'Hours', 'Price per hour (BGN)'])
+            for task, hours, price in self.tasks:
+                csv_writer.writerow([task, hours if hours is not None else '', price if price is not None else ''])
+        messagebox.showinfo("Success", "Changes saved successfully!")
 
     def update_task_listbox(self):
         self.task_listbox.delete(0, END)
