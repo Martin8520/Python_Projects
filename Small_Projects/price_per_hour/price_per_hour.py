@@ -1,6 +1,6 @@
-import csv
 from tkinter import *
-from tkinter import messagebox, filedialog
+from tkinter import filedialog, messagebox
+import csv
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer
@@ -17,46 +17,49 @@ class TaskManager:
         self.csv_filename = ""
 
         self.label_task = Label(master, text="Task:")
-        self.label_task.grid(row=0, column=0)
+        self.label_task.grid(row=0, column=0, sticky=E, padx=(10, 5), pady=(10, 5))
 
         self.label_hours = Label(master, text="Hours:")
-        self.label_hours.grid(row=1, column=0)
+        self.label_hours.grid(row=1, column=0, sticky=E, padx=(10, 5), pady=5)
 
         self.label_price = Label(master, text="Price per hour (BGN):")
-        self.label_price.grid(row=2, column=0)
+        self.label_price.grid(row=2, column=0, sticky=E, padx=(10, 5), pady=5)
 
         self.entry_task = Entry(master)
-        self.entry_task.grid(row=0, column=1)
+        self.entry_task.grid(row=0, column=1, sticky=W, padx=(0, 10), pady=(10, 5))
 
         self.entry_hours = Entry(master)
-        self.entry_hours.grid(row=1, column=1)
+        self.entry_hours.grid(row=1, column=1, sticky=W, padx=(0, 10), pady=5)
 
         self.entry_price = Entry(master)
-        self.entry_price.grid(row=2, column=1)
+        self.entry_price.grid(row=2, column=1, sticky=W, padx=(0, 10), pady=5)
 
         self.button_add_task = Button(master, text="Add Task", command=self.add_task)
-        self.button_add_task.grid(row=3, column=0, columnspan=2)
+        self.button_add_task.grid(row=3, column=0, columnspan=2, padx=10, pady=(5, 10))
 
         self.button_edit_task = Button(master, text="Edit Task", command=self.edit_task)
-        self.button_edit_task.grid(row=4, column=0, columnspan=2)
+        self.button_edit_task.grid(row=4, column=0, columnspan=2, padx=10, pady=5)
 
         self.button_export_pdf = Button(master, text="Export to PDF", command=self.export_to_pdf)
-        self.button_export_pdf.grid(row=5, column=0, columnspan=2)
+        self.button_export_pdf.grid(row=5, column=0, columnspan=2, padx=10, pady=5)
 
         self.button_create_csv = Button(master, text="Create CSV", command=self.create_csv)
-        self.button_create_csv.grid(row=6, column=0, columnspan=2)
+        self.button_create_csv.grid(row=6, column=0, columnspan=2, padx=10, pady=5)
 
         self.button_open_csv = Button(master, text="Open CSV", command=self.open_csv)
-        self.button_open_csv.grid(row=7, column=0, columnspan=2)
+        self.button_open_csv.grid(row=7, column=0, columnspan=2, padx=10, pady=5)
 
         self.button_save_changes = Button(master, text="Save Changes", command=self.save_changes)
-        self.button_save_changes.grid(row=8, column=0, columnspan=2)
+        self.button_save_changes.grid(row=8, column=0, columnspan=2, padx=10, pady=5)
+
+        self.button_delete_task = Button(master, text="Delete Task", command=self.delete_task)
+        self.button_delete_task.grid(row=9, column=0, columnspan=2, padx=10, pady=5)
 
         self.task_listbox = Listbox(master, width=50, height=10)
-        self.task_listbox.grid(row=9, column=0, columnspan=2)
+        self.task_listbox.grid(row=10, column=0, columnspan=2, padx=10, pady=5)
 
         self.label_total_price = Label(master, text="Total Price: 0 BGN")
-        self.label_total_price.grid(row=10, column=0, columnspan=2)
+        self.label_total_price.grid(row=11, column=0, columnspan=2, padx=10, pady=5)
 
         self.selected_index = None
 
@@ -86,7 +89,6 @@ class TaskManager:
         self.tasks.append((task, hours, price))
         self.update_task_listbox()
         self.calculate_total()
-        messagebox.showinfo("Success", "Task added successfully!")
         self.clear_entries()
 
     def edit_task(self):
@@ -121,11 +123,11 @@ class TaskManager:
         self.tasks[self.selected_index] = (edited_task, edited_hours, edited_price)
         self.update_task_listbox()
         self.calculate_total()
-        messagebox.showinfo("Success", "Task edited successfully!")
         self.clear_entries()
 
     def calculate_total(self):
-        self.total_price = sum(hours * price for _, hours, price in self.tasks if hours is not None and price is not None)
+        self.total_price = sum(
+            hours * price for _, hours, price in self.tasks if hours is not None and price is not None)
         self.label_total_price.config(text=f"Total Price: {self.total_price} BGN")
 
     def export_to_pdf(self):
@@ -146,7 +148,6 @@ class TaskManager:
                                        ('BACKGROUND', (0, 1), (-1, -2), colors.beige),
                                        ('GRID', (0, 0), (-1, -1), 1, colors.black)]))
             doc.build([table])
-            messagebox.showinfo("Success", "PDF exported successfully!")
 
     def create_csv(self):
         filename = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
@@ -169,7 +170,6 @@ class TaskManager:
                     self.tasks.append((task, hours, price))
             self.update_task_listbox()
             self.calculate_total()
-            messagebox.showinfo("Success", f"CSV file '{filename}' opened successfully!")
 
     def save_changes(self):
         if not self.csv_filename:
@@ -180,18 +180,50 @@ class TaskManager:
             csv_writer.writerow(['Task', 'Hours', 'Price per hour (BGN)'])
             for task, hours, price in self.tasks:
                 csv_writer.writerow([task, hours if hours is not None else '', price if price is not None else ''])
-        messagebox.showinfo("Success", "Changes saved successfully!")
+
+    def delete_task(self):
+        selected_index = self.task_listbox.curselection()
+        if not selected_index:
+            return
+        self.selected_index = selected_index[0]
+        del self.tasks[self.selected_index]
+        self.update_task_listbox()
+        self.calculate_total()
+        if self.csv_filename:
+            with open(self.csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
+                csv_writer = csv.writer(csvfile)
+                csv_writer.writerow(['Task', 'Hours', 'Price per hour (BGN)'])
+                for task, hours, price in self.tasks:
+                    csv_writer.writerow([task, hours if hours is not None else '', price if price is not None else ''])
 
     def update_task_listbox(self):
         self.task_listbox.delete(0, END)
         for task, hours, price in self.tasks:
-            self.task_listbox.insert(END, f"Task: {task}, Hours: {hours if hours is not None else 'N/A'}, Price per Hour: {price if price is not None else 'N/A'} BGN")
+            self.task_listbox.insert(END, f"Task: {task}, Hours: {hours if hours is not None else 'N/A'}, Price per "
+                                          f"Hour: {price if price is not None else 'N/A'} BGN")
 
     def clear_entries(self):
         self.entry_task.delete(0, END)
         self.entry_hours.delete(0, END)
         self.entry_price.delete(0, END)
 
+
 root = Tk()
 app = TaskManager(root)
+root.geometry("500x500")
+
+window_width = root.winfo_reqwidth()
+window_height = root.winfo_reqheight()
+
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+
+x_coordinate = (screen_width - window_width) // 2
+y_coordinate = (screen_height - window_height) // 2
+
+root.geometry(f"500x600+{x_coordinate}+{y_coordinate}")
+
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=1)
+
 root.mainloop()
