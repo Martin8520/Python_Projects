@@ -1,7 +1,7 @@
 import csv
-import os
 from tkinter import *
 from tkinter import filedialog, messagebox
+
 from reportlab.lib import colors
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
@@ -135,13 +135,15 @@ class TaskManager:
         filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
         if filename:
             doc = SimpleDocTemplate(filename)
+
+            pdfmetrics.registerFont(TTFont('Arial', 'arial.ttf'))
+
             data = [["Task", "Hours", "Price per Hour (BGN)"]]
             for task, hours, price in self.tasks:
                 if hours is not None and price is not None:
                     data.append([task, str(hours), str(price)])
             data.append(["Total Price", "", str(self.total_price) + " BGN"])
 
-            # Specify the font within the TableStyle
             table_style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
                                       ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
                                       ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
@@ -212,7 +214,6 @@ class TaskManager:
         self.entry_task.delete(0, END)
         self.entry_hours.delete(0, END)
         self.entry_price.delete(0, END)
-
 
 root = Tk()
 app = TaskManager(root)
