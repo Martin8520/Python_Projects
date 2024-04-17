@@ -97,7 +97,7 @@ class TaskManager:
             messagebox.showerror("Error", "Please select a task to edit.")
             return
         self.selected_index = selected_index[0]
-        task, hours, price = self.tasks[self.selected_index]
+        task, hours, _ = self.tasks[self.selected_index]
         edited_task = self.entry_task.get()
         edited_hours = self.entry_hours.get()
         edited_price = self.entry_price.get()
@@ -213,6 +213,7 @@ class TaskManager:
         self.entry_task.delete(0, END)
         self.entry_hours.delete(0, END)
         self.entry_price.delete(0, END)
+
 
 root = Tk()
 app = TaskManager(root)
