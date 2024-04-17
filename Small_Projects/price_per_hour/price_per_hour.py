@@ -1,7 +1,6 @@
 import csv
 from tkinter import *
 from tkinter import filedialog, messagebox
-
 from reportlab.lib import colors
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
