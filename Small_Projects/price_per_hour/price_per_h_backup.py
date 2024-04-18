@@ -56,16 +56,12 @@ class TaskManager:
         self.button_delete_task.grid(row=11, column=0, columnspan=2, sticky='')
 
         self.task_listbox = Listbox(master, width=100, height=10)
-        self.task_listbox.grid(row=9, column=0, columnspan=2, sticky='nsew')
+        self.task_listbox.grid(row=9, column=0, columnspan=2, sticky='')
 
         self.label_total_price = Label(master, text="Обща цена: 0 лв.")
         self.label_total_price.grid(row=10, column=0, columnspan=2, sticky='')
 
         self.selected_index = None
-
-        master.grid_rowconfigure(9, weight=1)
-        master.grid_columnconfigure(0, weight=1)
-        master.grid_columnconfigure(1, weight=1)
 
 
     def add_task(self):
@@ -223,8 +219,8 @@ class TaskManager:
 
 root = Tk()
 app = TaskManager(root)
-window_width = 650
-window_height = 450
+window_width = 615
+window_height = 550
 
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
