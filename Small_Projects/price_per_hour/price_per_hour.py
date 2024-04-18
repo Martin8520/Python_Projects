@@ -34,26 +34,32 @@ class TaskManager:
         self.entry_price = Entry(master)
         self.entry_price.grid(row=2, column=1, sticky='w')
 
-        self.button_add_task = Button(master, text="Добави Задача", command=self.add_task, width=15, height=1)
+        self.button_add_task = Button(master, text="Добави Задача", command=self.add_task, width=15, height=1,
+                                      anchor='w', justify='left')
         self.button_add_task.grid(row=3, column=0, columnspan=1, sticky='w', padx=(10, 0))
 
-        self.button_edit_task = Button(master, text="Промени Задача", command=self.edit_task, width=15, height=1)
+        self.button_edit_task = Button(master, text="Промени Задача", command=self.edit_task, width=15, height=1,
+                                       anchor='w', justify='left')
         self.button_edit_task.grid(row=4, column=0, columnspan=1, sticky='w', padx=(10, 0))
 
-        self.button_export_pdf = Button(master, text="Запази в PDF", command=self.export_to_pdf, width=15, height=1)
+        self.button_export_pdf = Button(master, text="Запази в PDF", command=self.export_to_pdf, width=15, height=1,
+                                        anchor='w', justify='left')
         self.button_export_pdf.grid(row=5, column=0, columnspan=1, sticky='w', padx=(10, 0))
 
-        self.button_create_csv = Button(master, text="Създай нов файл", command=self.create_csv, width=15, height=1)
+        self.button_create_csv = Button(master, text="Създай нов файл", command=self.create_csv, width=15, height=1,
+                                        anchor='e', justify='right')
         self.button_create_csv.grid(row=3, column=1, columnspan=1, sticky='e', padx=(0, 10))
 
-        self.button_open_csv = Button(master, text="Отвори файл", command=self.open_csv, width=15, height=1)
+        self.button_open_csv = Button(master, text="Отвори файл", command=self.open_csv, width=15, height=1, anchor='e',
+                                      justify='right')
         self.button_open_csv.grid(row=4, column=1, columnspan=1, sticky='e', padx=(0, 10))
 
-        self.button_save_changes = Button(master, text="Запази", command=self.save_changes, width=15, height=1)
+        self.button_save_changes = Button(master, text="Запази", command=self.save_changes, width=15, height=1,
+                                          anchor='e', justify='right')
         self.button_save_changes.grid(row=5, column=1, columnspan=1, sticky='e', padx=(0, 10))
 
         self.button_delete_task = Button(master, text="Изтрий Задача", command=self.delete_task, width=15, height=1,
-                                         bg="#ff6666",)
+                                         bg="#ff6666", anchor='w', justify='left')
         self.button_delete_task.grid(row=11, column=0, columnspan=2, sticky='w', padx=(10, 0))
 
         self.task_listbox = Listbox(master, width=100, height=10)
