@@ -206,7 +206,8 @@ class TaskManager:
     def update_task_listbox(self):
         self.task_listbox.delete(0, END)
         for task, hours, price in self.tasks:
-            self.task_listbox.insert(END, f"Задача: {task}, Часове: {hours if hours is not None else 'N/A'}, Цена на час в лева:"
+            self.task_listbox.insert(END, f"Задача: {task}, Часове: {hours if hours is not None else 'N/A'}, Цена на "
+                                          f"час в лева:"
                                           f" {price if price is not None else 'N/A'} лв.")
 
     def clear_entries(self):
