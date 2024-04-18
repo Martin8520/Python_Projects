@@ -17,49 +17,50 @@ class TaskManager:
         self.csv_filename = ""
 
         self.label_task = Label(master, text="Задача:")
-        self.label_task.grid(row=0, column=0, sticky='')
+        self.label_task.grid(row=0, column=0, sticky='e', padx=(0, 10))
 
         self.label_hours = Label(master, text="Часове:")
-        self.label_hours.grid(row=1, column=0, sticky='')
+        self.label_hours.grid(row=1, column=0, sticky='e', padx=(0, 10))
 
         self.label_price = Label(master, text="Цена на час в лева:")
-        self.label_price.grid(row=2, column=0, sticky='')
+        self.label_price.grid(row=2, column=0, sticky='e', padx=(0, 10))
 
         self.entry_task = Entry(master)
-        self.entry_task.grid(row=0, column=1, sticky='')
+        self.entry_task.grid(row=0, column=1, sticky='w')
 
         self.entry_hours = Entry(master)
-        self.entry_hours.grid(row=1, column=1, sticky='')
+        self.entry_hours.grid(row=1, column=1, sticky='w')
 
         self.entry_price = Entry(master)
-        self.entry_price.grid(row=2, column=1, sticky='')
+        self.entry_price.grid(row=2, column=1, sticky='w')
 
         self.button_add_task = Button(master, text="Добави Задача", command=self.add_task)
-        self.button_add_task.grid(row=3, column=0, columnspan=2, sticky='')
+        self.button_add_task.grid(row=3, column=0, columnspan=1, sticky='w', padx=(10, 0))
 
         self.button_edit_task = Button(master, text="Промени Задача", command=self.edit_task)
-        self.button_edit_task.grid(row=4, column=0, columnspan=2, sticky='')
+        self.button_edit_task.grid(row=4, column=0, columnspan=1, sticky='w', padx=(10, 0))
 
         self.button_export_pdf = Button(master, text="Запази в PDF", command=self.export_to_pdf)
-        self.button_export_pdf.grid(row=5, column=0, columnspan=2, sticky='')
+        self.button_export_pdf.grid(row=5, column=0, columnspan=1, sticky='w', padx=(10, 0))
 
         self.button_create_csv = Button(master, text="Създай нов файл", command=self.create_csv)
-        self.button_create_csv.grid(row=6, column=0, columnspan=2, sticky='')
+        self.button_create_csv.grid(row=3, column=1, columnspan=1, sticky='e', padx=(0, 10))
 
         self.button_open_csv = Button(master, text="Отвори файл", command=self.open_csv)
-        self.button_open_csv.grid(row=7, column=0, columnspan=2, sticky='')
+        self.button_open_csv.grid(row=4, column=1, columnspan=1, sticky='e', padx=(0, 10))
 
         self.button_save_changes = Button(master, text="Запази", command=self.save_changes)
-        self.button_save_changes.grid(row=8, column=0, columnspan=2, sticky='')
+        self.button_save_changes.grid(row=5, column=1, columnspan=1, sticky='e', padx=(0, 10))
 
         self.button_delete_task = Button(master, text="Изтрий Задача", command=self.delete_task)
-        self.button_delete_task.grid(row=11, column=0, columnspan=2, sticky='')
+        self.button_delete_task.grid(row=11, column=0, columnspan=2, sticky='w', padx=(10, 0))
 
         self.task_listbox = Listbox(master, width=100, height=10)
-        self.task_listbox.grid(row=9, column=0, columnspan=2, sticky='nsew')
+        self.task_listbox.grid(row=9, column=0, columnspan=2, sticky='nsew', padx=(10, 0))
+        self.task_listbox.bind("<<ListboxSelect>>", self.on_select)
 
         self.label_total_price = Label(master, text="Обща цена: 0 лв.")
-        self.label_total_price.grid(row=10, column=0, columnspan=2, sticky='')
+        self.label_total_price.grid(row=10, column=0, columnspan=2, sticky='w', padx=(10, 0))
 
         self.selected_index = None
 
@@ -67,6 +68,17 @@ class TaskManager:
         master.grid_columnconfigure(0, weight=1)
         master.grid_columnconfigure(1, weight=1)
 
+    def on_select(self, event):
+        selected_index = self.task_listbox.curselection()
+        if selected_index:
+            self.selected_index = selected_index[0]
+            task, hours, price = self.tasks[self.selected_index]
+            self.entry_task.delete(0, END)
+            self.entry_task.insert(END, task)
+            self.entry_hours.delete(0, END)
+            self.entry_hours.insert(END, str(hours) if hours is not None else "")
+            self.entry_price.delete(0, END)
+            self.entry_price.insert(END, str(price) if price is not None else "")
 
     def add_task(self):
         task = self.entry_task.get()
