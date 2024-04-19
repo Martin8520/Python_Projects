@@ -64,7 +64,7 @@ class TaskManager:
         self.button_delete_task.grid(row=11, column=0, columnspan=2, sticky='w', padx=(10, 0))
 
         self.button_mark_completed = Button(master, text="Маркирай като завършена", command=self.mark_completed,
-                                            width=21, height=1, anchor='e', justify='right')
+                                            width=21, height=1, anchor='e', justify='right', bg="#a6ffb4")
         self.button_mark_completed.grid(row=11, column=1, columnspan=1, sticky='e', padx=(0, 10))
 
         self.task_listbox = Listbox(master, width=100, height=10)
@@ -252,10 +252,15 @@ class TaskManager:
 
     def update_task_listbox(self):
         self.task_listbox.delete(0, END)
-        for task, hours, price, start_date, end_date in self.tasks:
-            self.task_listbox.insert(END, f"Задача: {task}, Часове: {hours if hours is not None else 'N/A'}, "
-                                          f"Цена на час в лева: {price if price is not None else 'N/A'} лв., "
-                                          f"Дата на започване: {start_date}, Дата на завършване: {end_date if end_date else 'Незавършена'}")
+        for i, (task, hours, price, start_date, end_date) in enumerate(self.tasks):
+            item_text = f"Задача: {task}, Часове: {hours if hours is not None else 'N/A'}, " \
+                        f"Цена на час в лева: {price if price is not None else 'N/A'} лв., " \
+                        f"Дата на започване: {start_date}, Дата на завършване: {end_date if end_date else 'Незавършена'}"
+            self.task_listbox.insert(END, item_text)
+            if end_date:
+                self.task_listbox.itemconfig(i, bg='#a6ffb4')
+            else:
+                self.task_listbox.itemconfig(i, bg='#ff6666')
 
     def clear_entries(self):
         self.entry_task.delete(0, END)
@@ -278,3 +283,4 @@ root.geometry(f"{window_width}x{window_height}+{int(x_coordinate)}+{int(y_coordi
 for child in root.winfo_children():
     child.grid_configure(padx=5, pady=5)
 root.mainloop()
+Upd
