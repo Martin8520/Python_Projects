@@ -283,4 +283,3 @@ root.geometry(f"{window_width}x{window_height}+{int(x_coordinate)}+{int(y_coordi
 for child in root.winfo_children():
     child.grid_configure(padx=5, pady=5)
 root.mainloop()
-Upd
