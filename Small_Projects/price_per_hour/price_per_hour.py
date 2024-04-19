@@ -8,6 +8,15 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from datetime import datetime
 
 
+class Task:
+    def __init__(self, task="", hours=None, price=None, start_date="", end_date=""):
+        self.task = task
+        self.hours = hours
+        self.price = price
+        self.start_date = start_date
+        self.end_date = end_date
+
+
 class TaskManager:
     def __init__(self, master):
         self.master = master
@@ -80,44 +89,33 @@ class TaskManager:
         master.grid_columnconfigure(0, weight=1)
         master.grid_columnconfigure(1, weight=1)
 
+    def on_entry_focus(self, event):
+        self.selected_index = self.task_listbox.curselection()
+
     def on_select(self, event):
         selected_index = self.task_listbox.curselection()
         if selected_index:
             self.selected_index = selected_index[0]
-            task, hours, price, start_date, end_date = self.tasks[self.selected_index]
+            task = self.tasks[self.selected_index]
             self.entry_task.delete(0, END)
-            self.entry_task.insert(END, task)
+            self.entry_task.insert(END, task.task)
             self.entry_hours.delete(0, END)
-            self.entry_hours.insert(END, str(hours) if hours is not None else "")
+            self.entry_hours.insert(END, str(task.hours) if task.hours is not None else "")
             self.entry_price.delete(0, END)
-            self.entry_price.insert(END, str(price) if price is not None else "")
+            self.entry_price.insert(END, str(task.price) if task.price is not None else "")
 
     def add_task(self):
-        task = self.entry_task.get()
-        hours = self.entry_hours.get()
-        price = self.entry_price.get()
-        if not task:
+        task = Task(
+            self.entry_task.get(),
+            float(self.entry_hours.get()) if self.entry_hours.get() else None,
+            float(self.entry_price.get()) if self.entry_price.get() else None,
+            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            ""
+        )
+        if not task.task:
             messagebox.showerror("Грешка", "Задачата трябва да има име.")
             return
-        if hours:
-            try:
-                hours = float(hours)
-            except ValueError:
-                messagebox.showerror("Грешка", "Моля въведете валидно число за часовете.")
-                return
-        else:
-            hours = None
-        if price:
-            try:
-                price = float(price)
-            except ValueError:
-                messagebox.showerror("Грешка", "Моля въведете валидно число за цената.")
-                return
-        else:
-            price = None
-        start_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        end_date = ""
-        self.tasks.append((task, hours, price, start_date, end_date))
+        self.tasks.append(task)
         self.update_task_listbox()
         self.calculate_total()
         self.clear_entries()
@@ -127,50 +125,55 @@ class TaskManager:
         if not selected_index:
             messagebox.showerror("Грешка", "Моля селектирайте задачата, която искате да промените.")
             return
-        self.selected_index = selected_index[0]
-        task, hours, _, _, _ = self.tasks[self.selected_index]
-        edited_task = self.entry_task.get()
-        edited_hours = self.entry_hours.get()
-        edited_price = self.entry_price.get()
 
-        if edited_hours:
-            try:
-                edited_hours = float(edited_hours)
-            except ValueError:
-                messagebox.showerror("Грешка", "Моля въведете валидно число за часовете.")
-                return
-        else:
-            edited_hours = None
+        # Get the selected task
+        task = self.tasks[selected_index[0]]
 
-        if edited_price:
-            try:
-                edited_price = float(edited_price)
-            except ValueError:
-                messagebox.showerror("Грешка", "Моля въведете валидно число за цената.")
-                return
-        else:
-            edited_price = None
+        edit_window = Toplevel(self.master)
+        edit_window.title("Промяна на Задача")
 
-        self.tasks[self.selected_index] = (edited_task, edited_hours, edited_price)
-        self.update_task_listbox()
-        self.calculate_total()
-        self.clear_entries()
+        Label(edit_window, text="Задача:").grid(row=0, column=0, sticky='e')
+        entry_task = Entry(edit_window)
+        entry_task.grid(row=0, column=1)
+        entry_task.insert(END, task.task)
+
+        Label(edit_window, text="Часове:").grid(row=1, column=0, sticky='e')
+        entry_hours = Entry(edit_window)
+        entry_hours.grid(row=1, column=1)
+        entry_hours.insert(END, str(task.hours) if task.hours is not None else "")
+
+        Label(edit_window, text="Цена на час в лева:").grid(row=2, column=0, sticky='e')
+        entry_price = Entry(edit_window)
+        entry_price.grid(row=2, column=1)
+        entry_price.insert(END, str(task.price) if task.price is not None else "")
+
+        def save_edit():
+            task.task = entry_task.get()
+            task.hours = float(entry_hours.get()) if entry_hours.get() else None
+            task.price = float(entry_price.get()) if entry_price.get() else None
+
+            self.update_task_listbox()
+            self.calculate_total()
+
+            edit_window.destroy()
+
+        Button(edit_window, text="Запази", command=save_edit).grid(row=3, column=0, pady=10)
+        Button(edit_window, text="Откажи", command=edit_window.destroy).grid(row=3, column=1, pady=10)
 
     def mark_completed(self):
         selected_index = self.task_listbox.curselection()
         if not selected_index:
             messagebox.showerror("Грешка", "Моля селектирайте задачата, която искате да маркирате като завършена.")
             return
-        self.selected_index = selected_index[0]
-        task, hours, price, start_date, _ = self.tasks[self.selected_index]
-        end_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.tasks[self.selected_index] = (task, hours, price, start_date, end_date)
+        task = self.tasks[selected_index[0]]
+        task.end_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.update_task_listbox()
         self.calculate_total()
 
     def calculate_total(self):
         self.total_price = sum(
-            hours * price for _, hours, price, _, _ in self.tasks if hours is not None and price is not None)
+            (task.hours * task.price) if (task.hours is not None and task.price is not None) else 0 for task in
+            self.tasks)
         self.label_total_price.config(text=f"Обща цена: {self.total_price} лв.")
 
     def export_to_pdf(self):
@@ -181,9 +184,9 @@ class TaskManager:
             pdfmetrics.registerFont(TTFont('Arial', 'arial.ttf'))
 
             data = [["Задача", "Часове", "Цена на час в лева", "Дата на започване", "Дата на завършване"]]
-            for task, hours, price, start_date, end_date in self.tasks:
-                if hours is not None and price is not None:
-                    data.append([task, str(hours), str(price), start_date, end_date])
+            for task in self.tasks:
+                if task.hours is not None and task.price is not None:
+                    data.append([task.task, str(task.hours), str(task.price), task.start_date, task.end_date])
             data.append(["Обща цена", "", str(self.total_price) + " лв.", "", ""])
 
             table_style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
@@ -214,12 +217,14 @@ class TaskManager:
                 csv_reader = csv.reader(csvfile)
                 next(csv_reader)
                 for row in csv_reader:
-                    task = row[0]
-                    hours = float(row[1]) if row[1] else None
-                    price = float(row[2]) if row[2] else None
-                    start_date = row[3]
-                    end_date = row[4]
-                    self.tasks.append((task, hours, price, start_date, end_date))
+                    task = Task(
+                        row[0],
+                        float(row[1]) if row[1] else None,
+                        float(row[2]) if row[2] else None,
+                        row[3],
+                        row[4]
+                    )
+                    self.tasks.append(task)
             self.update_task_listbox()
             self.calculate_total()
 
@@ -230,37 +235,39 @@ class TaskManager:
         with open(self.csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
             csv_writer = csv.writer(csvfile)
             csv_writer.writerow(['Задача', 'Часове', 'Цена на час в лева', 'Дата на започване', 'Дата на завършване'])
-            for task, hours, price, start_date, end_date in self.tasks:
-                csv_writer.writerow([task, hours if hours is not None else '', price if price is not None else '',
-                                     start_date, end_date])
+            for task in self.tasks:
+                csv_writer.writerow([task.task, task.hours if task.hours is not None else '',
+                                     task.price if task.price is not None else '',
+                                     task.start_date, task.end_date])
 
     def delete_task(self):
         selected_index = self.task_listbox.curselection()
         if not selected_index:
             return
-        self.selected_index = selected_index[0]
-        del self.tasks[self.selected_index]
+        del self.tasks[selected_index[0]]
         self.update_task_listbox()
         self.calculate_total()
         if self.csv_filename:
-            with open(self.csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
-                csv_writer = csv.writer(csvfile)
-                csv_writer.writerow(['Задача', 'Часове', 'Цена на час в лева', 'Дата на започване', 'Дата на завършване'])
-                for task, hours, price, start_date, end_date in self.tasks:
-                    csv_writer.writerow([task, hours if hours is not None else '', price if price is not None else '',
-                                         start_date, end_date])
+            self.save_changes()
 
     def update_task_listbox(self):
         self.task_listbox.delete(0, END)
-        for i, (task, hours, price, start_date, end_date) in enumerate(self.tasks):
-            item_text = f"Задача: {task}, Часове: {hours if hours is not None else 'N/A'}, " \
-                        f"Цена на час в лева: {price if price is not None else 'N/A'} лв., " \
-                        f"Дата на започване: {start_date}, Дата на завършване: {end_date if end_date else 'Незавършена'}"
-            self.task_listbox.insert(END, item_text)
-            if end_date:
-                self.task_listbox.itemconfig(i, bg='#a6ffb4')
+        for task in self.tasks:
+            task_text = f"Задача: {task.task}"
+            if task.hours is not None:
+                task_text += f", Часове: {task.hours}"
+            if task.price is not None:
+                task_text += f", Цена на час в лева: {task.price} лв."
+            task_text += f", Дата на започване: {task.start_date}"
+            if task.end_date:
+                task_text += f", Дата на завършване: {task.end_date}"
             else:
-                self.task_listbox.itemconfig(i, bg='#ff6666')
+                task_text += ", Незавършена"
+            self.task_listbox.insert(END, task_text)
+            if task.end_date:
+                self.task_listbox.itemconfig(END, {'bg': '#a6ffb4'})
+            else:
+                self.task_listbox.itemconfig(END, {'bg': '#ff6666'})
 
     def clear_entries(self):
         self.entry_task.delete(0, END)
