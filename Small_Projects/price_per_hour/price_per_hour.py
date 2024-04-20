@@ -109,7 +109,7 @@ class TaskManager:
             self.entry_task.get(),
             float(self.entry_hours.get()) if self.entry_hours.get() else None,
             float(self.entry_price.get()) if self.entry_price.get() else None,
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            datetime.now().strftime("%Y-%m-%d %H:%M"),
             ""
         )
         if not task.task:
@@ -166,7 +166,7 @@ class TaskManager:
             messagebox.showerror("Грешка", "Моля селектирайте задачата, която искате да маркирате като завършена.")
             return
         task = self.tasks[selected_index[0]]
-        task.end_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        task.end_date = datetime.now().strftime("%Y-%m-%d %H:%M")
         self.update_task_listbox()
         self.calculate_total()
 
