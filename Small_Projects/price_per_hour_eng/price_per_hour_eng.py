@@ -20,7 +20,7 @@ class Task:
 class TaskManager:
     def __init__(self, master):
         self.master = master
-        master.title("Price/Time Calculator")
+        master.title("Price Per Hour Calculator")
 
         self.tasks = []
         self.total_price = 0
@@ -32,7 +32,7 @@ class TaskManager:
         self.label_hours = Label(master, text="Hours:")
         self.label_hours.grid(row=1, column=0, sticky='e', padx=(0, 10))
 
-        self.label_price = Label(master, text="Price per hour in BGN:")
+        self.label_price = Label(master, text="Hourly Rate (BGN):")
         self.label_price.grid(row=2, column=0, sticky='e', padx=(0, 10))
 
         self.entry_task = Entry(master)
@@ -52,7 +52,7 @@ class TaskManager:
                                        anchor='w', justify='left')
         self.button_edit_task.grid(row=4, column=0, columnspan=1, sticky='w', padx=(10, 0))
 
-        self.button_export_pdf = Button(master, text="Save to PDF", command=self.export_to_pdf, width=15, height=1,
+        self.button_export_pdf = Button(master, text="Export to PDF", command=self.export_to_pdf, width=15, height=1,
                                         anchor='w', justify='left')
         self.button_export_pdf.grid(row=5, column=0, columnspan=1, sticky='w', padx=(10, 0))
 
@@ -73,7 +73,7 @@ class TaskManager:
         self.button_delete_task.grid(row=11, column=0, columnspan=2, sticky='w', padx=(10, 0))
 
         self.button_mark_completed = Button(master, text="Mark as Completed", command=self.mark_completed,
-                                            width=15, height=1, anchor='e', justify='right', bg="#a6ffb4")
+                                            width=21, height=1, anchor='e', justify='right', bg="#a6ffb4")
         self.button_mark_completed.grid(row=11, column=1, columnspan=1, sticky='e', padx=(0, 10))
 
         self.task_listbox = Listbox(master, width=100, height=10)
@@ -130,12 +130,10 @@ class TaskManager:
 
         edit_window = Toplevel(self.master)
         edit_window.title("Edit Task")
-        edit_window.geometry("250x200")
 
         edit_window.grid_rowconfigure(0, weight=1)
         edit_window.grid_rowconfigure(1, weight=1)
         edit_window.grid_rowconfigure(2, weight=1)
-        edit_window.grid_rowconfigure(3, weight=1)
         edit_window.grid_columnconfigure(0, weight=1)
         edit_window.grid_columnconfigure(1, weight=1)
 
@@ -149,7 +147,7 @@ class TaskManager:
         entry_hours.grid(row=1, column=1, sticky='we')
         entry_hours.insert(END, str(task.hours) if task.hours is not None else "")
 
-        Label(edit_window, text="Price per hour in BGN:").grid(row=2, column=0, sticky='e')
+        Label(edit_window, text="Hourly Rate in BGN:").grid(row=2, column=0, sticky='e')
         entry_price = Entry(edit_window)
         entry_price.grid(row=2, column=1, sticky='we')
         entry_price.insert(END, str(task.price) if task.price is not None else "")
@@ -164,19 +162,19 @@ class TaskManager:
 
             edit_window.destroy()
 
-        Button(edit_window, text="Save", command=save_edit).grid(row=3, column=0, sticky='we', padx=5, pady=10)
-        Button(edit_window, text="Cancel", command=edit_window.destroy).grid(row=3, column=1, sticky='we', padx=5,
-                                                                             pady=10)
+        for child_e in edit_window.winfo_children():
+            child_e.grid_configure(padx=5, pady=5)
 
-    def mark_completed(self):
-        selected_index = self.task_listbox.curselection()
-        if not selected_index:
-            messagebox.showerror("Error", "Please select the task you want to mark as completed.")
-            return
-        task = self.tasks[selected_index[0]]
-        task.end_date = datetime.now().strftime("%Y-%m-%d %H:%M")
-        self.update_task_listbox()
-        self.calculate_total()
+        edit_window.update_idletasks()
+        button_frame = Frame(edit_window)
+        button_frame.grid(row=5, column=0, columnspan=2, sticky='nsew')
+        button_frame.grid_columnconfigure(0, weight=1)
+        button_frame.grid_columnconfigure(1, weight=1)
+
+        Button(button_frame, text="Save", command=save_edit).pack(side=LEFT, padx=5, pady=10)
+        Button(button_frame, text="Cancel", command=edit_window.destroy).pack(side=RIGHT, padx=5, pady=10)
+
+        edit_window.geometry("")
 
     def mark_completed(self):
         selected_index = self.task_listbox.curselection()
@@ -201,7 +199,7 @@ class TaskManager:
 
             pdfmetrics.registerFont(TTFont('Arial', 'arial.ttf'))
 
-            data = [["Task", "Hours", "Price per hour in BGN", "Start Date", "End Date"]]
+            data = [["Task", "Hours", "Hourly Rate in BGN", "Start Date", "End Date"]]
             for task in self.tasks:
                 if task.hours is not None and task.price is not None:
                     data.append([task.task, str(task.hours), str(task.price), task.start_date, task.end_date])
@@ -252,7 +250,7 @@ class TaskManager:
             return
         with open(self.csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
             csv_writer = csv.writer(csvfile)
-            csv_writer.writerow(['Task', 'Hours', 'Price per hour in BGN', 'Start Date', 'End Date'])
+            csv_writer.writerow(['Task', 'Hours', 'Hourly Rate in BGN', 'Start Date', 'End Date'])
             for task in self.tasks:
                 csv_writer.writerow([task.task, task.hours if task.hours is not None else '',
                                      task.price if task.price is not None else '',
@@ -275,12 +273,12 @@ class TaskManager:
             if task.hours is not None:
                 task_text += f", Hours: {task.hours}"
             if task.price is not None:
-                task_text += f", Price per hour in BGN: {task.price} BGN"
+                task_text += f", Hourly Rate in BGN: {task.price} BGN"
             task_text += f", Start Date: {task.start_date}"
             if task.end_date:
                 task_text += f", End Date: {task.end_date}"
             else:
-                task_text += ", Unfinished"
+                task_text += ", Not Completed"
             self.task_listbox.insert(END, task_text)
             if task.end_date:
                 self.task_listbox.itemconfig(END, {'bg': '#a6ffb4'})
