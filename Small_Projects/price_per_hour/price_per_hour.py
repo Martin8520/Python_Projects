@@ -130,6 +130,7 @@ class TaskManager:
 
         edit_window = Toplevel(self.master)
         edit_window.title("Редактиране на Задача")
+        edit_window.geometry("250x200")
 
         edit_window.grid_rowconfigure(0, weight=1)
         edit_window.grid_rowconfigure(1, weight=1)

@@ -130,20 +130,28 @@ class TaskManager:
 
         edit_window = Toplevel(self.master)
         edit_window.title("Edit Task")
+        edit_window.geometry("250x200")
+
+        edit_window.grid_rowconfigure(0, weight=1)
+        edit_window.grid_rowconfigure(1, weight=1)
+        edit_window.grid_rowconfigure(2, weight=1)
+        edit_window.grid_rowconfigure(3, weight=1)
+        edit_window.grid_columnconfigure(0, weight=1)
+        edit_window.grid_columnconfigure(1, weight=1)
 
         Label(edit_window, text="Task:").grid(row=0, column=0, sticky='e')
         entry_task = Entry(edit_window)
-        entry_task.grid(row=0, column=1)
+        entry_task.grid(row=0, column=1, sticky='we')
         entry_task.insert(END, task.task)
 
         Label(edit_window, text="Hours:").grid(row=1, column=0, sticky='e')
         entry_hours = Entry(edit_window)
-        entry_hours.grid(row=1, column=1)
+        entry_hours.grid(row=1, column=1, sticky='we')
         entry_hours.insert(END, str(task.hours) if task.hours is not None else "")
 
         Label(edit_window, text="Price per hour in BGN:").grid(row=2, column=0, sticky='e')
         entry_price = Entry(edit_window)
-        entry_price.grid(row=2, column=1)
+        entry_price.grid(row=2, column=1, sticky='we')
         entry_price.insert(END, str(task.price) if task.price is not None else "")
 
         def save_edit():
@@ -156,8 +164,19 @@ class TaskManager:
 
             edit_window.destroy()
 
-        Button(edit_window, text="Save", command=save_edit).grid(row=3, column=0, pady=10)
-        Button(edit_window, text="Cancel", command=edit_window.destroy).grid(row=3, column=1, pady=10)
+        Button(edit_window, text="Save", command=save_edit).grid(row=3, column=0, sticky='we', padx=5, pady=10)
+        Button(edit_window, text="Cancel", command=edit_window.destroy).grid(row=3, column=1, sticky='we', padx=5,
+                                                                             pady=10)
+
+    def mark_completed(self):
+        selected_index = self.task_listbox.curselection()
+        if not selected_index:
+            messagebox.showerror("Error", "Please select the task you want to mark as completed.")
+            return
+        task = self.tasks[selected_index[0]]
+        task.end_date = datetime.now().strftime("%Y-%m-%d %H:%M")
+        self.update_task_listbox()
+        self.calculate_total()
 
     def mark_completed(self):
         selected_index = self.task_listbox.curselection()
