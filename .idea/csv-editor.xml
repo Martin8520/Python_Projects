@@ -101,6 +101,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Small_Projects\price_per_hour\test-3.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Small_Projects\price_per_hour\test_bg.csv">
           <value>
             <Attribute>
