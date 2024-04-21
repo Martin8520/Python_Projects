@@ -73,7 +73,7 @@ class TaskManager:
         self.button_delete_task.grid(row=11, column=0, columnspan=2, sticky='w', padx=(10, 0))
 
         self.button_mark_completed = Button(master, text="Mark as Completed", command=self.mark_completed,
-                                            width=21, height=1, anchor='e', justify='right', bg="#a6ffb4")
+                                            width=15, height=1, anchor='e', justify='right', bg="#a6ffb4")
         self.button_mark_completed.grid(row=11, column=1, columnspan=1, sticky='e', padx=(0, 10))
 
         self.task_listbox = Listbox(master, width=100, height=10)
@@ -126,7 +126,6 @@ class TaskManager:
             messagebox.showerror("Error", "Please select the task you want to edit.")
             return
 
-        # Get the selected task
         task = self.tasks[selected_index[0]]
 
         edit_window = Toplevel(self.master)
