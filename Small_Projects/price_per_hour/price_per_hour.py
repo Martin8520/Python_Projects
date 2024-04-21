@@ -123,28 +123,36 @@ class TaskManager:
     def edit_task(self):
         selected_index = self.task_listbox.curselection()
         if not selected_index:
-            messagebox.showerror("Грешка", "Моля селектирайте задачата, която искате да промените.")
+            messagebox.showerror("Грешка", "Моля изберете задачата, която искате да редактирате.")
             return
 
-        # Get the selected task
+        # Вземаме избраната задача
         task = self.tasks[selected_index[0]]
 
         edit_window = Toplevel(self.master)
-        edit_window.title("Промяна на Задача")
+        edit_window.title("Редактиране на Задача")
+
+        # Настройваме редовете и колоните да се променят при растене на прозореца
+        edit_window.grid_rowconfigure(0, weight=1)
+        edit_window.grid_rowconfigure(1, weight=1)
+        edit_window.grid_rowconfigure(2, weight=1)
+        edit_window.grid_rowconfigure(3, weight=1)
+        edit_window.grid_columnconfigure(0, weight=1)
+        edit_window.grid_columnconfigure(1, weight=1)
 
         Label(edit_window, text="Задача:").grid(row=0, column=0, sticky='e')
         entry_task = Entry(edit_window)
-        entry_task.grid(row=0, column=1)
+        entry_task.grid(row=0, column=1, sticky='we')
         entry_task.insert(END, task.task)
 
         Label(edit_window, text="Часове:").grid(row=1, column=0, sticky='e')
         entry_hours = Entry(edit_window)
-        entry_hours.grid(row=1, column=1)
+        entry_hours.grid(row=1, column=1, sticky='we')
         entry_hours.insert(END, str(task.hours) if task.hours is not None else "")
 
-        Label(edit_window, text="Цена на час в лева:").grid(row=2, column=0, sticky='e')
+        Label(edit_window, text="Цена на час в BGN:").grid(row=2, column=0, sticky='e')
         entry_price = Entry(edit_window)
-        entry_price.grid(row=2, column=1)
+        entry_price.grid(row=2, column=1, sticky='we')
         entry_price.insert(END, str(task.price) if task.price is not None else "")
 
         def save_edit():
@@ -157,8 +165,9 @@ class TaskManager:
 
             edit_window.destroy()
 
-        Button(edit_window, text="Запази", command=save_edit).grid(row=3, column=0, pady=10)
-        Button(edit_window, text="Откажи", command=edit_window.destroy).grid(row=3, column=1, pady=10)
+        Button(edit_window, text="Запази", command=save_edit).grid(row=3, column=0, sticky='we', padx=5, pady=10)
+        Button(edit_window, text="Откажи", command=edit_window.destroy).grid(row=3, column=1, sticky='we', padx=5,
+                                                                             pady=10)
 
     def mark_completed(self):
         selected_index = self.task_listbox.curselection()
