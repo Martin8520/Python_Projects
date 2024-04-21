@@ -126,13 +126,11 @@ class TaskManager:
             messagebox.showerror("Грешка", "Моля изберете задачата, която искате да редактирате.")
             return
 
-        # Вземаме избраната задача
         task = self.tasks[selected_index[0]]
 
         edit_window = Toplevel(self.master)
         edit_window.title("Редактиране на Задача")
 
-        # Настройваме редовете и колоните да се променят при растене на прозореца
         edit_window.grid_rowconfigure(0, weight=1)
         edit_window.grid_rowconfigure(1, weight=1)
         edit_window.grid_rowconfigure(2, weight=1)
