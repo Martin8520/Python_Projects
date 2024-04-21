@@ -130,12 +130,10 @@ class TaskManager:
 
         edit_window = Toplevel(self.master)
         edit_window.title("Редактиране на Задача")
-        edit_window.geometry("250x200")
 
         edit_window.grid_rowconfigure(0, weight=1)
         edit_window.grid_rowconfigure(1, weight=1)
         edit_window.grid_rowconfigure(2, weight=1)
-        edit_window.grid_rowconfigure(3, weight=1)
         edit_window.grid_columnconfigure(0, weight=1)
         edit_window.grid_columnconfigure(1, weight=1)
 
@@ -164,9 +162,19 @@ class TaskManager:
 
             edit_window.destroy()
 
-        Button(edit_window, text="Запази", command=save_edit).grid(row=3, column=0, sticky='we', padx=5, pady=10)
-        Button(edit_window, text="Откажи", command=edit_window.destroy).grid(row=3, column=1, sticky='we', padx=5,
-                                                                             pady=10)
+        for child_e in edit_window.winfo_children():
+            child_e.grid_configure(padx=5, pady=5)
+
+        edit_window.update_idletasks()
+        button_frame = Frame(edit_window)
+        button_frame.grid(row=5, column=0, columnspan=2, sticky='nsew')
+        button_frame.grid_columnconfigure(0, weight=1)
+        button_frame.grid_columnconfigure(1, weight=1)
+
+        Button(button_frame, text="Запази", command=save_edit).pack(side=LEFT, padx=5, pady=10)
+        Button(button_frame, text="Откажи", command=edit_window.destroy).pack(side=RIGHT, padx=5, pady=10)
+
+        edit_window.geometry("")
 
     def mark_completed(self):
         selected_index = self.task_listbox.curselection()
