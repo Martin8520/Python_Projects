@@ -108,7 +108,21 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Small_Projects\price_per_hour\test.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Small_Projects\price_per_hour\test_bg.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Small_Projects\price_per_hour_eng\test.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

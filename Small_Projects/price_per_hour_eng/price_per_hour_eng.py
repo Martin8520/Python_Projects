@@ -20,7 +20,7 @@ class Task:
 class TaskManager:
     def __init__(self, master):
         self.master = master
-        master.title("Price Per Hour Calculator")
+        master.title("Price/Hours Calculator")
 
         self.tasks = []
         self.total_price = 0
@@ -32,7 +32,7 @@ class TaskManager:
         self.label_hours = Label(master, text="Hours:")
         self.label_hours.grid(row=1, column=0, sticky='e', padx=(0, 10))
 
-        self.label_price = Label(master, text="Hourly Rate (BGN):")
+        self.label_price = Label(master, text="Price per hour in BGN:")
         self.label_price.grid(row=2, column=0, sticky='e', padx=(0, 10))
 
         self.entry_task = Entry(master)
@@ -80,7 +80,7 @@ class TaskManager:
         self.task_listbox.grid(row=9, column=0, columnspan=2, sticky='nsew', padx=(10, 0))
         self.task_listbox.bind("<<ListboxSelect>>", self.on_select)
 
-        self.label_total_price = Label(master, text="Total Price: 0 BGN")
+        self.label_total_price = Label(master, text="Total price: 0 BGN")
         self.label_total_price.grid(row=10, column=0, columnspan=2, sticky='w', padx=(10, 0))
 
         self.selected_index = None
@@ -147,7 +147,7 @@ class TaskManager:
         entry_hours.grid(row=1, column=1, sticky='we')
         entry_hours.insert(END, str(task.hours) if task.hours is not None else "")
 
-        Label(edit_window, text="Hourly Rate in BGN:").grid(row=2, column=0, sticky='e')
+        Label(edit_window, text="Price per hour in BGN:").grid(row=2, column=0, sticky='e')
         entry_price = Entry(edit_window)
         entry_price.grid(row=2, column=1, sticky='we')
         entry_price.insert(END, str(task.price) if task.price is not None else "")
@@ -190,7 +190,7 @@ class TaskManager:
         self.total_price = sum(
             (task.hours * task.price) if (task.hours is not None and task.price is not None) else 0 for task in
             self.tasks)
-        self.label_total_price.config(text=f"Total Price: {self.total_price} BGN")
+        self.label_total_price.config(text=f"Total price: {self.total_price} BGN")
 
     def export_to_pdf(self):
         filename = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
@@ -199,11 +199,11 @@ class TaskManager:
 
             pdfmetrics.registerFont(TTFont('Arial', 'arial.ttf'))
 
-            data = [["Task", "Hours", "Hourly Rate in BGN", "Start Date", "End Date"]]
+            data = [["Task", "Hours", "Price per hour in BGN", "Start Date", "End Date"]]
             for task in self.tasks:
                 if task.hours is not None and task.price is not None:
                     data.append([task.task, str(task.hours), str(task.price), task.start_date, task.end_date])
-            data.append(["Total Price", "", str(self.total_price) + " BGN", "", ""])
+            data.append(["Total price", "", str(self.total_price) + " BGN", "", ""])
 
             table_style = TableStyle([('BACKGROUND', (0, 0), (-1, 0), colors.grey),
                                       ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -250,7 +250,7 @@ class TaskManager:
             return
         with open(self.csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
             csv_writer = csv.writer(csvfile)
-            csv_writer.writerow(['Task', 'Hours', 'Hourly Rate in BGN', 'Start Date', 'End Date'])
+            csv_writer.writerow(['Task', 'Hours', 'Price per hour in BGN', 'Start Date', 'End Date'])
             for task in self.tasks:
                 csv_writer.writerow([task.task, task.hours if task.hours is not None else '',
                                      task.price if task.price is not None else '',
@@ -273,12 +273,12 @@ class TaskManager:
             if task.hours is not None:
                 task_text += f", Hours: {task.hours}"
             if task.price is not None:
-                task_text += f", Hourly Rate in BGN: {task.price} BGN"
+                task_text += f", Price per hour in BGN: {task.price} BGN"
             task_text += f", Start Date: {task.start_date}"
             if task.end_date:
                 task_text += f", End Date: {task.end_date}"
             else:
-                task_text += ", Not Completed"
+                task_text += ", Incomplete"
             self.task_listbox.insert(END, task_text)
             if task.end_date:
                 self.task_listbox.itemconfig(END, {'bg': '#a6ffb4'})
