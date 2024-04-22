@@ -20,67 +20,74 @@ class Task:
 class TaskManager:
     def __init__(self, master):
         self.master = master
-        master.title("Калкулатор за цена/час")
+        master.title("Price/Hours Calculator")
 
         self.tasks = []
         self.total_price = 0
         self.csv_filename = ""
+        self.language = "bulgarian"
 
-        self.label_task = Label(master, text="Задача:")
-        self.label_task.grid(row=0, column=0, sticky='e', padx=(0, 10))
+        self.language_var = StringVar()
+        self.language_var.set("Bulgarian")
+        self.language_menu = OptionMenu(master, self.language_var, "English", "Bulgarian", command=self.change_language)
+        self.language_menu.config(width=12)
+        self.language_menu.grid(row=0, column=0, columnspan=1, sticky="w", padx=5, pady=5)
 
-        self.label_hours = Label(master, text="Часове:")
-        self.label_hours.grid(row=1, column=0, sticky='e', padx=(0, 10))
+        self.label_task = Label(master, text="Задача:" if self.language == "bulgarian" else "Task:")
+        self.label_task.grid(row=1, column=0, sticky='e', padx=(0, 10))
 
-        self.label_price = Label(master, text="Цена на час в лева:")
-        self.label_price.grid(row=2, column=0, sticky='e', padx=(0, 10))
+        self.label_hours = Label(master, text="Часове:" if self.language == "bulgarian" else "Hours:")
+        self.label_hours.grid(row=2, column=0, sticky='e', padx=(0, 10))
+
+        self.label_price = Label(master, text="Цена на час в BGN:" if self.language == "bulgarian" else "Price per hour in BGN:")
+        self.label_price.grid(row=3, column=0, sticky='e', padx=(0, 10))
 
         self.entry_task = Entry(master)
-        self.entry_task.grid(row=0, column=1, sticky='w')
+        self.entry_task.grid(row=1, column=1, sticky='w')
 
         self.entry_hours = Entry(master)
-        self.entry_hours.grid(row=1, column=1, sticky='w')
+        self.entry_hours.grid(row=2, column=1, sticky='w')
 
         self.entry_price = Entry(master)
-        self.entry_price.grid(row=2, column=1, sticky='w')
+        self.entry_price.grid(row=3, column=1, sticky='w')
 
-        self.button_add_task = Button(master, text="Добави Задача", command=self.add_task, width=15, height=1,
+        self.button_add_task = Button(master, text="Добави Задача" if self.language == "bulgarian" else "Add Task", command=self.add_task, width=15, height=1,
                                       anchor='w', justify='left')
-        self.button_add_task.grid(row=3, column=0, columnspan=1, sticky='w', padx=(10, 0))
+        self.button_add_task.grid(row=4, column=0, columnspan=1, sticky='w', padx=(10, 0), pady=5)
 
-        self.button_edit_task = Button(master, text="Промени Задача", command=self.edit_task, width=15, height=1,
+        self.button_edit_task = Button(master, text="Промени Задача" if self.language == "bulgarian" else "Edit Task", command=self.edit_task, width=15, height=1,
                                        anchor='w', justify='left')
-        self.button_edit_task.grid(row=4, column=0, columnspan=1, sticky='w', padx=(10, 0))
+        self.button_edit_task.grid(row=5, column=0, columnspan=1, sticky='w', padx=(10, 0), pady=5)
 
-        self.button_export_pdf = Button(master, text="Запази в PDF", command=self.export_to_pdf, width=15, height=1,
+        self.button_export_pdf = Button(master, text="Запази в PDF" if self.language == "bulgarian" else "Save to PDF", command=self.export_to_pdf, width=15, height=1,
                                         anchor='w', justify='left')
-        self.button_export_pdf.grid(row=5, column=0, columnspan=1, sticky='w', padx=(10, 0))
+        self.button_export_pdf.grid(row=6, column=0, columnspan=1, sticky='w', padx=(10, 0), pady=5)
 
-        self.button_create_csv = Button(master, text="Създай нов файл", command=self.create_csv, width=15, height=1,
+        self.button_create_csv = Button(master, text="Създай нов файл" if self.language == "bulgarian" else "Create new file", command=self.create_csv, width=15, height=1,
                                         anchor='e', justify='right')
-        self.button_create_csv.grid(row=3, column=1, columnspan=1, sticky='e', padx=(0, 10))
+        self.button_create_csv.grid(row=4, column=1, columnspan=1, sticky='e', padx=(0, 10), pady=5)
 
-        self.button_open_csv = Button(master, text="Отвори файл", command=self.open_csv, width=15, height=1, anchor='e',
+        self.button_open_csv = Button(master, text="Отвори файл" if self.language == "bulgarian" else "Open file", command=self.open_csv, width=15, height=1, anchor='e',
                                       justify='right')
-        self.button_open_csv.grid(row=4, column=1, columnspan=1, sticky='e', padx=(0, 10))
+        self.button_open_csv.grid(row=5, column=1, columnspan=1, sticky='e', padx=(0, 10), pady=5)
 
-        self.button_save_changes = Button(master, text="Запази", command=self.save_changes, width=15, height=1,
+        self.button_save_changes = Button(master, text="Запази" if self.language == "bulgarian" else "Save", command=self.save_changes, width=15, height=1,
                                           anchor='e', justify='right')
-        self.button_save_changes.grid(row=5, column=1, columnspan=1, sticky='e', padx=(0, 10))
+        self.button_save_changes.grid(row=6, column=1, columnspan=1, sticky='e', padx=(0, 10), pady=5)
 
-        self.button_delete_task = Button(master, text="Изтрий Задача", command=self.delete_task, width=15, height=1,
+        self.button_delete_task = Button(master, text="Изтрий Задача" if self.language == "bulgarian" else "Delete Task", command=self.delete_task, width=15, height=1,
                                          bg="#ff6666", anchor='w', justify='left')
-        self.button_delete_task.grid(row=11, column=0, columnspan=2, sticky='w', padx=(10, 0))
+        self.button_delete_task.grid(row=11, column=0, columnspan=2, sticky='w', padx=(10, 0), pady=5)
 
-        self.button_mark_completed = Button(master, text="Маркирай като завършена", command=self.mark_completed,
+        self.button_mark_completed = Button(master, text="Маркирай като завършена" if self.language == "bulgarian" else "Mark as completed", command=self.mark_completed,
                                             width=21, height=1, anchor='e', justify='right', bg="#a6ffb4")
-        self.button_mark_completed.grid(row=11, column=1, columnspan=1, sticky='e', padx=(0, 10))
+        self.button_mark_completed.grid(row=11, column=1, columnspan=1, sticky='e', padx=(0, 10), pady=5)
 
         self.task_listbox = Listbox(master, width=100, height=10)
         self.task_listbox.grid(row=9, column=0, columnspan=2, sticky='nsew', padx=(10, 0))
         self.task_listbox.bind("<<ListboxSelect>>", self.on_select)
 
-        self.label_total_price = Label(master, text="Обща цена: 0 лв.")
+        self.label_total_price = Label(master, text="Обща цена: 0 лв." if self.language == "bulgarian" else "Total price: 0 BGN")
         self.label_total_price.grid(row=10, column=0, columnspan=2, sticky='w', padx=(10, 0))
 
         self.selected_index = None
@@ -88,6 +95,38 @@ class TaskManager:
         master.grid_rowconfigure(9, weight=1)
         master.grid_columnconfigure(0, weight=1)
         master.grid_columnconfigure(1, weight=1)
+
+    def change_language(self, event):
+        self.language = self.language_var.get().lower()
+        self.update_ui_language()
+
+    def update_ui_language(self):
+        if self.language == "bulgarian":
+            self.label_task.config(text="Задача:")
+            self.label_hours.config(text="Часове:")
+            self.label_price.config(text="Цена на час в BGN:")
+            self.button_add_task.config(text="Добави Задача")
+            self.button_edit_task.config(text="Промени Задача")
+            self.button_export_pdf.config(text="Запази в PDF")
+            self.button_create_csv.config(text="Създай нов файл")
+            self.button_open_csv.config(text="Отвори файл")
+            self.button_save_changes.config(text="Запази")
+            self.button_delete_task.config(text="Изтрий Задача")
+            self.button_mark_completed.config(text="Маркирай като завършена")
+            self.label_total_price.config(text="Обща цена: 0 лв.")
+        else:
+            self.label_task.config(text="Task:")
+            self.label_hours.config(text="Hours:")
+            self.label_price.config(text="Price per hour in BGN:")
+            self.button_add_task.config(text="Add Task")
+            self.button_edit_task.config(text="Edit Task")
+            self.button_export_pdf.config(text="Save to PDF")
+            self.button_create_csv.config(text="Create new file")
+            self.button_open_csv.config(text="Open file")
+            self.button_save_changes.config(text="Save")
+            self.button_delete_task.config(text="Delete Task")
+            self.button_mark_completed.config(text="Mark as completed")
+            self.label_total_price.config(text="Total price: 0 BGN")
 
     def on_entry_focus(self, event):
         self.selected_index = self.task_listbox.curselection()
@@ -137,17 +176,27 @@ class TaskManager:
         edit_window.grid_columnconfigure(0, weight=1)
         edit_window.grid_columnconfigure(1, weight=1)
 
-        Label(edit_window, text="Задача:").grid(row=0, column=0, sticky='e')
+        if self.language == "bulgarian":
+            Label(edit_window, text="Задача:").grid(row=0, column=0, sticky='e')
+            Label(edit_window, text="Часове:").grid(row=1, column=0, sticky='e')
+            Label(edit_window, text="Цена на час в лева:").grid(row=2, column=0, sticky='e')
+            save_button_text = "Запази"
+            cancel_button_text = "Откажи"
+        else:
+            Label(edit_window, text="Task:").grid(row=0, column=0, sticky='e')
+            Label(edit_window, text="Hours:").grid(row=1, column=0, sticky='e')
+            Label(edit_window, text="Price per hour in BGN:").grid(row=2, column=0, sticky='e')
+            save_button_text = "Save"
+            cancel_button_text = "Cancel"
+
         entry_task = Entry(edit_window)
         entry_task.grid(row=0, column=1, sticky='we')
         entry_task.insert(END, task.task)
 
-        Label(edit_window, text="Часове:").grid(row=1, column=0, sticky='e')
         entry_hours = Entry(edit_window)
         entry_hours.grid(row=1, column=1, sticky='we')
         entry_hours.insert(END, str(task.hours) if task.hours is not None else "")
 
-        Label(edit_window, text="Цена на час в BGN:").grid(row=2, column=0, sticky='e')
         entry_price = Entry(edit_window)
         entry_price.grid(row=2, column=1, sticky='we')
         entry_price.insert(END, str(task.price) if task.price is not None else "")
@@ -171,8 +220,8 @@ class TaskManager:
         button_frame.grid_columnconfigure(0, weight=1)
         button_frame.grid_columnconfigure(1, weight=1)
 
-        Button(button_frame, text="Запази", command=save_edit).pack(side=LEFT, padx=5, pady=10)
-        Button(button_frame, text="Откажи", command=edit_window.destroy).pack(side=RIGHT, padx=5, pady=10)
+        Button(button_frame, text=save_button_text, command=save_edit).pack(side=LEFT, padx=5, pady=10)
+        Button(button_frame, text=cancel_button_text, command=edit_window.destroy).pack(side=RIGHT, padx=5, pady=10)
 
         edit_window.geometry("")
 
