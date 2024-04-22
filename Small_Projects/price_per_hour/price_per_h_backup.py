@@ -109,7 +109,7 @@ class TaskManager:
             self.entry_task.get(),
             float(self.entry_hours.get()) if self.entry_hours.get() else None,
             float(self.entry_price.get()) if self.entry_price.get() else None,
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            datetime.now().strftime("%Y-%m-%d %H:%M"),
             ""
         )
         if not task.task:
@@ -123,28 +123,33 @@ class TaskManager:
     def edit_task(self):
         selected_index = self.task_listbox.curselection()
         if not selected_index:
-            messagebox.showerror("Грешка", "Моля селектирайте задачата, която искате да промените.")
+            messagebox.showerror("Грешка", "Моля изберете задачата, която искате да редактирате.")
             return
 
-        # Get the selected task
         task = self.tasks[selected_index[0]]
 
         edit_window = Toplevel(self.master)
-        edit_window.title("Промяна на Задача")
+        edit_window.title("Редактиране на Задача")
+
+        edit_window.grid_rowconfigure(0, weight=1)
+        edit_window.grid_rowconfigure(1, weight=1)
+        edit_window.grid_rowconfigure(2, weight=1)
+        edit_window.grid_columnconfigure(0, weight=1)
+        edit_window.grid_columnconfigure(1, weight=1)
 
         Label(edit_window, text="Задача:").grid(row=0, column=0, sticky='e')
         entry_task = Entry(edit_window)
-        entry_task.grid(row=0, column=1)
+        entry_task.grid(row=0, column=1, sticky='we')
         entry_task.insert(END, task.task)
 
         Label(edit_window, text="Часове:").grid(row=1, column=0, sticky='e')
         entry_hours = Entry(edit_window)
-        entry_hours.grid(row=1, column=1)
+        entry_hours.grid(row=1, column=1, sticky='we')
         entry_hours.insert(END, str(task.hours) if task.hours is not None else "")
 
-        Label(edit_window, text="Цена на час в лева:").grid(row=2, column=0, sticky='e')
+        Label(edit_window, text="Цена на час в BGN:").grid(row=2, column=0, sticky='e')
         entry_price = Entry(edit_window)
-        entry_price.grid(row=2, column=1)
+        entry_price.grid(row=2, column=1, sticky='we')
         entry_price.insert(END, str(task.price) if task.price is not None else "")
 
         def save_edit():
@@ -157,8 +162,19 @@ class TaskManager:
 
             edit_window.destroy()
 
-        Button(edit_window, text="Запази", command=save_edit).grid(row=3, column=0, pady=10)
-        Button(edit_window, text="Откажи", command=edit_window.destroy).grid(row=3, column=1, pady=10)
+        for child_e in edit_window.winfo_children():
+            child_e.grid_configure(padx=5, pady=5)
+
+        edit_window.update_idletasks()
+        button_frame = Frame(edit_window)
+        button_frame.grid(row=5, column=0, columnspan=2, sticky='nsew')
+        button_frame.grid_columnconfigure(0, weight=1)
+        button_frame.grid_columnconfigure(1, weight=1)
+
+        Button(button_frame, text="Запази", command=save_edit).pack(side=LEFT, padx=5, pady=10)
+        Button(button_frame, text="Откажи", command=edit_window.destroy).pack(side=RIGHT, padx=5, pady=10)
+
+        edit_window.geometry("")
 
     def mark_completed(self):
         selected_index = self.task_listbox.curselection()
@@ -166,7 +182,7 @@ class TaskManager:
             messagebox.showerror("Грешка", "Моля селектирайте задачата, която искате да маркирате като завършена.")
             return
         task = self.tasks[selected_index[0]]
-        task.end_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        task.end_date = datetime.now().strftime("%Y-%m-%d %H:%M")
         self.update_task_listbox()
         self.calculate_total()
 
