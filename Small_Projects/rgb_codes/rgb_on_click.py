@@ -5,6 +5,7 @@ import pyperclip
 
 pil_image = None
 
+
 def open_image():
     global img_label, canvas, img, image_loaded, pil_image
 
@@ -19,6 +20,7 @@ def open_image():
             image_loaded = True
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open image: {e}")
+
 
 def get_rgb(event):
     global img_label, image_loaded, pil_image
@@ -40,6 +42,7 @@ def get_rgb(event):
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {e}")
 
+
 def resize_image():
     global pil_image, img
     if pil_image is not None:
@@ -52,8 +55,10 @@ def resize_image():
         canvas.create_image(0, 0, anchor=tk.NW, image=img)
         canvas.image = img
 
+
 def on_resize(event):
     resize_image()
+
 
 root = tk.Tk()
 root.title("Color Extractor")
