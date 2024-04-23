@@ -29,7 +29,7 @@ def get_color(event):
 
     try:
         if image_loaded and pil_image is not None:
-            x, y = event.x, event.y
+            x, y = canvas.canvasx(event.x), canvas.canvasy(event.y)
             color = pil_image.getpixel((x, y))
             if sampling_mode == "RGB":
                 color_str = f"{color[0]}, {color[1]}, {color[2]}"
