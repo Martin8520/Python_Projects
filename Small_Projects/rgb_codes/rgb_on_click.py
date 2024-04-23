@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
+import pyperclip
 
 pil_image = None
 
@@ -11,8 +12,8 @@ def open_image():
     if file_path:
         try:
             pil_image = Image.open(file_path)
+            resize_image()
             img = ImageTk.PhotoImage(pil_image)
-            canvas.config(width=img.width(), height=img.height())
             canvas.create_image(0, 0, anchor=tk.NW, image=img)
             img_label.config(text="Click on the image to get RGB")
             image_loaded = True
@@ -23,65 +24,55 @@ def get_rgb(event):
     global img_label, image_loaded, pil_image
 
     try:
-        if image_loaded and pil_image is not None:  # Check if pil_image is not None
-            # Get the coordinates of the event
+        if image_loaded and pil_image is not None:
             x, y = event.x, event.y
-            # Calculate the scaling factor for the coordinates
             scale_x = pil_image.width / canvas.winfo_width()
             scale_y = pil_image.height / canvas.winfo_height()
-            # Adjust the coordinates based on the scaling factor
             x = int(x * scale_x)
             y = int(y * scale_y)
-            # Get the RGB value of the pixel
             rgb = pil_image.getpixel((x, y))
             r, g, b = [val for val in rgb]
-            img_label.config(text=f"RGB: {r}, {g}, {b}")
+            rgb_str = f"{r}, {g}, {b}"
+            img_label.config(text=f"RGB: {rgb_str}")
+            pyperclip.copy(rgb_str)
         else:
             messagebox.showerror("Error", "Please open an image first.")
     except Exception as e:
         messagebox.showerror("Error", f"An error occurred: {e}")
 
-
 def resize_image():
     global pil_image, img
-    if pil_image is not None:  # Check if pil_image is not None
-        window_width = root.winfo_width() - 20  # -20 for padding
-        window_height = root.winfo_height() - 20  # -20 for padding
-
-        # Calculate new width and height based on the aspect ratio
-        aspect_ratio = pil_image.width / pil_image.height
-        new_width = window_width
-        new_height = int(window_width / aspect_ratio)
-        if new_height > window_height:
-            new_height = window_height
-            new_width = int(window_height * aspect_ratio)
-
-        # Resize the image
-        pil_image_resized = pil_image.resize((new_width, new_height))
-
+    if pil_image is not None:
+        window_width = root.winfo_width() - 20
+        window_height = root.winfo_height() - 20
+        pil_image_resized = pil_image.copy()
+        pil_image_resized.thumbnail((window_width, window_height))
         img = ImageTk.PhotoImage(pil_image_resized)
-        canvas.config(width=new_width, height=new_height)
+        canvas.config(width=window_width, height=window_height)
         canvas.create_image(0, 0, anchor=tk.NW, image=img)
         canvas.image = img
-
 
 def on_resize(event):
     resize_image()
 
 root = tk.Tk()
 root.title("Color Extractor")
+root.geometry("500x500")
 
-frame = tk.Frame(root)
-frame.pack(padx=10, pady=10)
+top_frame = tk.Frame(root)
+top_frame.pack(side=tk.TOP, fill=tk.X)
 
-canvas = tk.Canvas(frame)
+open_button = tk.Button(top_frame, text="Open Image", command=open_image)
+open_button.pack(side=tk.LEFT, padx=10, pady=10)
+
+img_label = tk.Label(top_frame, text="Click on the image to get RGB")
+img_label.pack(side=tk.LEFT, padx=10, pady=10)
+
+canvas_frame = tk.Frame(root)
+canvas_frame.pack(fill=tk.BOTH, expand=True)
+
+canvas = tk.Canvas(canvas_frame)
 canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-
-img_label = tk.Label(frame, text="Click on the image to get RGB")
-img_label.pack(side=tk.RIGHT)
-
-open_button = tk.Button(root, text="Open Image", command=open_image)
-open_button.pack(pady=10)
 
 image_loaded = False
 
