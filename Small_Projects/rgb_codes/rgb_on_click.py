@@ -99,9 +99,14 @@ def rgb_to_cmyk(r, g, b):
 
 def update_teal_dot(x, y):
     global teal_dot
-    teal_dot_image = Image.new("RGB", (teal_dot_size, teal_dot_size), "teal")
-    teal_dot = ImageTk.PhotoImage(teal_dot_image)
-    update_cursor(None)
+    if pil_image is not None:
+        color = pil_image.getpixel((x, y))
+
+        teal_dot_image = Image.new("RGB", (teal_dot_size, teal_dot_size), color)
+
+        teal_dot = ImageTk.PhotoImage(teal_dot_image)
+
+        update_cursor(None)
 
 
 root = tk.Tk()

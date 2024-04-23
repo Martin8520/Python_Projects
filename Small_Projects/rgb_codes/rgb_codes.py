@@ -34,10 +34,10 @@ def get_color(event):
             if sampling_mode == "RGB":
                 color_str = f"{color[0]}, {color[1]}, {color[2]}"
             else:
-                if len(color) == 3:  # RGB mode, convert to CMYK
+                if len(color) == 3:
                     r, g, b = color
                     c, m, y, k = rgb_to_cmyk(r, g, b)
-                else:  # CMYK mode
+                else:
                     c, m, y, k = color
                 color_str = f"{int(c * 100):d}%, {int(m * 100):d}%, {int(y * 100):d}%, {int(k * 100):d}%"
             pyperclip.copy(color_str)
@@ -87,7 +87,7 @@ def rgb_to_cmyk(r, g, b):
     b /= 255.0
 
     k = 1 - max(r, g, b)
-    if k == 1:  # black
+    if k == 1:
         c = m = y = 0
     else:
         c = (1 - r - k) / (1 - k)
@@ -99,9 +99,14 @@ def rgb_to_cmyk(r, g, b):
 
 def update_teal_dot(x, y):
     global teal_dot
-    teal_dot_image = Image.new("RGB", (teal_dot_size, teal_dot_size), "teal")
-    teal_dot = ImageTk.PhotoImage(teal_dot_image)
-    update_cursor(None)  # Refresh cursor
+    if pil_image is not None:
+        color = pil_image.getpixel((x, y))
+
+        teal_dot_image = Image.new("RGB", (teal_dot_size, teal_dot_size), color)
+
+        teal_dot = ImageTk.PhotoImage(teal_dot_image)
+
+        update_cursor(None)
 
 
 root = tk.Tk()
@@ -119,7 +124,7 @@ open_button = tk.Button(top_frame, text="Open Image", command=open_image)
 open_button.pack(side=tk.LEFT, padx=10, pady=10)
 
 sampling_mode_menu = ttk.Combobox(top_frame, values=["RGB", "CMYK"], state="readonly")
-sampling_mode_menu.current(0)  # Set default value
+sampling_mode_menu.current(0)
 sampling_mode_menu.bind("<<ComboboxSelected>>", lambda event: switch_mode(sampling_mode_menu.get()))
 sampling_mode_menu.pack(side=tk.LEFT, padx=10, pady=10)
 
