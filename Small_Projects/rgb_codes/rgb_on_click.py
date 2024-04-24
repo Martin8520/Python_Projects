@@ -80,9 +80,11 @@ def stop_listener():
 
 def stop_program():
     stop_listener()
+    root.destroy()  # Close the tkinter window properly
     exit()
 
 def start_tkinter():
+    global root
     root = tk.Tk()
     root.title("Color Extractor")
     root.geometry("400x100")
