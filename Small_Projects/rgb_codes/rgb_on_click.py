@@ -14,6 +14,7 @@ img_label = None
 mouse_controller = Controller()
 listener = None
 
+
 def on_click(x, y, button, pressed):
     global last_color
 
@@ -37,51 +38,62 @@ def on_click(x, y, button, pressed):
         except Exception as e:
             show_error(e)
 
+
 def on_release(key):
     if key == keyboard.Key.esc:
         stop_listener()
         return False
 
+
 def switch_mode(mode):
     global sampling_mode
     sampling_mode = mode
-    update_label("Click anywhere on the screen to get RGB" if sampling_mode == "RGB" else "Click anywhere on the screen to get CMYK")
+    update_label(
+        "Click anywhere on the screen to get RGB" if sampling_mode == "RGB" else "Click anywhere on the screen to get CMYK")
+
 
 def rgb_to_cmyk(r, g, b):
     c = 1 - (r / 255)
     m = 1 - (g / 255)
     y = 1 - (b / 255)
 
-    min_cmy = min(c, m, y)
-    if min_cmy == 1:
+    k = min(c, m, y)
+
+    if k == 1:
         return 0, 0, 0, 100
-    else:
-        k = min_cmy
-        c = (c - k) / (1 - k)
-        m = (m - k) / (1 - k)
-        y = (y - k) / (1 - k)
-        return c, m, y, k
+
+    c = (c - k) / (1 - k)
+    m = (m - k) / (1 - k)
+    y = (y - k) / (1 - k)
+
+    return c, m, y, k
+
 
 def update_label(text):
     img_label.config(text=text)
 
+
 def show_error(error):
     messagebox.showerror("Error", f"An error occurred: {error}")
+
 
 def start_listener():
     global listener
     listener = Listener(on_click=on_click)
     listener.start()
 
+
 def stop_listener():
     global listener
     if listener:
         listener.stop()
 
+
 def stop_program():
     stop_listener()
-    root.destroy()  # Close the tkinter window properly
+    root.destroy()
     exit()
+
 
 def start_tkinter():
     global root
@@ -103,6 +115,7 @@ def start_tkinter():
     img_label.pack(padx=10, pady=10)
 
     root.mainloop()
+
 
 threading.Thread(target=start_listener, daemon=True).start()
 
