@@ -5,7 +5,7 @@ a = Analysis(
     ['task_tracker.py'],
     pathex=[],
     binaries=[],
-    datas=[('fonts', 'fonts')],
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
