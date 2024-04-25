@@ -114,6 +114,9 @@ class TaskManager:
             end_date_text = task.get("End Date", "")
             end_date_label_value = ttk.Label(task_frame, text=end_date_text)
             end_date_label_value.pack(side="left", padx=5)
+            edit_date_button = ttk.Button(task_frame, text="Промени дата",
+                                           command=lambda index=task_index: self.edit_date(index))
+            edit_date_button.pack(side="right", padx=5)
             delete_button = ttk.Button(task_frame, text="Изтрий",
                                        command=lambda index=task_index: self.delete_task(index))
             delete_button.pack(side="right", padx=5)
@@ -230,6 +233,31 @@ class TaskManager:
 
         add_button = ttk.Button(dialog, text="Добави задача", command=add_task_to_list)
         add_button.pack(pady=10)
+
+    def edit_date(self, index):
+        task = self.tasks[index]
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Промяна на дата")
+        start_date_label = ttk.Label(dialog, text="Начална дата:")
+        start_date_label.pack(pady=5)
+        start_date_var = tk.StringVar(value=task["Start Date"])
+        start_date_entry = ttk.Entry(dialog, textvariable=start_date_var)
+        start_date_entry.pack(pady=5)
+        end_date_label = ttk.Label(dialog, text="Крайна дата:")
+        end_date_label.pack(pady=5)
+        end_date_var = tk.StringVar(value=task["End Date"])
+        end_date_entry = ttk.Entry(dialog, textvariable=end_date_var)
+        end_date_entry.pack(pady=5)
+
+        def save_date_changes():
+            task["Start Date"] = start_date_var.get().strip()
+            task["End Date"] = end_date_var.get().strip()
+            self.save_tasks()
+            self.setup_ui()
+            dialog.destroy()
+
+        save_button = ttk.Button(dialog, text="Запази", command=save_date_changes)
+        save_button.pack(pady=10)
 
     def clear_ui(self):
         for widget in self.frame.winfo_children():
