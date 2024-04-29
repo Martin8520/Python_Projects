@@ -11,7 +11,7 @@ def groupAnagrams(strs):
     return list(anagrams.values())
 
 
-strs1 = ["eat", "tea", "tan", "ate", "nat", "bat"]
+strs1 = ["eat", "tea", "tan", "ate", "nat", "bat", "tab"]
 print(groupAnagrams(strs1))
 
 strs2 = [""]
