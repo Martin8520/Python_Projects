@@ -145,14 +145,16 @@ class TaskManager:
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
 
     def export_to_pdf(self):
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        font_path = os.path.join(script_dir, "fonts", "arial-unicode-ms.ttf")
-
-        pdfmetrics.registerFont(TTFont('CustomFont', font_path))
-
         pdf_file_name = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
         if pdf_file_name:
             doc = SimpleDocTemplate(pdf_file_name, pagesize=letter)
+
+            # Specify the path to the font file
+            font_path = os.path.join(os.path.dirname(__file__), "fonts", "arial-unicode-ms.ttf")
+
+            # Register font
+            pdfmetrics.registerFont(TTFont('CustomFont', font_path))
+
             data = [["Задача", "Статус", "Цена (BGN)", "Начална дата", "Крайна дата"]]
             total_price = 0
 
