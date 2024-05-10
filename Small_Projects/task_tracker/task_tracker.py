@@ -8,7 +8,7 @@ from reportlab.lib import colors
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 import os
-
+import sys
 
 class TaskManager:
     def __init__(self, root):
@@ -149,13 +149,12 @@ class TaskManager:
         if pdf_file_name:
             doc = SimpleDocTemplate(pdf_file_name, pagesize=letter)
 
-            # Specify the path to the font file
-            font_filename = "arial-unicode-ms.ttf"
-            font_path = os.path.join(sys._MEIPASS, "fonts", font_filename)
+            if getattr(sys, 'frozen', False):
+                font_path = os.path.join(sys._MEIPASS, "fonts", "arial-unicode-ms.ttf")
+            else:
+                font_path = os.path.join(os.path.dirname(__file__), "fonts", "arial-unicode-ms.ttf")
 
-            # Register font
             pdfmetrics.registerFont(TTFont('CustomFont', font_path))
-
             data = [["Задача", "Статус", "Цена (BGN)", "Начална дата", "Крайна дата"]]
             total_price = 0
 
