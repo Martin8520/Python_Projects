@@ -150,7 +150,8 @@ class TaskManager:
             doc = SimpleDocTemplate(pdf_file_name, pagesize=letter)
 
             # Specify the path to the font file
-            font_path = os.path.join(os.path.dirname(__file__), "fonts", "arial-unicode-ms.ttf")
+            font_filename = "arial-unicode-ms.ttf"
+            font_path = os.path.join(sys._MEIPASS, "fonts", font_filename)
 
             # Register font
             pdfmetrics.registerFont(TTFont('CustomFont', font_path))

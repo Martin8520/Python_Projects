@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['task_tracker.py'],
+    ['your_script.py'],
     pathex=[],
     binaries=[],
     datas=[('fonts', 'fonts')],
@@ -21,7 +21,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='task_tracker',
+    name='your_script',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
