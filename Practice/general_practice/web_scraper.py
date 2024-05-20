@@ -14,7 +14,11 @@ def fetch_headlines(url):
 
     headlines = []
     for item in soup.find_all('h2', {'data-testid': 'card-headline'}):
-        headlines.append(item.get_text(strip=True))
+        headline = item.get_text(strip=True)
+        link = item.find_parent('a')['href']
+        if not link.startswith('http'):
+            link = 'https://www.bbc.com' + link
+        headlines.append((headline, link))
 
     return headlines
 
@@ -22,7 +26,7 @@ def fetch_headlines(url):
 def filter_headlines(headlines, keyword):
     if keyword:
         keyword = keyword.lower()
-        filtered_headlines = [headline for headline in headlines if keyword in headline.lower()]
+        filtered_headlines = [headline for headline in headlines if keyword in headline[0].lower()]
         return filtered_headlines
     return headlines
 
@@ -33,8 +37,9 @@ def display_headlines(headlines):
         return
 
     print("Filtered News Headlines:")
-    for i, headline in enumerate(headlines, 1):
+    for i, (headline, link) in enumerate(headlines, 1):
         print(f"{i}. {headline}")
+        print(f"   Link: {link}")
 
 
 def main():
