@@ -13,9 +13,8 @@ def fetch_headlines(url):
     soup = BeautifulSoup(response.content, "html.parser")
 
     headlines = []
-    for item in soup.find_all('h3'):
-        if item.get('class') and 'gs-c-promo-heading__title' in item.get('class'):
-            headlines.append(item.get_text())
+    for item in soup.find_all('h2', {'data-testid': 'card-headline'}):
+        headlines.append(item.get_text(strip=True))
 
     return headlines
 
