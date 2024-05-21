@@ -152,7 +152,7 @@ def export_to_pdf():
     doc = SimpleDocTemplate(pdf_file_name, pagesize=letter)
     elements = []
 
-    data = [['Index', 'Type', 'Amount', 'Description']]
+    data = [['Index', 'Type', 'Amount (BGN)', 'Description']]
     for i, transaction in enumerate(transactions, 1):
         data.append([i, transaction[0], transaction[1], transaction[2]])
 
@@ -173,7 +173,7 @@ def export_to_pdf():
 
     styles = getSampleStyleSheet()
     normal_style = styles['Normal']
-    balance_paragraph = Paragraph(f"Current Balance: {balance}", normal_style)
+    balance_paragraph = Paragraph(f"Current Balance: {balance:.2f} BGN", normal_style)
     balance_paragraph.wrapOn(doc, table_width, 0)
     elements.append(balance_paragraph)
 
@@ -188,10 +188,10 @@ def main():
     frame = ttk.Frame(root, padding="10")
     frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
-    tree = ttk.Treeview(frame, columns=('Type', 'Amount', 'Description'))
+    tree = ttk.Treeview(frame, columns=('Type', 'Amount (BGN)', 'Description'))
     tree.heading('#0', text='Index')
     tree.heading('#1', text='Type')
-    tree.heading('#2', text='Amount')
+    tree.heading('#2', text='Amount (BGN)')
     tree.heading('#3', text='Description')
     tree.column('#0', width=50)
     tree.column('#1', width=100)
