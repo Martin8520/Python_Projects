@@ -146,7 +146,7 @@ def main():
     tree = ttk.Treeview(frame, columns=('Type', 'Amount', 'Description'))
     tree.heading('#0', text='Index')
     tree.heading('#1', text='Type')
-    tree.heading('#2', text='Amount')
+    tree.heading('#2', text='Amount (BGN)')
     tree.heading('#3', text='Description')
     tree.column('#0', width=50)
     tree.column('#1', width=100)
