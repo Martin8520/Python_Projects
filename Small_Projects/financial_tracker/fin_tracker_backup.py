@@ -2,6 +2,8 @@ import os
 import csv
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 
 FILE_NAME = "transactions.csv"
 
@@ -133,6 +135,35 @@ def create_new_file(tree, balance_label):
         update_balance(balance_label)
 
 
+def export_to_pdf():
+    global transactions
+    balance = 0
+    for t_type, amount, _ in transactions:
+        if t_type == "income":
+            balance += float(amount)
+        elif t_type == "expense":
+            balance -= float(amount)
+
+    pdf_file_name = filedialog.asksaveasfilename(defaultextension=".pdf", filetypes=[("PDF files", "*.pdf")])
+    if not pdf_file_name:
+        return
+
+    c = canvas.Canvas(pdf_file_name, pagesize=letter)
+    width, height = letter
+    c.drawString(100, height - 40, "Transactions:")
+    y_position = height - 60
+
+    for i, transaction in enumerate(transactions, 1):
+        text = f"{i}. {transaction[0]}, {transaction[1]}, {transaction[2]}"
+        c.drawString(100, y_position, text)
+        y_position -= 20
+
+    c.drawString(100, y_position - 20, f"Current Balance: {balance}")
+    c.save()
+
+    messagebox.showinfo("Success", "Transactions exported to PDF!")
+
+
 def main():
     global transactions
     root = tk.Tk()
@@ -150,7 +181,7 @@ def main():
     tree.column('#1', width=100)
     tree.column('#2', width=100)
     tree.column('#3', width=200)
-    tree.grid(row=0, column=0, columnspan=4)
+    tree.grid(row=0, column=0, columnspan=5)
 
     tree.tag_configure('income', background='lightgreen')
     tree.tag_configure('expense', background='lightcoral')
@@ -170,6 +201,9 @@ def main():
 
     new_button = ttk.Button(frame, text="New File", command=lambda: create_new_file(tree, balance_label))
     new_button.grid(row=3, column=1, pady=5)
+
+    export_button = ttk.Button(frame, text="Export to PDF", command=export_to_pdf)
+    export_button.grid(row=3, column=2, pady=5)
 
     transactions = load_transactions(FILE_NAME)
     update_treeview(tree, transactions)
