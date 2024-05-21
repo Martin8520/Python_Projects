@@ -1,9 +1,11 @@
-import os
 import csv
+import os
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
+from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib.styles import getSampleStyleSheet
 
 FILE_NAME = "transactions.csv"
 
@@ -148,20 +150,40 @@ def export_to_pdf():
     if not pdf_file_name:
         return
 
-    c = canvas.Canvas(pdf_file_name, pagesize=letter)
-    width, height = letter
-    c.drawString(100, height - 40, "Transactions:")
-    y_position = height - 60
+    doc = SimpleDocTemplate(pdf_file_name, pagesize=letter)
+    elements = []
 
+    data = [['Index', 'Type', 'Amount (BGN)', 'Description']]
     for i, transaction in enumerate(transactions, 1):
-        text = f"{i}. {transaction[0]}, {transaction[1]}, {transaction[2]}"
-        c.drawString(100, y_position, text)
-        y_position -= 20
+        data.append([i, transaction[0], transaction[1], transaction[2]])
 
-    c.drawString(100, y_position - 20, f"Current Balance: {balance}")
-    c.save()
+    table_width = 500
+    table = Table(data, colWidths=[table_width/4] * 4)
+    table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 14),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.beige),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),
+    ]))
+
+    elements.append(table)
+
+    styles = getSampleStyleSheet()
+    normal_style = styles['Normal']
+    balance_paragraph = Paragraph(f"Current Balance: {balance}", normal_style)
+    balance_paragraph.wrapOn(doc, table_width, 0)
+    elements.append(balance_paragraph)
+
+    doc.build(elements)
 
     messagebox.showinfo("Success", "Transactions exported to PDF!")
+
+
+
 
 
 def main():
