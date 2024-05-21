@@ -1,10 +1,10 @@
-import csv
 import os
+import csv
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
-from reportlab.lib import colors
+from tkinter import filedialog, ttk
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 
 FILE_NAME = "transactions.csv"
@@ -27,7 +27,8 @@ def save_transactions(file_name, transactions):
 def prompt_transaction_type():
     dialog = tk.Toplevel()
     dialog.title("Select Transaction Type")
-    tk.Label(dialog, text="Choose transaction type:").pack(pady=10)
+    dialog.geometry("300x150")
+    tk.Label(dialog, text="Choose transaction type:").pack(pady=10, padx=10)
     type_var = tk.StringVar()
 
     def set_type(t_type):
@@ -44,6 +45,7 @@ def prompt_transaction_type():
 def prompt_transaction_details():
     dialog = tk.Toplevel()
     dialog.title("Enter Transaction Details")
+    dialog.geometry("300x170")
 
     tk.Label(dialog, text="Amount:").pack(pady=5)
     amount_entry = tk.Entry(dialog)
@@ -60,7 +62,7 @@ def prompt_transaction_details():
         details['description'] = description_entry.get()
         dialog.destroy()
 
-    tk.Button(dialog, text="Submit", command=submit).pack(pady=10)
+    tk.Button(dialog, text="Submit", command=submit).pack(pady=10, padx=10)
 
     dialog.wait_window()
     return details
@@ -74,14 +76,12 @@ def add_transaction(tree, balance_label):
 
     details = prompt_transaction_details()
     if not details['amount'] or not details['description']:
-        messagebox.showerror("Error", "All fields are required!")
         return
 
     transactions.append([t_type, details['amount'], details['description']])
     save_transactions(FILE_NAME, transactions)
     update_treeview(tree, transactions)
     update_balance(balance_label)
-    messagebox.showinfo("Success", "Transaction added!")
 
 
 def delete_transaction(tree, balance_label):
@@ -92,7 +92,6 @@ def delete_transaction(tree, balance_label):
     save_transactions(FILE_NAME, transactions)
     update_treeview(tree, transactions)
     update_balance(balance_label)
-    messagebox.showinfo("Success", "Transaction deleted!")
 
 
 def update_balance(balance_label):
@@ -153,12 +152,12 @@ def export_to_pdf():
     doc = SimpleDocTemplate(pdf_file_name, pagesize=letter)
     elements = []
 
-    data = [['Index', 'Type', 'Amount (BGN)', 'Description']]
+    data = [['Index', 'Type', 'Amount', 'Description']]
     for i, transaction in enumerate(transactions, 1):
         data.append([i, transaction[0], transaction[1], transaction[2]])
 
     table_width = 500
-    table = Table(data, colWidths=[table_width/4] * 4)
+    table = Table(data, colWidths=[table_width / 4] * 4)
     table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -180,14 +179,9 @@ def export_to_pdf():
 
     doc.build(elements)
 
-    messagebox.showinfo("Success", "Transactions exported to PDF!")
-
-
-
-
-
 def main():
     global transactions
+    global root
     root = tk.Tk()
     root.title("Personal Finance Tracker")
 
