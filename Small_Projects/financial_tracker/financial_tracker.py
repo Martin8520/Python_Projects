@@ -1,9 +1,10 @@
 import os
 import csv
 import tkinter as tk
-from tkinter import filedialog, messagebox, simpledialog, ttk
+from tkinter import filedialog, messagebox, ttk
 
 FILE_NAME = "transactions.csv"
+
 
 def load_transactions(file_name):
     if not os.path.exists(file_name):
@@ -12,24 +13,76 @@ def load_transactions(file_name):
         reader = csv.reader(file)
         return list(reader)
 
+
 def save_transactions(file_name, transactions):
     with open(file_name, "w", newline='') as file:
         writer = csv.writer(file)
         writer.writerows(transactions)
 
+
+def prompt_transaction_type():
+    dialog = tk.Toplevel()
+    dialog.title("Select Transaction Type")
+    tk.Label(dialog, text="Choose transaction type:").pack(pady=10)
+    type_var = tk.StringVar()
+
+    def set_type(t_type):
+        type_var.set(t_type)
+        dialog.destroy()
+
+    tk.Button(dialog, text="Income", command=lambda: set_type("income")).pack(side=tk.LEFT, padx=10, pady=10)
+    tk.Button(dialog, text="Expense", command=lambda: set_type("expense")).pack(side=tk.RIGHT, padx=10, pady=10)
+
+    dialog.wait_window()
+    return type_var.get()
+
+
+def prompt_transaction_details():
+    dialog = tk.Toplevel()
+    dialog.title("Enter Transaction Details")
+
+    tk.Label(dialog, text="Amount:").pack(pady=5, padx=5)
+    amount_entry = tk.Entry(dialog)
+    amount_entry.pack(pady=5)
+
+    tk.Label(dialog, text="Description:").pack(pady=5, padx=5)
+    description_entry = tk.Entry(dialog)
+    description_entry.pack(pady=5, padx=5)
+
+    details = {}
+
+    def submit():
+        details['amount'] = amount_entry.get()
+        details['description'] = description_entry.get()
+        dialog.destroy()
+
+    tk.Button(dialog, text="Submit", command=submit).pack(pady=10)
+
+    dialog.wait_window()
+    return details
+
+
 def add_transaction(tree, balance_label):
     global transactions
-    t_type = simpledialog.askstring("Transaction Type", "Enter transaction type (income/expense):").strip()
-    amount = simpledialog.askstring("Amount", "Enter amount:").strip()
-    description = simpledialog.askstring("Description", "Enter description:").strip()
-    transactions.append([t_type, amount, description])
+    t_type = prompt_transaction_type()
+    if not t_type:
+        return
+
+    details = prompt_transaction_details()
+    if not details['amount'] or not details['description']:
+        messagebox.showerror("Error", "All fields are required!")
+        return
+
+    transactions.append([t_type, details['amount'], details['description']])
     save_transactions(FILE_NAME, transactions)
     update_treeview(tree, transactions)
     update_balance(balance_label)
 
+
 def view_transactions(tree):
     global transactions
     update_treeview(tree, transactions)
+
 
 def delete_transaction(tree, balance_label):
     global transactions
@@ -39,6 +92,7 @@ def delete_transaction(tree, balance_label):
     save_transactions(FILE_NAME, transactions)
     update_treeview(tree, transactions)
     update_balance(balance_label)
+
 
 def update_balance(balance_label):
     global transactions
@@ -50,11 +104,13 @@ def update_balance(balance_label):
             balance -= float(amount)
     balance_label.config(text=f"Current Balance: {balance}")
 
+
 def update_treeview(tree, transactions):
     for item in tree.get_children():
         tree.delete(item)
     for i, transaction in enumerate(transactions, 1):
         tree.insert('', 'end', text=i, values=transaction)
+
 
 def open_file(tree, balance_label):
     global FILE_NAME
@@ -66,6 +122,7 @@ def open_file(tree, balance_label):
         update_treeview(tree, transactions)
         update_balance(balance_label)
 
+
 def create_new_file(tree, balance_label):
     global FILE_NAME
     global transactions
@@ -76,6 +133,7 @@ def create_new_file(tree, balance_label):
         save_transactions(FILE_NAME, transactions)
         update_treeview(tree, transactions)
         update_balance(balance_label)
+
 
 def main():
     global transactions
@@ -102,7 +160,8 @@ def main():
     view_button = ttk.Button(frame, text="View Transactions", command=lambda: view_transactions(tree))
     view_button.grid(row=1, column=1, pady=5)
 
-    delete_button = ttk.Button(frame, text="Delete Transaction", command=lambda: delete_transaction(tree, balance_label))
+    delete_button = ttk.Button(frame, text="Delete Transaction",
+                               command=lambda: delete_transaction(tree, balance_label))
     delete_button.grid(row=1, column=2, pady=5)
 
     balance_label = ttk.Label(frame, text="Current Balance: 0")
@@ -119,6 +178,7 @@ def main():
     update_balance(balance_label)
 
     root.mainloop()
+
 
 if __name__ == "__main__":
     main()
