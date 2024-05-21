@@ -1,51 +1,46 @@
 import os
+import csv
+import tkinter as tk
+from tkinter import filedialog, messagebox, simpledialog, ttk
 
-FILE_NAME = "transactions.txt"
+FILE_NAME = "transactions.csv"
 
 
-def load_transactions():
-    if not os.path.exists(FILE_NAME):
+def load_transactions(file_name):
+    if not os.path.exists(file_name):
         return []
-    with open(FILE_NAME, "r") as file:
-        transactions = file.readlines()
-    return [line.strip().split(",") for line in transactions]
+    with open(file_name, "r", newline='') as file:
+        reader = csv.reader(file)
+        return list(reader)
 
 
-def save_transactions(transactions):
-    with open(FILE_NAME, "w") as file:
-        for transaction in transactions:
-            file.write(",".join(transaction) + "\n")
+def save_transactions(file_name, transactions):
+    with open(file_name, "w", newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(transactions)
 
 
-def add_transaction(transactions):
-    t_type = input("Enter transaction type (income/expense): ").strip()
-    amount = input("Enter amount: ").strip()
-    description = input("Enter description: ").strip()
+def add_transaction(transactions, tree):
+    t_type = simpledialog.askstring("Transaction Type", "Enter transaction type (income/expense):").strip()
+    amount = simpledialog.askstring("Amount", "Enter amount:").strip()
+    description = simpledialog.askstring("Description", "Enter description:").strip()
     transactions.append([t_type, amount, description])
-    save_transactions(transactions)
-    print("Transaction added!")
+    save_transactions(FILE_NAME, transactions)
+    update_treeview(tree, transactions)
+    messagebox.showinfo("Success", "Transaction added!")
 
 
-def view_transactions(transactions):
-    if not transactions:
-        print("No transactions found.")
-        return
-    for i, transaction in enumerate(transactions, 1):
-        print(f"{i}. {transaction[0]}, {transaction[1]}, {transaction[2]}")
+def view_transactions(transactions, tree):
+    update_treeview(tree, transactions)
 
 
-def delete_transaction(transactions):
-    view_transactions(transactions)
-    try:
-        index = int(input("Enter the number of the transaction to delete: "))
-        if 1 <= index <= len(transactions):
-            transactions.pop(index - 1)
-            save_transactions(transactions)
-            print("Transaction deleted!")
-        else:
-            print("Invalid transaction number.")
-    except ValueError:
-        print("Invalid input. Please enter a number.")
+def delete_transaction(transactions, tree):
+    selected_item = tree.selection()[0]
+    transaction_index = int(tree.item(selected_item)['text']) - 1
+    transactions.pop(transaction_index)
+    save_transactions(FILE_NAME, transactions)
+    update_treeview(tree, transactions)
+    messagebox.showinfo("Success", "Transaction deleted!")
 
 
 def view_balance(transactions):
@@ -55,33 +50,76 @@ def view_balance(transactions):
             balance += float(amount)
         elif t_type == "expense":
             balance -= float(amount)
-    print(f"Current balance: {balance}")
+    messagebox.showinfo("Balance", f"Current balance: {balance}")
+
+
+def update_treeview(tree, transactions):
+    for item in tree.get_children():
+        tree.delete(item)
+    for i, transaction in enumerate(transactions, 1):
+        tree.insert('', 'end', text=i, values=transaction)
+
+
+def open_file(tree):
+    global FILE_NAME
+    file_name = filedialog.askopenfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
+    if file_name:
+        FILE_NAME = file_name
+        transactions = load_transactions(FILE_NAME)
+        update_treeview(tree, transactions)
+
+
+def create_new_file(tree):
+    global FILE_NAME
+    file_name = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
+    if file_name:
+        FILE_NAME = file_name
+        transactions = []
+        save_transactions(FILE_NAME, transactions)
+        update_treeview(tree, transactions)
 
 
 def main():
-    transactions = load_transactions()
-    while True:
-        print("\nWelcome to Personal Finance Tracker!")
-        print("What would you like to do?")
-        print("1. Add a transaction")
-        print("2. View transactions")
-        print("3. Delete a transaction")
-        print("4. View balance")
-        print("5. Exit")
-        choice = input("Enter your choice: ")
+    root = tk.Tk()
+    root.title("Personal Finance Tracker")
 
-        if choice == "1":
-            add_transaction(transactions)
-        elif choice == "2":
-            view_transactions(transactions)
-        elif choice == "3":
-            delete_transaction(transactions)
-        elif choice == "4":
-            view_balance(transactions)
-        elif choice == "5":
-            break
-        else:
-            print("Invalid choice. Please enter a number between 1 and 5.")
+    frame = ttk.Frame(root, padding="10")
+    frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+    tree = ttk.Treeview(frame, columns=('Type', 'Amount', 'Description'))
+    tree.heading('#0', text='Index')
+    tree.heading('#1', text='Type')
+    tree.heading('#2', text='Amount')
+    tree.heading('#3', text='Description')
+    tree.column('#0', width=50)
+    tree.column('#1', width=100)
+    tree.column('#2', width=100)
+    tree.column('#3', width=200)
+    tree.grid(row=0, column=0, columnspan=4)
+
+    add_button = ttk.Button(frame, text="Add Transaction", command=lambda: add_transaction(transactions, tree))
+    add_button.grid(row=1, column=0, pady=5)
+
+    view_button = ttk.Button(frame, text="View Transactions", command=lambda: view_transactions(transactions, tree))
+    view_button.grid(row=1, column=1, pady=5)
+
+    delete_button = ttk.Button(frame, text="Delete Transaction", command=lambda: delete_transaction(transactions, tree))
+    delete_button.grid(row=1, column=2, pady=5)
+
+    balance_button = ttk.Button(frame, text="View Balance", command=lambda: view_balance(transactions))
+    balance_button.grid(row=1, column=3, pady=5)
+
+    open_button = ttk.Button(frame, text="Open File", command=lambda: open_file(tree))
+    open_button.grid(row=2, column=0, pady=5)
+
+    new_button = ttk.Button(frame, text="New File", command=lambda: create_new_file(tree))
+    new_button.grid(row=2, column=1, pady=5)
+
+    global transactions
+    transactions = load_transactions(FILE_NAME)
+    update_treeview(tree, transactions)
+
+    root.mainloop()
 
 
 if __name__ == "__main__":
