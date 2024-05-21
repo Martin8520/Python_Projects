@@ -30,8 +30,8 @@ def prompt_transaction_type():
         type_var.set(t_type)
         dialog.destroy()
 
-    tk.Button(dialog, text="Income", command=lambda: set_type("income")).pack(side=tk.LEFT, padx=10, pady=10)
-    tk.Button(dialog, text="Expense", command=lambda: set_type("expense")).pack(side=tk.RIGHT, padx=10, pady=10)
+    tk.Button(dialog, text="Income", command=lambda: set_type("income")).pack(side=tk.LEFT, padx=10)
+    tk.Button(dialog, text="Expense", command=lambda: set_type("expense")).pack(side=tk.RIGHT, padx=10)
 
     dialog.wait_window()
     return type_var.get()
@@ -41,13 +41,13 @@ def prompt_transaction_details():
     dialog = tk.Toplevel()
     dialog.title("Enter Transaction Details")
 
-    tk.Label(dialog, text="Amount:").pack(pady=5, padx=5)
+    tk.Label(dialog, text="Amount:").pack(pady=5)
     amount_entry = tk.Entry(dialog)
     amount_entry.pack(pady=5)
 
-    tk.Label(dialog, text="Description:").pack(pady=5, padx=5)
+    tk.Label(dialog, text="Description:").pack(pady=5)
     description_entry = tk.Entry(dialog)
-    description_entry.pack(pady=5, padx=5)
+    description_entry.pack(pady=5)
 
     details = {}
 
@@ -77,11 +77,7 @@ def add_transaction(tree, balance_label):
     save_transactions(FILE_NAME, transactions)
     update_treeview(tree, transactions)
     update_balance(balance_label)
-
-
-def view_transactions(tree):
-    global transactions
-    update_treeview(tree, transactions)
+    messagebox.showinfo("Success", "Transaction added!")
 
 
 def delete_transaction(tree, balance_label):
@@ -92,6 +88,7 @@ def delete_transaction(tree, balance_label):
     save_transactions(FILE_NAME, transactions)
     update_treeview(tree, transactions)
     update_balance(balance_label)
+    messagebox.showinfo("Success", "Transaction deleted!")
 
 
 def update_balance(balance_label):
@@ -109,7 +106,8 @@ def update_treeview(tree, transactions):
     for item in tree.get_children():
         tree.delete(item)
     for i, transaction in enumerate(transactions, 1):
-        tree.insert('', 'end', text=i, values=transaction)
+        tag = 'income' if transaction[0] == 'income' else 'expense'
+        tree.insert('', 'end', text=i, values=transaction, tags=(tag,))
 
 
 def open_file(tree, balance_label):
@@ -146,7 +144,7 @@ def main():
     tree = ttk.Treeview(frame, columns=('Type', 'Amount', 'Description'))
     tree.heading('#0', text='Index')
     tree.heading('#1', text='Type')
-    tree.heading('#2', text='Amount (BGN)')
+    tree.heading('#2', text='Amount')
     tree.heading('#3', text='Description')
     tree.column('#0', width=50)
     tree.column('#1', width=100)
@@ -154,15 +152,15 @@ def main():
     tree.column('#3', width=200)
     tree.grid(row=0, column=0, columnspan=4)
 
+    tree.tag_configure('income', background='lightgreen')
+    tree.tag_configure('expense', background='lightcoral')
+
     add_button = ttk.Button(frame, text="Add Transaction", command=lambda: add_transaction(tree, balance_label))
     add_button.grid(row=1, column=0, pady=5)
 
-    view_button = ttk.Button(frame, text="View Transactions", command=lambda: view_transactions(tree))
-    view_button.grid(row=1, column=1, pady=5)
-
     delete_button = ttk.Button(frame, text="Delete Transaction",
                                command=lambda: delete_transaction(tree, balance_label))
-    delete_button.grid(row=1, column=2, pady=5)
+    delete_button.grid(row=1, column=1, pady=5)
 
     balance_label = ttk.Label(frame, text="Current Balance: 0")
     balance_label.grid(row=2, column=0, columnspan=2, pady=5)
