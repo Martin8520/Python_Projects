@@ -1,13 +1,20 @@
-import csv
 import os
+import csv
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
-from reportlab.lib import colors
+from tkinter import filedialog, ttk
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
+import sys
 
-FILE_NAME = "transactions.csv"
+
+def resource_path(relative_path):
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+
+FILE_NAME = resource_path("transactions.csv")
 
 
 def load_transactions(file_name):
@@ -27,7 +34,8 @@ def save_transactions(file_name, transactions):
 def prompt_transaction_type():
     dialog = tk.Toplevel()
     dialog.title("Select Transaction Type")
-    tk.Label(dialog, text="Choose transaction type:").pack(pady=10)
+    dialog.geometry("300x150")
+    tk.Label(dialog, text="Choose transaction type:").pack(pady=10, padx=10)
     type_var = tk.StringVar()
 
     def set_type(t_type):
@@ -44,6 +52,7 @@ def prompt_transaction_type():
 def prompt_transaction_details():
     dialog = tk.Toplevel()
     dialog.title("Enter Transaction Details")
+    dialog.geometry("300x170")
 
     tk.Label(dialog, text="Amount:").pack(pady=5)
     amount_entry = tk.Entry(dialog)
@@ -60,7 +69,7 @@ def prompt_transaction_details():
         details['description'] = description_entry.get()
         dialog.destroy()
 
-    tk.Button(dialog, text="Submit", command=submit).pack(pady=10)
+    tk.Button(dialog, text="Submit", command=submit).pack(pady=10, padx=10)
 
     dialog.wait_window()
     return details
@@ -74,7 +83,6 @@ def add_transaction(tree, balance_label):
 
     details = prompt_transaction_details()
     if not details['amount'] or not details['description']:
-        messagebox.showerror("Error", "All fields are required!")
         return
 
     transactions.append([t_type, details['amount'], details['description']])
@@ -156,7 +164,7 @@ def export_to_pdf():
         data.append([i, transaction[0], transaction[1], transaction[2]])
 
     table_width = 500
-    table = Table(data, colWidths=[table_width/4] * 4)
+    table = Table(data, colWidths=[table_width / 4] * 4)
     table.setStyle(TableStyle([
         ('BACKGROUND', (0, 0), (-1, 0), colors.grey),
         ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -172,29 +180,26 @@ def export_to_pdf():
 
     styles = getSampleStyleSheet()
     normal_style = styles['Normal']
-    balance_paragraph = Paragraph(f"Current Balance: {balance}", normal_style)
+    balance_paragraph = Paragraph(f"Current Balance: {balance:.2f} BGN", normal_style)
     balance_paragraph.wrapOn(doc, table_width, 0)
     elements.append(balance_paragraph)
 
     doc.build(elements)
 
 
-
-
-
-
 def main():
     global transactions
+    global root
     root = tk.Tk()
     root.title("Personal Finance Tracker")
 
     frame = ttk.Frame(root, padding="10")
     frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
 
-    tree = ttk.Treeview(frame, columns=('Type', 'Amount', 'Description'))
+    tree = ttk.Treeview(frame, columns=('Type', 'Amount (BGN)', 'Description'))
     tree.heading('#0', text='Index')
     tree.heading('#1', text='Type')
-    tree.heading('#2', text='Amount')
+    tree.heading('#2', text='Amount (BGN)')
     tree.heading('#3', text='Description')
     tree.column('#0', width=50)
     tree.column('#1', width=100)
