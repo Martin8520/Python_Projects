@@ -1,23 +1,40 @@
-import tkinter as tk
-from tkinter import ttk
-from tkinter import Tk
-from financial_tracker import run_finance_tracker
-from price_per_hour import TaskManager
-from task_tracker import TaskManager
+import os
+import sys
+from tkinter import Tk, Button, Frame
+
+
+def launch_app1():
+    os.system('python financial_tracker.py')
+
+
+def launch_app2():
+    os.system('python price_per_hour.py')
+
+
+def launch_app3():
+    os.system('python task_tracker.py')
+
+
+def exit_app():
+    sys.exit()
+
 
 root = Tk()
+root.title("Main Menu")
 
-# 2. Instantiate the TaskManager class with the Tk instance as its argument
-app = TaskManager(root)
+frame = Frame(root)
+frame.pack(padx=20, pady=20)
 
-# 3. Set up the window dimensions and position if needed
-window_width = 800
-window_height = 550
-screen_width = root.winfo_screenwidth()
-screen_height = root.winfo_screenheight()
-x_coordinate = (screen_width / 2) - (window_width / 2)
-y_coordinate = (screen_height / 2) - (window_height / 2)
-root.geometry(f"{window_width}x{window_height}+{int(x_coordinate)}+{int(y_coordinate)}")
+button1 = Button(frame, text="Launch App 1", command=launch_app1)
+button1.pack(fill="x", padx=10, pady=5)
 
-# 4. Start the Tkinter event loop
+button2 = Button(frame, text="Launch App 2", command=launch_app2)
+button2.pack(fill="x", padx=10, pady=5)
+
+button3 = Button(frame, text="Launch App 3", command=launch_app3)
+button3.pack(fill="x", padx=10, pady=5)
+
+exit_button = Button(frame, text="Exit", command=exit_app)
+exit_button.pack(fill="x", padx=10, pady=5)
+
 root.mainloop()
