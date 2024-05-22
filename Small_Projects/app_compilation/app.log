@@ -1,0 +1,15 @@
+INFO:root:Launching App 1
+INFO:root:Starting Application
+INFO:root:Launching App 1
+INFO:root:Application Closed
+INFO:root:Starting Application
+INFO:root:Launching App 2
+INFO:root:Application Closed
+INFO:root:Starting Application
+INFO:root:Launching App 3
+INFO:root:Starting Application
+INFO:root:Launching financial_tracker.py
+INFO:root:Starting Application
+INFO:root:Launching task_tracker.py
+INFO:root:Starting Application
+INFO:root:Launching price_per_hour.py
