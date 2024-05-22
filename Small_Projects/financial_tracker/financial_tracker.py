@@ -187,7 +187,7 @@ def export_to_pdf():
     doc.build(elements)
 
 
-def main():
+def run_finance_tracker():
     global transactions
     global root
     root = tk.Tk()
@@ -237,4 +237,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    run_finance_tracker()
