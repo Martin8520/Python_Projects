@@ -1,18 +1,25 @@
 def merge(intervals):
+    if not intervals:
+        return []
+
     intervals.sort(key=lambda x: x[0])
 
-    merged = []
-    for interval in intervals:
-        if not merged or interval[0] > merged[-1][1]:
-            merged.append(interval)
+    merged_intervals = [intervals[0]]
+
+    for current in intervals[1:]:
+        last_merged = merged_intervals[-1]
+
+        if current[0] <= last_merged[1]:
+            last_merged[1] = max(last_merged[1], current[1])
         else:
-            merged[-1][1] = max(merged[-1][1], interval[1])
+            merged_intervals.append(current)
 
-    return merged
+    return merged_intervals
 
 
-intervals1 = [[1, 3], [2, 6], [8, 10], [15, 18]]
-print(merge(intervals1))
-
-intervals2 = [[1, 4], [4, 5]]
-print(merge(intervals2))
+print(merge([[1, 3], [2, 6], [8, 10], [15, 18]]))  # [[1,6],[8,10],[15,18]]
+print(merge([[1, 4], [4, 5]]))  # [[1,5]]
+print(merge([[1, 4], [2, 3]]))  # [[1,4]]
+print(merge([[1, 4], [0, 4]]))  # [[0,4]]
+print(merge([[1, 4], [5, 6]]))  # [[1,4],[5,6]]
+print(merge([]))  # []
