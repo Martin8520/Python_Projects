@@ -24,8 +24,8 @@ def unique_paths_with_obstacles(grid):
 
 m, n = 3, 3
 grid = [
-    [0, 0, 0],
-    [0, 1, 0],
-    [0, 0, 0]
+    [0, 2, 0, 0],
+    [0, 2, 0, 0],
+    [1, 0, 1, 0]
 ]
-print(unique_paths_with_obstacles(grid))  # 2
+print(unique_paths_with_obstacles(grid))  # 4
