@@ -30,5 +30,5 @@ def longestPalindrome(s):
 print(longestPalindrome("babad"))  # "aba"
 print(longestPalindrome("cbbd"))  # "bb"
 print(longestPalindrome("a"))  # "a"
-print(longestPalindrome("ac"))  # "a" or "c"
+print(longestPalindrome("ac"))  # "a"
 print(longestPalindrome("racecar"))  # "racecar"
