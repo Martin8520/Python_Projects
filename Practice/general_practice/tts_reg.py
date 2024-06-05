@@ -1,26 +1,24 @@
-import winreg
+import pyttsx3
 
+engine = pyttsx3.init()
 
-def list_available_voices():
-    try:
-        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Speech\Voices\Tokens") as key:
-            index = 0
-            while True:
-                try:
-                    voice_name = winreg.EnumKey(key, index)
-                    if voice_name:
-                        print(voice_name)
-                    else:
-                        break
-                    index += 1
-                except EnvironmentError:
-                    break
-                except Exception as e:
-                    print("Error occurred while listing voices:", e)
-                    break
-    except Exception as e:
-        print("Error occurred while accessing the registry:", e)
+voices = engine.getProperty('voices')
 
+print("Available Voices:")
+for i, voice in enumerate(voices):
+    print(f"{i+1}. {voice.name}")
 
-if __name__ == "__main__":
-    list_available_voices()
+selected_index = int(input("Enter the index of the voice you want to use: ")) - 1
+
+if 0 <= selected_index < len(voices):
+    selected_voice = voices[selected_index]
+
+    engine.setProperty('voice', selected_voice.id)
+
+    # Say something
+    engine.say("Hello, I'm speaking using the selected voice.")
+
+    # Wait for speech to finish
+    engine.runAndWait()
+else:
+    print("Invalid voice index. Please select a valid index.")
