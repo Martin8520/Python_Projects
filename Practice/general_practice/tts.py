@@ -1,77 +1,45 @@
 import pyttsx3
+import tkinter as tk
 
-def initialize_tts():
-    """Initialize the TTS engine and list available voices."""
-    engine = pyttsx3.init(driverName='sapi5')
-    voices = engine.getProperty('voices')
+# Initialize the TTS engine
+engine = pyttsx3.init()
 
-    if not voices:
-        print("No voices available. Make sure additional voices are installed on your system.")
-        return engine, []
+# Get all available voices
+voices = engine.getProperty('voices')
 
-    print("Available voices:")
-    for index, voice in enumerate(voices):
-        print(f"{index}: {voice.name} ({voice.id})")
+# Function to speak with selected voice
+def speak_with_selected_voice():
+    selected_index = voice_listbox.curselection()
+    if selected_index:
+        selected_index = int(selected_index[0])
+        selected_voice = voices[selected_index]
+        engine.setProperty('voice', selected_voice.id)
+        text_to_speak = text_entry.get()
+        engine.say(text_to_speak)
+        engine.runAndWait()
+    else:
+        status_label.config(text="Please select a voice.")
 
-    return engine, voices
+# Create GUI
+root = tk.Tk()
+root.title("Voice Selection")
 
+# Create listbox to display available voices
+voice_listbox = tk.Listbox(root, width=40)
+for voice in voices:
+    voice_listbox.insert(tk.END, voice.name)
+voice_listbox.pack(padx=10, pady=5)
 
-def set_voice(engine, voices, voice_index):
-    """Set the TTS engine to use the specified voice."""
-    engine.setProperty('voice', voices[voice_index].id)
+# Create input box for text
+text_entry = tk.Entry(root, width=50)
+text_entry.pack(padx=10, pady=5)
 
+# Create button to speak with selected voice
+speak_button = tk.Button(root, text="Speak", command=speak_with_selected_voice)
+speak_button.pack(pady=5)
 
-def text_to_speech(engine, text):
-    """Convert text to speech."""
-    engine.say(text)
-    engine.runAndWait()
+# Create label to display status
+status_label = tk.Label(root, text="")
+status_label.pack()
 
-
-def display_menu():
-    """Display the menu and get the user's choice."""
-    print("\nChoose an option:")
-    print("1. Enter text to convert to speech")
-    print("2. Change voice")
-    print("3. List available voices")
-    print("4. Exit")
-    return input("Enter your choice: ")
-
-
-def main():
-    engine, voices = initialize_tts()
-
-    if not voices:
-        print("No voices found. Please check your TTS engine and available voices.")
-        return
-
-    while True:
-        choice = display_menu()
-
-        if choice == '1':
-            text = input("Enter the text: ")
-            text_to_speech(engine, text)
-        elif choice == '2':
-            voice_index = int(input("Enter the voice index you want to use: "))
-            if 0 <= voice_index < len(voices):
-                set_voice(engine, voices, voice_index)
-                print(f"Voice changed to {voices[voice_index].name}")
-            else:
-                print("Invalid voice index. Please try again.")
-        elif choice == '3':
-            list_available_voices(engine)
-        elif choice == '4':
-            print("Exiting...")
-            break
-        else:
-            print("Invalid choice. Please try again.")
-
-
-def list_available_voices(engine):
-    """List available voices."""
-    voices = engine.getProperty('voices')
-    for index, voice in enumerate(voices):
-        print(f"{index}: {voice.name} ({voice.id})")
-
-
-if __name__ == "__main__":
-    main()
+root.mainloop()
