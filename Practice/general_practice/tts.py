@@ -1,10 +1,13 @@
 import pyttsx3
 
-
 def initialize_tts():
     """Initialize the TTS engine and list available voices."""
-    engine = pyttsx3.init()
+    engine = pyttsx3.init(driverName='sapi5')
     voices = engine.getProperty('voices')
+
+    if not voices:
+        print("No voices available. Make sure additional voices are installed on your system.")
+        return engine, []
 
     print("Available voices:")
     for index, voice in enumerate(voices):
@@ -29,12 +32,17 @@ def display_menu():
     print("\nChoose an option:")
     print("1. Enter text to convert to speech")
     print("2. Change voice")
-    print("3. Exit")
+    print("3. List available voices")
+    print("4. Exit")
     return input("Enter your choice: ")
 
 
 def main():
     engine, voices = initialize_tts()
+
+    if not voices:
+        print("No voices found. Please check your TTS engine and available voices.")
+        return
 
     while True:
         choice = display_menu()
@@ -50,10 +58,19 @@ def main():
             else:
                 print("Invalid voice index. Please try again.")
         elif choice == '3':
+            list_available_voices(engine)
+        elif choice == '4':
             print("Exiting...")
             break
         else:
             print("Invalid choice. Please try again.")
+
+
+def list_available_voices(engine):
+    """List available voices."""
+    voices = engine.getProperty('voices')
+    for index, voice in enumerate(voices):
+        print(f"{index}: {voice.name} ({voice.id})")
 
 
 if __name__ == "__main__":
