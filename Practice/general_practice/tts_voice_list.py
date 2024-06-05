@@ -2,7 +2,6 @@ import win32com.client
 
 
 def list_available_voices():
-    """List available voices using SAPI5."""
     try:
         sapi5 = win32com.client.Dispatch("SAPI.SpVoice")
         voices = sapi5.GetVoices()
