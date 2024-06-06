@@ -39,6 +39,9 @@ class BatchImageProcessorApp:
         self.rename_entry = tk.Entry(self.frame, width=20)
         self.rename_entry.grid(row=2, column=1, columnspan=4, padx=5, pady=10, sticky=tk.W)
 
+        self.directory_button = tk.Button(self.frame, text="Select Save Directory", command=self.select_directory)
+        self.directory_button.grid(row=3, column=0, columnspan=5, pady=10)
+
         self.process_button = tk.Button(self.root, text="Process Images", command=self.process_images)
         self.process_button.pack(pady=20)
 
@@ -52,6 +55,7 @@ class BatchImageProcessorApp:
         self.default_values_label.pack(pady=10)
 
         self.images = []
+        self.save_directory = ""
 
     def upload_images(self):
         file_paths = filedialog.askopenfilenames(filetypes=[("Image files", "*.jpg;*.jpeg;*.png;*.bmp;*.gif")])
@@ -59,6 +63,11 @@ class BatchImageProcessorApp:
             self.images = file_paths
             messagebox.showinfo("Success", f"Uploaded {len(self.images)} images.")
             self.display_original_image()
+
+    def select_directory(self):
+        self.save_directory = filedialog.askdirectory()
+        if self.save_directory:
+            messagebox.showinfo("Success", f"Save directory set to: {self.save_directory}")
 
     def display_original_image(self):
         if self.images:
@@ -84,6 +93,10 @@ class BatchImageProcessorApp:
             messagebox.showerror("Error", "Please upload images first.")
             return
 
+        if not self.save_directory:
+            messagebox.showerror("Error", "Please select a save directory first.")
+            return
+
         width = self.width_entry.get()
         height = self.height_entry.get()
         left = self.left_entry.get()
@@ -104,16 +117,17 @@ class BatchImageProcessorApp:
                             raise ValueError("Crop coordinates are out of image bounds")
                         img = img.crop((left, top, right, bottom))
 
-                    base, ext = os.path.splitext(image_path)
+                    base, ext = os.path.splitext(os.path.basename(image_path))
                     if rename_prefix:
                         new_name = f"{rename_prefix}_{i + 1}{ext}"
                     else:
                         new_name = f"{base}_processed{ext}"
 
-                    img.save(new_name)
+                    save_path = os.path.join(self.save_directory, new_name)
+                    img.save(save_path)
 
                     if i == self.current_image_index:
-                        self.show_image(new_name, self.processed_image_label)
+                        self.show_image(save_path, self.processed_image_label)
 
                 except Exception as e:
                     messagebox.showerror("Error", f"Failed to process image {image_path}: {e}")
