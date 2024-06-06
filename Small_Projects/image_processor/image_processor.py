@@ -7,7 +7,7 @@ class BatchImageProcessorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Batch Image Processor")
-        self.root.geometry("1200x600")
+        self.root.geometry("1200x700")
 
         self.upload_button = tk.Button(self.root, text="Upload Images", command=self.upload_images)
         self.upload_button.pack(pady=20)
@@ -47,6 +47,9 @@ class BatchImageProcessorApp:
         self.processed_image_label = tk.Label(self.root)
         self.processed_image_label.pack(side=tk.RIGHT, padx=10)
 
+        self.default_values_label = tk.Label(self.root, text="")
+        self.default_values_label.pack(pady=10)
+
         self.images = []
 
     def upload_images(self):
@@ -60,6 +63,7 @@ class BatchImageProcessorApp:
         if self.images:
             self.current_image_index = 0
             self.show_image(self.images[self.current_image_index], self.original_image_label)
+            self.display_default_values(self.images[self.current_image_index])
 
     def show_image(self, image_path, label):
         image = Image.open(image_path)
@@ -67,6 +71,12 @@ class BatchImageProcessorApp:
         photo = ImageTk.PhotoImage(image)
         label.config(image=photo)
         label.image = photo
+
+    def display_default_values(self, image_path):
+        with Image.open(image_path) as img:
+            width, height = img.size
+            self.default_values_label.config(text=f"Default Dimensions: {width} x {height}\n"
+                                                  f"Default Crop: Left=0, Top=0, Right={width}, Bottom={height}")
 
     def process_images(self):
         if not self.images:
@@ -83,21 +93,30 @@ class BatchImageProcessorApp:
 
         for i, image_path in enumerate(self.images):
             with Image.open(image_path) as img:
-                if width and height:
-                    img = img.resize((int(width), int(height)))
+                try:
+                    if width and height:
+                        img = img.resize((int(width), int(height)))
 
-                if left and top and right and bottom:
-                    img = img.crop((int(left), int(top), int(right), int(bottom)))
+                    if left and top and right and bottom:
+                        left, top, right, bottom = map(int, [left, top, right, bottom])
+                        if left < 0 or top < 0 or right > img.width or bottom > img.height:
+                            raise ValueError("Crop coordinates are out of image bounds")
+                        img = img.crop((left, top, right, bottom))
 
-                base, ext = os.path.splitext(image_path)
-                if rename_prefix:
-                    new_name = f"{rename_prefix}_{i+1}{ext}"
-                else:
-                    new_name = f"{base}_processed{ext}"
+                    base, ext = os.path.splitext(image_path)
+                    if rename_prefix:
+                        new_name = f"{rename_prefix}_{i+1}{ext}"
+                    else:
+                        new_name = f"{base}_processed{ext}"
 
-                img.save(new_name)
-                if i == self.current_image_index:
-                    self.show_image(new_name, self.processed_image_label)
+                    img.save(new_name)
+
+                    if i == self.current_image_index:
+                        self.show_image(new_name, self.processed_image_label)
+
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to process image {image_path}: {e}")
+                    continue
 
         messagebox.showinfo("Success", "Images processed successfully.")
 
