@@ -1,13 +1,13 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from PIL import Image
+from PIL import Image, ImageTk
 import os
 
 class BatchImageProcessorApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Batch Image Processor")
-        self.root.geometry("600x400")
+        self.root.geometry("1200x600")
 
         self.upload_button = tk.Button(self.root, text="Upload Images", command=self.upload_images)
         self.upload_button.pack(pady=20)
@@ -41,6 +41,12 @@ class BatchImageProcessorApp:
         self.process_button = tk.Button(self.root, text="Process Images", command=self.process_images)
         self.process_button.pack(pady=20)
 
+        self.original_image_label = tk.Label(self.root)
+        self.original_image_label.pack(side=tk.LEFT, padx=10)
+
+        self.processed_image_label = tk.Label(self.root)
+        self.processed_image_label.pack(side=tk.RIGHT, padx=10)
+
         self.images = []
 
     def upload_images(self):
@@ -48,6 +54,19 @@ class BatchImageProcessorApp:
         if file_paths:
             self.images = file_paths
             messagebox.showinfo("Success", f"Uploaded {len(self.images)} images.")
+            self.display_original_image()
+
+    def display_original_image(self):
+        if self.images:
+            self.current_image_index = 0
+            self.show_image(self.images[self.current_image_index], self.original_image_label)
+
+    def show_image(self, image_path, label):
+        image = Image.open(image_path)
+        image.thumbnail((400, 400))
+        photo = ImageTk.PhotoImage(image)
+        label.config(image=photo)
+        label.image = photo
 
     def process_images(self):
         if not self.images:
@@ -77,6 +96,8 @@ class BatchImageProcessorApp:
                     new_name = f"{base}_processed{ext}"
 
                 img.save(new_name)
+                if i == self.current_image_index:
+                    self.show_image(new_name, self.processed_image_label)
 
         messagebox.showinfo("Success", "Images processed successfully.")
 
