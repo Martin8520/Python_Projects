@@ -3,6 +3,7 @@ from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
 import os
 
+
 class BatchImageProcessorApp:
     def __init__(self, root):
         self.root = root
@@ -105,7 +106,7 @@ class BatchImageProcessorApp:
 
                     base, ext = os.path.splitext(image_path)
                     if rename_prefix:
-                        new_name = f"{rename_prefix}_{i+1}{ext}"
+                        new_name = f"{rename_prefix}_{i + 1}{ext}"
                     else:
                         new_name = f"{base}_processed{ext}"
 
@@ -119,6 +120,7 @@ class BatchImageProcessorApp:
                     continue
 
         messagebox.showinfo("Success", "Images processed successfully.")
+
 
 if __name__ == "__main__":
     root = tk.Tk()
