@@ -42,5 +42,4 @@ root2.right = TreeNode(1)
 root2.left.left = TreeNode(1)
 root2.left.right = TreeNode(3)
 root2.left.right.right = TreeNode(1)
-
 print(pseudoPalindromicPaths(root2))  # 1
