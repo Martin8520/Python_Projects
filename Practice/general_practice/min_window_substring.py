@@ -34,8 +34,9 @@ def minWindow(s, t):
 
         r += 1
 
-    return "" if ans[1] is None else s[ans[1] : ans[2] + 1]
+    return "" if ans[1] is None else s[ans[1]: ans[2] + 1]
+
 
 print(minWindow("ADOBECODEBANC", "ABC"))  # "BANC"
-print(minWindow("a", "a"))                # "a"
-print(minWindow("a", "aa"))               # ""
+print(minWindow("a", "a"))  # "a"
+print(minWindow("a", "aa"))  # ""
