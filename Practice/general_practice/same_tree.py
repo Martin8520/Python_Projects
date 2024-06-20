@@ -5,14 +5,15 @@ class TreeNode:
         self.right = right
 
 
-def is_same_tree(p, q):
+def isSameTree(p: TreeNode, q: TreeNode) -> bool:
     if not p and not q:
         return True
     if not p or not q:
         return False
     if p.val != q.val:
         return False
-    return is_same_tree(p.left, q.left) and is_same_tree(p.right, q.right)
+
+    return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
 
 
 p = TreeNode(1)
@@ -23,7 +24,7 @@ q = TreeNode(1)
 q.left = TreeNode(2)
 q.right = TreeNode(3)
 
-print(is_same_tree(p, q))
+print(isSameTree(p, q))  # True
 
 p = TreeNode(1)
 p.left = TreeNode(2)
@@ -31,4 +32,14 @@ p.left = TreeNode(2)
 q = TreeNode(1)
 q.right = TreeNode(2)
 
-print(is_same_tree(p, q))
+print(isSameTree(p, q))  # False
+
+p = TreeNode(1)
+p.left = TreeNode(2)
+p.right = TreeNode(1)
+
+q = TreeNode(1)
+q.left = TreeNode(1)
+q.right = TreeNode(2)
+
+print(isSameTree(p, q))  # False
