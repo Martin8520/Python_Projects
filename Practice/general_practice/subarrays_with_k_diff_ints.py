@@ -26,6 +26,5 @@ def subarrays_with_k_distinct(nums, k):
     return at_most_k(nums, k) - at_most_k(nums, k - 1)
 
 
-# Example usage
 print(subarrays_with_k_distinct([1, 2, 1, 2, 3], 2))  # 7
 print(subarrays_with_k_distinct([1, 2, 1, 3, 4], 3))  # 3
