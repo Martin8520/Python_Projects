@@ -7,6 +7,11 @@ class Room:
     def describe(self):
         print(self.description)
 
+    def list_actions(self):
+        print("Available actions:")
+        for action in self.actions:
+            print(f"- {action}")
+
     def take_action(self, action, inventory):
         if action in self.actions:
             return self.actions[action](inventory)
@@ -161,7 +166,8 @@ class Game:
             self.rooms[self.current_room].describe()
             while self.actions_taken < 5 or not self.rooms[self.current_room].take_action('unlock door',
                                                                                           self.inventory):
-                action = input("What would you like to do? ")
+                self.rooms[self.current_room].list_actions()
+                action = input("Choose an action: ")
                 self.rooms[self.current_room].take_action(action, self.inventory)
                 self.actions_taken += 1
             self.actions_taken = 0
