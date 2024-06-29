@@ -93,7 +93,81 @@ class Game:
         }
         room2 = Room(room2_description, room2_actions)
 
-        return [room1, room2]
+        # Room 3
+        room3_description = """
+        You are in a dusty attic. There is a locked chest, a window, and a trapdoor in the floor.
+        You see a crowbar, a flashlight, and a map on the table.
+        """
+
+        def room3_action1(inventory):
+            if 'crowbar' not in inventory:
+                print("You take the crowbar.")
+                inventory.append('crowbar')
+                return False
+            else:
+                print("You already have the crowbar.")
+                return False
+
+        def room3_action2(inventory):
+            if 'flashlight' not in inventory:
+                print("You take the flashlight.")
+                inventory.append('flashlight')
+                return False
+            else:
+                print("You already have the flashlight.")
+                return False
+
+        def room3_action3(inventory):
+            if 'crowbar' in inventory:
+                print("You use the crowbar to pry open the trapdoor and escape the attic!")
+                return True
+            else:
+                print("You need a crowbar to open the trapdoor.")
+                return False
+
+        room3_actions = {
+            'take crowbar': room3_action1,
+            'take flashlight': room3_action2,
+            'open trapdoor': room3_action3
+        }
+        room3 = Room(room3_description, room3_actions)
+
+        # Room 4
+        room4_description = """
+        You are in a secret lab. There is a locked door to the north. 
+        You see a computer, a safe, and a desk.
+        """
+
+        def room4_action1(inventory):
+            print(
+                "You turn on the computer and find a clue: 'The code is the answer to life, the universe, and everything.'")
+            return False
+
+        def room4_action2(inventory):
+            if 'code' not in inventory:
+                print("You take the note with the code '42'.")
+                inventory.append('code')
+                return False
+            else:
+                print("You already have the code.")
+                return False
+
+        def room4_action3(inventory):
+            if 'code' in inventory and inventory.count('code') == 1:
+                print("You use the code '42' to unlock the door and escape the lab!")
+                return True
+            else:
+                print("You need the correct code to unlock the door.")
+                return False
+
+        room4_actions = {
+            'use computer': room4_action1,
+            'take code': room4_action2,
+            'unlock door': room4_action3
+        }
+        room4 = Room(room4_description, room4_actions)
+
+        return [room1, room2, room3, room4]
 
     def play(self):
         print("Welcome to the Escape Room Game!")
