@@ -22,7 +22,7 @@ class Game:
         self.rooms = self.create_rooms()
         self.current_room = 0
         self.actions_taken = 0
-        self.points = 5
+        self.points = 7
 
     def create_rooms(self):
         # Room 1
