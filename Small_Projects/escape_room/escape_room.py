@@ -22,7 +22,7 @@ class Game:
         self.rooms = self.create_rooms()
         self.current_room = 0
         self.actions_taken = 0
-        self.points = 7
+        self.points = 5
 
     def create_rooms(self):
         # Room 1
@@ -191,8 +191,9 @@ class Game:
                 self.points -= 1
                 if self.points > 0:
                     print(f"Incorrect choice. You lose 1 point. Points remaining: {self.points}")
+                    print(f"The unknown entity is getting closer... you can feel its presence.")
                 else:
-                    print("You have run out of points. Game over!")
+                    print("You have run out of points. The unknown entity reaches you. Game over!")
                     return
             self.actions_taken = 0
             self.current_room += 1
