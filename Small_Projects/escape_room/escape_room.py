@@ -23,6 +23,13 @@ class Game:
         self.current_room = 0
         self.actions_taken = 0
         self.points = 5
+        self.entity_messages = [
+            "You hear faint footsteps behind you.",
+            "The air grows colder, and you feel a presence nearby.",
+            "You hear breathing close to your neck.",
+            "You feel a hand brush against your shoulder.",
+            "A whisper echoes in your ear: 'I'm here...'"
+        ]
 
     def create_rooms(self):
         # Room 1
@@ -140,8 +147,7 @@ class Game:
 
         def room4_action1(inventory):
             print(
-                "You turn on the computer and find a clue:"
-                " 'The code is the answer to life, the universe, and everything.'")
+                "You turn on the computer and find a clue: 'The code is the answer to life, the universe, and everything.'")
             return False
 
         def room4_action2(inventory):
@@ -192,7 +198,7 @@ class Game:
                 self.points -= 1
                 if self.points > 0:
                     print(f"Incorrect choice. You lose 1 point. Points remaining: {self.points}")
-                    print(f"The unknown entity is getting closer... you can feel its presence.")
+                    print(self.entity_messages[5 - self.points])
                 else:
                     print("You have run out of points. The unknown entity reaches you. Game over!")
                     return
