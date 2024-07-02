@@ -21,9 +21,7 @@ class Game:
         self.inventory = []
         self.rooms = self.create_rooms()
         self.current_room = 0
-        self.actions_taken = 0
         self.points = 10
-        self.score = self.points
         self.entity_messages = [
             "You hear faint footsteps behind you.",
             "The air grows colder, and you feel a presence nearby.",
@@ -191,7 +189,7 @@ class Game:
         print("Welcome to the Escape Room Game!")
         while self.current_room < len(self.rooms) and self.points > 0:
             self.rooms[self.current_room].describe()
-            while self.actions_taken < 5 or not self.rooms[self.current_room].take_action(3, self.inventory):
+            while True:
                 self.rooms[self.current_room].list_actions()
                 try:
                     action_num = int(input("Choose an action (1, 2, or 3): "))
@@ -199,21 +197,15 @@ class Game:
                         raise ValueError
                     if self.rooms[self.current_room].take_action(action_num, self.inventory):
                         break
-                    else:
-                        self.actions_taken += 1
-                        if self.actions_taken >= 5:
-                            print("You have taken the maximum allowed actions for this room.")
-                            break
                 except ValueError:
                     print("Invalid input. Please enter a number between 1 and 3.")
                 self.points -= 1
                 if self.points > 0:
                     print(f"Incorrect choice. You lose 1 point. Points remaining: {self.points}")
-                    print(self.entity_messages[self.score - self.points])
+                    print(self.entity_messages[10 - self.points])
                 else:
                     print("You have run out of points. The unknown entity reaches you. Game over!")
                     return
-            self.actions_taken = 0
             self.current_room += 1
             if self.current_room < len(self.rooms):
                 print("You move to the next room.")
