@@ -22,13 +22,24 @@ class Game:
         self.rooms = self.create_rooms()
         self.current_room = 0
         self.actions_taken = 0
-        self.points = 5
+        self.points = 10
+        self.score = self.points
         self.entity_messages = [
             "You hear faint footsteps behind you.",
             "The air grows colder, and you feel a presence nearby.",
             "You hear breathing close to your neck.",
             "You feel a hand brush against your shoulder.",
-            "A whisper echoes in your ear: 'I'm here...'"
+            "A whisper echoes in your ear: 'I'm here...'",
+            "Shadows move at the corner of your vision.",
+            "A cold wind blows, chilling you to the bone.",
+            "You hear distant, eerie laughter.",
+            "Your heart races as the feeling of dread intensifies.",
+            "You feel unseen eyes watching your every move.",
+            "A cold sweat breaks out on your forehead.",
+            "You hear the sound of chains rattling in the distance.",
+            "Your vision blurs momentarily as fear grips you.",
+            "The room darkens, and you feel the entity drawing closer.",
+            "You sense a presence right behind you, but when you turn, nothing is there."
         ]
 
     def create_rooms(self):
@@ -198,7 +209,7 @@ class Game:
                 self.points -= 1
                 if self.points > 0:
                     print(f"Incorrect choice. You lose 1 point. Points remaining: {self.points}")
-                    print(self.entity_messages[5 - self.points])
+                    print(self.entity_messages[self.score - self.points])
                 else:
                     print("You have run out of points. The unknown entity reaches you. Game over!")
                     return
