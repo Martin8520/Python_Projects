@@ -156,7 +156,8 @@ class Game:
 
         def room4_action1(inventory):
             print(
-                "You turn on the computer and find a clue: 'The code is the answer to life, the universe, and everything.'")
+                "You turn on the computer and find a clue: 'The code is the answer to life, the universe, "
+                "and everything.'")
             return False
 
         def room4_action2(inventory):
