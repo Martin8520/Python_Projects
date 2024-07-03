@@ -156,8 +156,7 @@ class Game:
 
         def room4_action1(inventory):
             print(
-                "You turn on the computer and find a clue: 'The code is the answer to life, the universe, "
-                "and everything.'")
+                "You turn on the computer and find a clue: 'The code is the answer to life, the universe, and everything.'")
             return False
 
         def room4_action2(inventory):
@@ -184,7 +183,80 @@ class Game:
         }
         room4 = Room(room4_description, room4_actions)
 
-        return [room1, room2, room3, room4]
+        # Room 5
+        room5_description = """
+        You are in a library filled with ancient books. There is a locked door to the north.
+        You see a magnifying glass, a map, and a statue.
+        """
+
+        def room5_action1(inventory):
+            if 'magnifying glass' not in inventory:
+                print("You take the magnifying glass.")
+                inventory.append('magnifying glass')
+                return False
+            else:
+                print("You already have the magnifying glass.")
+                return False
+
+        def room5_action2(inventory):
+            print("The map shows a secret passage behind the statue.")
+            return False
+
+        def room5_action3(inventory):
+            if 'magnifying glass' in inventory:
+                print("You use the magnifying glass to find the hidden switch on the statue and escape the library!")
+                return True
+            else:
+                print("You need a magnifying glass to find the hidden switch.")
+                return False
+
+        room5_actions = {
+            'take magnifying glass': room5_action1,
+            'inspect map': room5_action2,
+            'inspect statue': room5_action3
+        }
+        room5 = Room(room5_description, room5_actions)
+
+        # Room 6
+        room6_description = """
+        You are in a garden with high walls. There is a locked gate to the north.
+        You see a shovel, a ladder, and a fountain.
+        """
+
+        def room6_action1(inventory):
+            if 'shovel' not in inventory:
+                print("You take the shovel.")
+                inventory.append('shovel')
+                return False
+            else:
+                print("You already have the shovel.")
+                return False
+
+        def room6_action2(inventory):
+            if 'shovel' in inventory:
+                print("You use the shovel to dig around the fountain and find a hidden key.")
+                inventory.append('key')
+                return False
+            else:
+                print("You need a shovel to dig around the fountain.")
+                return False
+
+        def room6_action3(inventory):
+            if 'key' in inventory:
+                print("You use the key to unlock the gate and escape the garden!")
+                return True
+            else:
+                print("You need a key to unlock the gate.")
+                return False
+
+        room6_actions = {
+            'take shovel': room6_action1,
+            'dig around fountain': room6_action2,
+            'unlock gate': room6_action3
+        }
+        room6 = Room(room6_description, room6_actions)
+
+        return [room1, room2, room3, room4, room5, room6]
 
     def play(self):
         print("Welcome to the Escape Room Game!")
