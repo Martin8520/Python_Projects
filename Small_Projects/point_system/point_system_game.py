@@ -13,10 +13,20 @@ class TaskManager:
     def load_tasks(self):
         if os.path.exists(self.filename):
             with open(self.filename, 'r') as file:
-                data = json.load(file)
-                self.tasks = data.get('tasks', [])
-                self.last_completed_date = data.get('last_completed_date')
-                self.current_streak = data.get('current_streak', 0)
+                try:
+                    data = json.load(file)
+                    if isinstance(data, dict):
+                        self.tasks = data.get('tasks', [])
+                        self.last_completed_date = data.get('last_completed_date')
+                        self.current_streak = data.get('current_streak', 0)
+                    else:
+                        self.tasks = []
+                        self.last_completed_date = None
+                        self.current_streak = 0
+                except json.JSONDecodeError:
+                    self.tasks = []
+                    self.last_completed_date = None
+                    self.current_streak = 0
         else:
             self.tasks = []
             self.last_completed_date = None
