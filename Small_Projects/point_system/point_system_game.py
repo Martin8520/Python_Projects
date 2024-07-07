@@ -1,41 +1,67 @@
 import json
 import os
-
+from datetime import datetime, timedelta
 
 class TaskManager:
     def __init__(self, filename='tasks.json'):
         self.filename = filename
         self.tasks = []
+        self.last_completed_date = None
+        self.current_streak = 0
         self.load_tasks()
 
     def load_tasks(self):
         if os.path.exists(self.filename):
             with open(self.filename, 'r') as file:
-                self.tasks = json.load(file)
+                data = json.load(file)
+                self.tasks = data.get('tasks', [])
+                self.last_completed_date = data.get('last_completed_date')
+                self.current_streak = data.get('current_streak', 0)
         else:
             self.tasks = []
+            self.last_completed_date = None
+            self.current_streak = 0
 
     def save_tasks(self):
         with open(self.filename, 'w') as file:
-            json.dump(self.tasks, file, indent=4)
+            data = {
+                'tasks': self.tasks,
+                'last_completed_date': self.last_completed_date,
+                'current_streak': self.current_streak
+            }
+            json.dump(data, file, indent=4)
 
     def add_task(self, task, points):
         self.tasks.append({'task': task, 'points': points, 'completed': False})
         self.save_tasks()
 
     def complete_task(self, task_index):
-        if 0 <= task_index < len(self.tasks):
+        if 0 <= task_index < len(self.tasks) and not self.tasks[task_index]['completed']:
             self.tasks[task_index]['completed'] = True
+            self.update_streak()
             self.save_tasks()
             return self.tasks[task_index]['points']
         return 0
+
+    def update_streak(self):
+        today = datetime.today().date()
+        if self.last_completed_date:
+            last_date = datetime.strptime(self.last_completed_date, "%Y-%m-%d").date()
+            if today == last_date + timedelta(days=1):
+                self.current_streak += 1
+            elif today != last_date:
+                self.current_streak = 1
+        else:
+            self.current_streak = 1
+        self.last_completed_date = today.strftime("%Y-%m-%d")
 
     def get_tasks(self):
         return self.tasks
 
     def get_total_points(self):
-        return sum(task['points'] for task in self.tasks if task['completed'])
-
+        base_points = sum(task['points'] for task in self.tasks if task['completed'])
+        streak_bonus = (self.current_streak - 1) * 2 if self.current_streak > 1 else 0
+        return base_points + streak_bonus
 
 def main():
     task_manager = TaskManager()
@@ -84,7 +110,6 @@ def main():
 
         else:
             print("Invalid choice. Please try again.")
-
 
 if __name__ == "__main__":
     main()
