@@ -6,44 +6,55 @@ from tkinter import messagebox
 
 
 class TaskManager:
-    def __init__(self, filename='tasks.json'):
-        self.filename = filename
+    def __init__(self, tasks_filename='tasks.json', completed_tasks_filename='completed_tasks.json'):
+        self.tasks_filename = tasks_filename
+        self.completed_tasks_filename = completed_tasks_filename
         self.tasks = []
         self.completed_tasks = []
         self.last_completed_date = None
         self.current_streak = 0
         self.load_tasks()
+        self.load_completed_tasks()
 
     def load_tasks(self):
-        if os.path.exists(self.filename):
-            with open(self.filename, 'r') as file:
+        if os.path.exists(self.tasks_filename):
+            with open(self.tasks_filename, 'r') as file:
+                try:
+                    self.tasks = json.load(file)
+                except json.JSONDecodeError:
+                    self.tasks = []
+        else:
+            self.tasks = []
+
+    def load_completed_tasks(self):
+        if os.path.exists(self.completed_tasks_filename):
+            with open(self.completed_tasks_filename, 'r') as file:
                 try:
                     data = json.load(file)
                     if isinstance(data, dict):
-                        self.tasks = data.get('tasks', [])
                         self.completed_tasks = data.get('completed_tasks', [])
                         self.last_completed_date = data.get('last_completed_date')
                         self.current_streak = data.get('current_streak', 0)
                     else:
-                        self.tasks = []
                         self.completed_tasks = []
                         self.last_completed_date = None
                         self.current_streak = 0
                 except json.JSONDecodeError:
-                    self.tasks = []
                     self.completed_tasks = []
                     self.last_completed_date = None
                     self.current_streak = 0
         else:
-            self.tasks = []
             self.completed_tasks = []
             self.last_completed_date = None
             self.current_streak = 0
 
     def save_tasks(self):
-        with open(self.filename, 'w') as file:
+        with open(self.tasks_filename, 'w') as file:
+            json.dump(self.tasks, file, indent=4)
+
+    def save_completed_tasks(self):
+        with open(self.completed_tasks_filename, 'w') as file:
             data = {
-                'tasks': self.tasks,
                 'completed_tasks': self.completed_tasks,
                 'last_completed_date': self.last_completed_date,
                 'current_streak': self.current_streak
@@ -56,11 +67,12 @@ class TaskManager:
 
     def complete_task(self, task_index):
         if 0 <= task_index < len(self.tasks):
-            task = self.tasks[task_index]
+            task = self.tasks.pop(task_index)
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             self.completed_tasks.append({'task': task['task'], 'points': task['points'], 'timestamp': timestamp})
             self.update_streak()
             self.save_tasks()
+            self.save_completed_tasks()
             return task['points']
         return 0
 
