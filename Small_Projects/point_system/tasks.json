@@ -1,7 +1,32 @@
-[
-    {
-        "task": "wash dishes",
-        "points": 5,
-        "completed": true
-    }
-]
+{
+    "tasks": [
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "completed": true
+        },
+        {
+            "task": "do laundry",
+            "points": 10
+        }
+    ],
+    "completed_tasks": [
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "timestamp": "2024-07-09 18:39:31"
+        },
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "timestamp": "2024-07-09 18:39:50"
+        },
+        {
+            "task": "do laundry",
+            "points": 10,
+            "timestamp": "2024-07-09 18:39:56"
+        }
+    ],
+    "last_completed_date": "2024-07-09",
+    "current_streak": 1
+}

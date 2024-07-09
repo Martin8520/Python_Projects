@@ -9,6 +9,7 @@ class TaskManager:
     def __init__(self, filename='tasks.json'):
         self.filename = filename
         self.tasks = []
+        self.completed_tasks = []
         self.last_completed_date = None
         self.current_streak = 0
         self.load_tasks()
@@ -20,18 +21,22 @@ class TaskManager:
                     data = json.load(file)
                     if isinstance(data, dict):
                         self.tasks = data.get('tasks', [])
+                        self.completed_tasks = data.get('completed_tasks', [])
                         self.last_completed_date = data.get('last_completed_date')
                         self.current_streak = data.get('current_streak', 0)
                     else:
                         self.tasks = []
+                        self.completed_tasks = []
                         self.last_completed_date = None
                         self.current_streak = 0
                 except json.JSONDecodeError:
                     self.tasks = []
+                    self.completed_tasks = []
                     self.last_completed_date = None
                     self.current_streak = 0
         else:
             self.tasks = []
+            self.completed_tasks = []
             self.last_completed_date = None
             self.current_streak = 0
 
@@ -39,21 +44,24 @@ class TaskManager:
         with open(self.filename, 'w') as file:
             data = {
                 'tasks': self.tasks,
+                'completed_tasks': self.completed_tasks,
                 'last_completed_date': self.last_completed_date,
                 'current_streak': self.current_streak
             }
             json.dump(data, file, indent=4)
 
     def add_task(self, task, points):
-        self.tasks.append({'task': task, 'points': points, 'completed': False})
+        self.tasks.append({'task': task, 'points': points})
         self.save_tasks()
 
     def complete_task(self, task_index):
-        if 0 <= task_index < len(self.tasks) and not self.tasks[task_index]['completed']:
-            self.tasks[task_index]['completed'] = True
+        if 0 <= task_index < len(self.tasks):
+            task = self.tasks[task_index]
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.completed_tasks.append({'task': task['task'], 'points': task['points'], 'timestamp': timestamp})
             self.update_streak()
             self.save_tasks()
-            return self.tasks[task_index]['points']
+            return task['points']
         return 0
 
     def update_streak(self):
@@ -72,9 +80,12 @@ class TaskManager:
         return self.tasks
 
     def get_total_points(self):
-        base_points = sum(task['points'] for task in self.tasks if task['completed'])
+        base_points = sum(task['points'] for task in self.completed_tasks)
         streak_bonus = (self.current_streak - 1) * 2 if self.current_streak > 1 else 0
         return base_points + streak_bonus
+
+    def get_completed_tasks(self):
+        return self.completed_tasks
 
 
 class TaskManagerUI:
@@ -105,13 +116,21 @@ class TaskManagerUI:
         self.view_points_button = tk.Button(root, text="View Points", command=self.view_points)
         self.view_points_button.pack(pady=5)
 
+        self.points_listbox = tk.Listbox(root, width=50)
+        self.points_listbox.pack(pady=10)
+
         self.refresh_task_list()
+        self.refresh_points_list()
 
     def refresh_task_list(self):
         self.task_listbox.delete(0, tk.END)
         for idx, task in enumerate(self.task_manager.get_tasks()):
-            status = "Completed" if task['completed'] else "Pending"
-            self.task_listbox.insert(tk.END, f"{idx}. {task['task']} - {task['points']} points - {status}")
+            self.task_listbox.insert(tk.END, f"{idx}. {task['task']} - {task['points']} points")
+
+    def refresh_points_list(self):
+        self.points_listbox.delete(0, tk.END)
+        for task in self.task_manager.get_completed_tasks():
+            self.points_listbox.insert(tk.END, f"{task['task']} - {task['points']} points - {task['timestamp']}")
 
     def add_task(self):
         task = self.task_entry.get()
@@ -132,8 +151,9 @@ class TaskManagerUI:
             if earned_points > 0:
                 messagebox.showinfo("Task Completed", f"You earned {earned_points} points!")
                 self.refresh_task_list()
+                self.refresh_points_list()
             else:
-                messagebox.showwarning("Invalid Action", "Task already completed or invalid selection.")
+                messagebox.showwarning("Invalid Action", "Invalid selection.")
         except IndexError:
             messagebox.showwarning("Invalid Action", "No task selected.")
         except ValueError:
