@@ -3,7 +3,17 @@
         {
             "task": "wash dishes",
             "points": 10,
-            "timestamp": "2024-07-09 18:48:00"
+            "timestamp": "2024-07-09 18:50:13"
+        },
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "timestamp": "2024-07-09 18:50:22"
+        },
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "timestamp": "2024-07-09 18:50:24"
         }
     ],
     "last_completed_date": "2024-07-09",

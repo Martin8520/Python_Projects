@@ -67,11 +67,10 @@ class TaskManager:
 
     def complete_task(self, task_index):
         if 0 <= task_index < len(self.tasks):
-            task = self.tasks.pop(task_index)
+            task = self.tasks[task_index]
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             self.completed_tasks.append({'task': task['task'], 'points': task['points'], 'timestamp': timestamp})
             self.update_streak()
-            self.save_tasks()
             self.save_completed_tasks()
             return task['points']
         return 0
