@@ -148,8 +148,11 @@ class TaskManagerUI:
         try:
             selected_task_index = int(self.task_listbox.get(tk.ACTIVE).split(".")[0])
             earned_points = self.task_manager.complete_task(selected_task_index)
-            if earned_points > 0:
-                messagebox.showinfo("Task Completed", f"You earned {earned_points} points!")
+            if earned_points != 0:
+                if earned_points > 0:
+                    messagebox.showinfo("Task Completed", f"You earned {earned_points} points!")
+                else:
+                    messagebox.showinfo("Task Completed", f"You lost {-earned_points} points!")
                 self.refresh_task_list()
                 self.refresh_points_list()
             else:
