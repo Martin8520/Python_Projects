@@ -1,6 +1,9 @@
 import json
 import os
 from datetime import datetime, timedelta
+import tkinter as tk
+from tkinter import messagebox
+
 
 class TaskManager:
     def __init__(self, filename='tasks.json'):
@@ -73,53 +76,76 @@ class TaskManager:
         streak_bonus = (self.current_streak - 1) * 2 if self.current_streak > 1 else 0
         return base_points + streak_bonus
 
-def main():
-    task_manager = TaskManager()
 
-    while True:
-        print("\nTask Manager")
-        print("1. Add a new task")
-        print("2. Complete a task")
-        print("3. View tasks")
-        print("4. View total points")
-        print("5. Exit")
+class TaskManagerUI:
+    def __init__(self, root, task_manager):
+        self.root = root
+        self.task_manager = task_manager
+        self.root.title("Task Manager")
 
-        choice = input("Enter your choice: ")
+        self.task_listbox = tk.Listbox(root, width=50)
+        self.task_listbox.pack(pady=10)
 
-        if choice == '1':
-            task = input("Enter the task description: ")
-            points = int(input("Enter the points for this task: "))
-            task_manager.add_task(task, points)
-            print("Task added successfully!")
+        self.add_task_frame = tk.Frame(root)
+        self.add_task_frame.pack(pady=10)
 
-        elif choice == '2':
-            tasks = task_manager.get_tasks()
-            for idx, task in enumerate(tasks):
-                status = "Completed" if task['completed'] else "Pending"
-                print(f"{idx}. {task['task']} - {task['points']} points - {status}")
-            task_index = int(input("Enter the task number to complete: "))
-            earned_points = task_manager.complete_task(task_index)
+        self.task_entry = tk.Entry(self.add_task_frame, width=30)
+        self.task_entry.pack(side=tk.LEFT, padx=5)
+
+        self.points_entry = tk.Entry(self.add_task_frame, width=10)
+        self.points_entry.pack(side=tk.LEFT, padx=5)
+        self.points_entry.insert(0, "Points")
+
+        self.add_task_button = tk.Button(self.add_task_frame, text="Add Task", command=self.add_task)
+        self.add_task_button.pack(side=tk.LEFT, padx=5)
+
+        self.complete_task_button = tk.Button(root, text="Complete Task", command=self.complete_task)
+        self.complete_task_button.pack(pady=5)
+
+        self.view_points_button = tk.Button(root, text="View Points", command=self.view_points)
+        self.view_points_button.pack(pady=5)
+
+        self.refresh_task_list()
+
+    def refresh_task_list(self):
+        self.task_listbox.delete(0, tk.END)
+        for idx, task in enumerate(self.task_manager.get_tasks()):
+            status = "Completed" if task['completed'] else "Pending"
+            self.task_listbox.insert(tk.END, f"{idx}. {task['task']} - {task['points']} points - {status}")
+
+    def add_task(self):
+        task = self.task_entry.get()
+        try:
+            points = int(self.points_entry.get())
+            self.task_manager.add_task(task, points)
+            self.task_entry.delete(0, tk.END)
+            self.points_entry.delete(0, tk.END)
+            self.points_entry.insert(0, "Points")
+            self.refresh_task_list()
+        except ValueError:
+            messagebox.showerror("Invalid Input", "Points must be a valid integer.")
+
+    def complete_task(self):
+        try:
+            selected_task_index = int(self.task_listbox.get(tk.ACTIVE).split(".")[0])
+            earned_points = self.task_manager.complete_task(selected_task_index)
             if earned_points > 0:
-                print(f"Task completed! You earned {earned_points} points.")
+                messagebox.showinfo("Task Completed", f"You earned {earned_points} points!")
+                self.refresh_task_list()
             else:
-                print("Invalid task number or task already completed.")
+                messagebox.showwarning("Invalid Action", "Task already completed or invalid selection.")
+        except IndexError:
+            messagebox.showwarning("Invalid Action", "No task selected.")
+        except ValueError:
+            messagebox.showwarning("Invalid Action", "No task selected.")
 
-        elif choice == '3':
-            tasks = task_manager.get_tasks()
-            for idx, task in enumerate(tasks):
-                status = "Completed" if task['completed'] else "Pending"
-                print(f"{idx}. {task['task']} - {task['points']} points - {status}")
+    def view_points(self):
+        total_points = self.task_manager.get_total_points()
+        messagebox.showinfo("Total Points", f"Total points earned: {total_points}")
 
-        elif choice == '4':
-            total_points = task_manager.get_total_points()
-            print(f"Total points earned: {total_points}")
-
-        elif choice == '5':
-            print("Goodbye!")
-            break
-
-        else:
-            print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
-    main()
+    root = tk.Tk()
+    task_manager = TaskManager()
+    app = TaskManagerUI(root, task_manager)
+    root.mainloop()
