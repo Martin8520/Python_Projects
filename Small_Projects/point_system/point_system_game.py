@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime, timedelta
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, filedialog
 
 
 class TaskManager:
@@ -16,7 +16,9 @@ class TaskManager:
         self.load_tasks()
         self.load_completed_tasks()
 
-    def load_tasks(self):
+    def load_tasks(self, filename=None):
+        if filename:
+            self.tasks_filename = filename
         if os.path.exists(self.tasks_filename):
             with open(self.tasks_filename, 'r') as file:
                 try:
@@ -26,7 +28,9 @@ class TaskManager:
         else:
             self.tasks = []
 
-    def load_completed_tasks(self):
+    def load_completed_tasks(self, filename=None):
+        if filename:
+            self.completed_tasks_filename = filename
         if os.path.exists(self.completed_tasks_filename):
             with open(self.completed_tasks_filename, 'r') as file:
                 try:
@@ -105,6 +109,18 @@ class TaskManagerUI:
         self.task_manager = task_manager
         self.root.title("Task Manager")
 
+        self.menu = tk.Menu(root)
+        root.config(menu=self.menu)
+
+        self.file_menu = tk.Menu(self.menu, tearoff=0)
+        self.menu.add_cascade(label="File", menu=self.file_menu)
+        self.file_menu.add_command(label="Open Tasks File", command=self.open_tasks_file)
+        self.file_menu.add_command(label="Open Completed Tasks File", command=self.open_completed_tasks_file)
+        self.file_menu.add_command(label="Save Tasks File As", command=self.save_tasks_file_as)
+        self.file_menu.add_command(label="Save Completed Tasks File As", command=self.save_completed_tasks_file_as)
+        self.file_menu.add_separator()
+        self.file_menu.add_command(label="Exit", command=root.quit)
+
         self.task_listbox = tk.Listbox(root, width=50)
         self.task_listbox.pack(pady=10)
 
@@ -176,6 +192,34 @@ class TaskManagerUI:
     def view_points(self):
         total_points = self.task_manager.get_total_points()
         messagebox.showinfo("Total Points", f"Total points earned: {total_points}")
+
+    def open_tasks_file(self):
+        filename = filedialog.askopenfilename(defaultextension=".json",
+                                              filetypes=[("JSON files", "*.json"), ("All files", "*.*")])
+        if filename:
+            self.task_manager.load_tasks(filename)
+            self.refresh_task_list()
+
+    def open_completed_tasks_file(self):
+        filename = filedialog.askopenfilename(defaultextension=".json",
+                                              filetypes=[("JSON files", "*.json"), ("All files", "*.*")])
+        if filename:
+            self.task_manager.load_completed_tasks(filename)
+            self.refresh_points_list()
+
+    def save_tasks_file_as(self):
+        filename = filedialog.asksaveasfilename(defaultextension=".json",
+                                                filetypes=[("JSON files", "*.json"), ("All files", "*.*")])
+        if filename:
+            self.task_manager.tasks_filename = filename
+            self.task_manager.save_tasks()
+
+    def save_completed_tasks_file_as(self):
+        filename = filedialog.asksaveasfilename(defaultextension=".json",
+                                                filetypes=[("JSON files", "*.json"), ("All files", "*.*")])
+        if filename:
+            self.task_manager.completed_tasks_filename = filename
+            self.task_manager.save_completed_tasks()
 
 
 if __name__ == "__main__":
