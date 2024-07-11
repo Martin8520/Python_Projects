@@ -2,7 +2,7 @@ import json
 import os
 from datetime import datetime, timedelta
 import tkinter as tk
-from tkinter import messagebox, filedialog
+from tkinter import messagebox, filedialog, ttk
 
 
 class TaskManager:
@@ -72,7 +72,7 @@ class TaskManager:
     def complete_task(self, task_index):
         if 0 <= task_index < len(self.tasks):
             task = self.tasks[task_index]
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
             self.completed_tasks.append({'task': task['task'], 'points': task['points'], 'timestamp': timestamp})
             self.update_streak()
             self.save_completed_tasks()
@@ -108,6 +108,13 @@ class TaskManagerUI:
         self.root = root
         self.task_manager = task_manager
         self.root.title("Task Manager")
+        self.root.geometry("600x600")
+
+        style = ttk.Style()
+        style.configure("TLabel", font=("Helvetica", 12))
+        style.configure("TButton", font=("Helvetica", 12))
+        style.configure("TEntry", font=("Helvetica", 12))
+        style.configure("TListbox", font=("Helvetica", 12))
 
         self.menu = tk.Menu(root)
         root.config(menu=self.menu)
@@ -121,33 +128,40 @@ class TaskManagerUI:
         self.file_menu.add_separator()
         self.file_menu.add_command(label="Exit", command=root.quit)
 
-        self.task_listbox = tk.Listbox(root, width=50)
+        self.stats_frame = ttk.Frame(root)
+        self.stats_frame.pack(pady=10)
+
+        self.points_label = ttk.Label(self.stats_frame, text="Total Points: 0")
+        self.points_label.pack(side=tk.LEFT, padx=10)
+
+        self.streak_label = ttk.Label(self.stats_frame, text="Current Streak: 0 days")
+        self.streak_label.pack(side=tk.LEFT, padx=10)
+
+        self.task_listbox = tk.Listbox(root, width=50, height=10, font=("Helvetica", 12))
         self.task_listbox.pack(pady=10)
 
-        self.add_task_frame = tk.Frame(root)
+        self.add_task_frame = ttk.Frame(root)
         self.add_task_frame.pack(pady=10)
 
-        self.task_entry = tk.Entry(self.add_task_frame, width=30)
+        self.task_entry = ttk.Entry(self.add_task_frame, width=30)
         self.task_entry.pack(side=tk.LEFT, padx=5)
 
-        self.points_entry = tk.Entry(self.add_task_frame, width=10)
+        self.points_entry = ttk.Entry(self.add_task_frame, width=10)
         self.points_entry.pack(side=tk.LEFT, padx=5)
         self.points_entry.insert(0, "Points")
 
-        self.add_task_button = tk.Button(self.add_task_frame, text="Add Task", command=self.add_task)
+        self.add_task_button = ttk.Button(self.add_task_frame, text="Add Task", command=self.add_task)
         self.add_task_button.pack(side=tk.LEFT, padx=5)
 
-        self.complete_task_button = tk.Button(root, text="Complete Task", command=self.complete_task)
+        self.complete_task_button = ttk.Button(root, text="Complete Task", command=self.complete_task)
         self.complete_task_button.pack(pady=5)
 
-        self.view_points_button = tk.Button(root, text="View Points", command=self.view_points)
-        self.view_points_button.pack(pady=5)
-
-        self.points_listbox = tk.Listbox(root, width=50)
+        self.points_listbox = tk.Listbox(root, width=50, height=10, font=("Helvetica", 12))
         self.points_listbox.pack(pady=10)
 
         self.refresh_task_list()
         self.refresh_points_list()
+        self.update_stats()
 
     def refresh_task_list(self):
         self.task_listbox.delete(0, tk.END)
@@ -158,6 +172,12 @@ class TaskManagerUI:
         self.points_listbox.delete(0, tk.END)
         for task in self.task_manager.get_completed_tasks():
             self.points_listbox.insert(tk.END, f"{task['task']} - {task['points']} points - {task['timestamp']}")
+
+    def update_stats(self):
+        total_points = self.task_manager.get_total_points()
+        current_streak = self.task_manager.current_streak
+        self.points_label.config(text=f"Total Points: {total_points}")
+        self.streak_label.config(text=f"Current Streak: {current_streak} days")
 
     def add_task(self):
         task = self.task_entry.get()
@@ -174,24 +194,14 @@ class TaskManagerUI:
     def complete_task(self):
         try:
             selected_task_index = int(self.task_listbox.get(tk.ACTIVE).split(".")[0])
-            earned_points = self.task_manager.complete_task(selected_task_index)
-            if earned_points != 0:
-                if earned_points > 0:
-                    messagebox.showinfo("Task Completed", f"You earned {earned_points} points!")
-                else:
-                    messagebox.showinfo("Task Completed", f"You lost {-earned_points} points!")
-                self.refresh_task_list()
-                self.refresh_points_list()
-            else:
-                messagebox.showwarning("Invalid Action", "Invalid selection.")
+            self.task_manager.complete_task(selected_task_index)
+            self.refresh_task_list()
+            self.refresh_points_list()
+            self.update_stats()
         except IndexError:
             messagebox.showwarning("Invalid Action", "No task selected.")
         except ValueError:
             messagebox.showwarning("Invalid Action", "No task selected.")
-
-    def view_points(self):
-        total_points = self.task_manager.get_total_points()
-        messagebox.showinfo("Total Points", f"Total points earned: {total_points}")
 
     def open_tasks_file(self):
         filename = filedialog.askopenfilename(defaultextension=".json",
@@ -206,6 +216,7 @@ class TaskManagerUI:
         if filename:
             self.task_manager.load_completed_tasks(filename)
             self.refresh_points_list()
+            self.update_stats()
 
     def save_tasks_file_as(self):
         filename = filedialog.asksaveasfilename(defaultextension=".json",
