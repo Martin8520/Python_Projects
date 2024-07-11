@@ -1,0 +1,41 @@
+{
+    "completed_tasks": [
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "timestamp": "2024-07-11 14:43:02"
+        },
+        {
+            "task": "do laundry",
+            "points": 10,
+            "timestamp": "2024-07-11 14:43:04"
+        },
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "timestamp": "2024-07-11 14:43:05"
+        },
+        {
+            "task": "do laundry",
+            "points": 10,
+            "timestamp": "2024-07-11 14:43:07"
+        },
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "timestamp": "2024-07-11 14:43:08"
+        },
+        {
+            "task": "do laundry",
+            "points": 10,
+            "timestamp": "2024-07-11 14:43:09"
+        },
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "timestamp": "2024-07-11 14:43:14"
+        }
+    ],
+    "last_completed_date": "2024-07-11",
+    "current_streak": 1
+}
