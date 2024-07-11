@@ -72,7 +72,7 @@ class TaskManager:
     def complete_task(self, task_index):
         if 0 <= task_index < len(self.tasks):
             task = self.tasks[task_index]
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
             self.completed_tasks.append({'task': task['task'], 'points': task['points'], 'timestamp': timestamp})
             self.update_streak()
             self.save_completed_tasks()
@@ -156,9 +156,6 @@ class TaskManagerUI:
         self.complete_task_button = ttk.Button(root, text="Complete Task", command=self.complete_task)
         self.complete_task_button.pack(pady=5)
 
-        self.view_points_button = ttk.Button(root, text="View Points", command=self.view_points)
-        self.view_points_button.pack(pady=5)
-
         self.points_listbox = tk.Listbox(root, width=50, height=10, font=("Helvetica", 12))
         self.points_listbox.pack(pady=10)
 
@@ -197,26 +194,14 @@ class TaskManagerUI:
     def complete_task(self):
         try:
             selected_task_index = int(self.task_listbox.get(tk.ACTIVE).split(".")[0])
-            earned_points = self.task_manager.complete_task(selected_task_index)
-            if earned_points != 0:
-                if earned_points > 0:
-                    messagebox.showinfo("Task Completed", f"You earned {earned_points} points!")
-                else:
-                    messagebox.showinfo("Task Completed", f"You lost {-earned_points} points!")
-                self.refresh_task_list()
-                self.refresh_points_list()
-                self.update_stats()
-            else:
-                messagebox.showwarning("Invalid Action", "Invalid selection.")
+            self.task_manager.complete_task(selected_task_index)
+            self.refresh_task_list()
+            self.refresh_points_list()
+            self.update_stats()
         except IndexError:
             messagebox.showwarning("Invalid Action", "No task selected.")
         except ValueError:
             messagebox.showwarning("Invalid Action", "No task selected.")
-
-    def view_points(self):
-        self.update_stats()
-        total_points = self.task_manager.get_total_points()
-        messagebox.showinfo("Total Points", f"Total points earned: {total_points}")
 
     def open_tasks_file(self):
         filename = filedialog.askopenfilename(defaultextension=".json",
