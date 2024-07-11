@@ -128,6 +128,15 @@ class TaskManagerUI:
         self.file_menu.add_separator()
         self.file_menu.add_command(label="Exit", command=root.quit)
 
+        self.stats_frame = ttk.Frame(root)
+        self.stats_frame.pack(pady=10)
+
+        self.points_label = ttk.Label(self.stats_frame, text="Total Points: 0")
+        self.points_label.pack(side=tk.LEFT, padx=10)
+
+        self.streak_label = ttk.Label(self.stats_frame, text="Current Streak: 0 days")
+        self.streak_label.pack(side=tk.LEFT, padx=10)
+
         self.task_listbox = tk.Listbox(root, width=50, height=10, font=("Helvetica", 12))
         self.task_listbox.pack(pady=10)
 
@@ -155,6 +164,7 @@ class TaskManagerUI:
 
         self.refresh_task_list()
         self.refresh_points_list()
+        self.update_stats()
 
     def refresh_task_list(self):
         self.task_listbox.delete(0, tk.END)
@@ -165,6 +175,12 @@ class TaskManagerUI:
         self.points_listbox.delete(0, tk.END)
         for task in self.task_manager.get_completed_tasks():
             self.points_listbox.insert(tk.END, f"{task['task']} - {task['points']} points - {task['timestamp']}")
+
+    def update_stats(self):
+        total_points = self.task_manager.get_total_points()
+        current_streak = self.task_manager.current_streak
+        self.points_label.config(text=f"Total Points: {total_points}")
+        self.streak_label.config(text=f"Current Streak: {current_streak} days")
 
     def add_task(self):
         task = self.task_entry.get()
@@ -189,6 +205,7 @@ class TaskManagerUI:
                     messagebox.showinfo("Task Completed", f"You lost {-earned_points} points!")
                 self.refresh_task_list()
                 self.refresh_points_list()
+                self.update_stats()
             else:
                 messagebox.showwarning("Invalid Action", "Invalid selection.")
         except IndexError:
@@ -197,6 +214,7 @@ class TaskManagerUI:
             messagebox.showwarning("Invalid Action", "No task selected.")
 
     def view_points(self):
+        self.update_stats()
         total_points = self.task_manager.get_total_points()
         messagebox.showinfo("Total Points", f"Total points earned: {total_points}")
 
@@ -213,6 +231,7 @@ class TaskManagerUI:
         if filename:
             self.task_manager.load_completed_tasks(filename)
             self.refresh_points_list()
+            self.update_stats()
 
     def save_tasks_file_as(self):
         filename = filedialog.asksaveasfilename(defaultextension=".json",

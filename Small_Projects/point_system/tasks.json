@@ -2,5 +2,9 @@
     {
         "task": "wash dishes",
         "points": 10
+    },
+    {
+        "task": "do laundry",
+        "points": 10
     }
 ]
