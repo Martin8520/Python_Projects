@@ -34,8 +34,33 @@
             "task": "wash dishes",
             "points": 10,
             "timestamp": "2024-07-11 14:43:14"
+        },
+        {
+            "task": "do laundry",
+            "points": 10,
+            "timestamp": "2024-07-12 17:48"
+        },
+        {
+            "task": "do laundry",
+            "points": 10,
+            "timestamp": "2024-07-12 17:48"
+        },
+        {
+            "task": "do laundry",
+            "points": 10,
+            "timestamp": "2024-07-12 17:48"
+        },
+        {
+            "task": "do laundry",
+            "points": 10,
+            "timestamp": "2024-07-12 17:48"
+        },
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "timestamp": "2024-07-12 17:48"
         }
     ],
-    "last_completed_date": "2024-07-11",
-    "current_streak": 1
+    "last_completed_date": "2024-07-12",
+    "current_streak": 2
 }
