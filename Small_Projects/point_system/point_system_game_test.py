@@ -96,7 +96,7 @@ class TaskManager:
 
     def get_total_points(self):
         base_points = sum(task['points'] for task in self.completed_tasks)
-        streak_bonus = (self.current_streak - 1) * 2 if self.current_streak > 1 else 0
+        streak_bonus = min((self.current_streak - 1) * 2, 10) if self.current_streak > 1 else 0
         return base_points + streak_bonus
 
     def get_completed_tasks(self):
