@@ -6,18 +6,15 @@ from tkinter import messagebox, filedialog, ttk
 
 
 class TaskManager:
-    def __init__(self, tasks_filename='tasks.json', completed_tasks_filename='completed_tasks.json', purchases_filename='purchases.json'):
+    def __init__(self, tasks_filename='tasks.json', completed_tasks_filename='completed_tasks.json'):
         self.tasks_filename = tasks_filename
         self.completed_tasks_filename = completed_tasks_filename
-        self.purchases_filename = purchases_filename
         self.tasks = []
         self.completed_tasks = []
-        self.purchases = []
         self.last_completed_date = None
         self.current_streak = 0
         self.load_tasks()
         self.load_completed_tasks()
-        self.load_purchases()
 
     def load_tasks(self, filename=None):
         if filename:
@@ -55,16 +52,6 @@ class TaskManager:
             self.last_completed_date = None
             self.current_streak = 0
 
-    def load_purchases(self):
-        if os.path.exists(self.purchases_filename):
-            with open(self.purchases_filename, 'r') as file:
-                try:
-                    self.purchases = json.load(file)
-                except json.JSONDecodeError:
-                    self.purchases = []
-        else:
-            self.purchases = []
-
     def save_tasks(self):
         with open(self.tasks_filename, 'w') as file:
             json.dump(self.tasks, file, indent=4)
@@ -78,10 +65,6 @@ class TaskManager:
             }
             json.dump(data, file, indent=4)
 
-    def save_purchases(self):
-        with open(self.purchases_filename, 'w') as file:
-            json.dump(self.purchases, file, indent=4)
-
     def add_task(self, task, points):
         self.tasks.append({'task': task, 'points': points})
         self.save_tasks()
@@ -91,7 +74,8 @@ class TaskManager:
             task = self.tasks[task_index]
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
             self.completed_tasks.append({'task': task['task'], 'points': task['points'], 'timestamp': timestamp})
-            self.update_streak()
+            if task['points'] >= 0:
+                self.update_streak()
             self.save_completed_tasks()
             return task['points']
         return 0
@@ -113,14 +97,11 @@ class TaskManager:
 
     def get_total_points(self):
         base_points = sum(task['points'] for task in self.completed_tasks)
-        streak_bonus = min((self.current_streak - 1) * 2, 10) if self.current_streak > 1 else 0
+        streak_bonus = (self.current_streak - 1) * 2 if self.current_streak > 1 else 0
         return base_points + streak_bonus
 
     def get_completed_tasks(self):
         return self.completed_tasks
-
-    def get_purchases(self):
-        return self.purchases
 
     def deduct_points(self, price, note):
         points_to_deduct = price * 10
@@ -150,8 +131,7 @@ class TaskManager:
         if points_to_deduct > 0:
             raise ValueError("Not enough points")
 
-        self.purchases.append({'price': price, 'note': note, 'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M")})
-        self.save_purchases()
+        self.completed_tasks.append({'task': note, 'points': -price * 10, 'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M")})
         self.save_completed_tasks()
 
 
@@ -225,12 +205,8 @@ class TaskManagerUI:
         self.deduct_points_button = ttk.Button(self.purchase_frame, text="Deduct Points", command=self.deduct_points)
         self.deduct_points_button.pack(side=tk.LEFT, padx=5)
 
-        self.purchase_listbox = tk.Listbox(root, width=50, height=10, font=("Helvetica", 12))
-        self.purchase_listbox.pack(pady=10)
-
         self.refresh_task_list()
         self.refresh_points_list()
-        self.refresh_purchase_list()
         self.update_stats()
 
     def refresh_task_list(self):
@@ -242,11 +218,6 @@ class TaskManagerUI:
         self.points_listbox.delete(0, tk.END)
         for task in self.task_manager.get_completed_tasks():
             self.points_listbox.insert(tk.END, f"{task['task']} - {task['points']} points - {task['timestamp']}")
-
-    def refresh_purchase_list(self):
-        self.purchase_listbox.delete(0, tk.END)
-        for purchase in self.task_manager.get_purchases():
-            self.purchase_listbox.insert(tk.END, f"{purchase['note']} - ${purchase['price']} - {purchase['timestamp']}")
 
     def update_stats(self):
         total_points = self.task_manager.get_total_points()
@@ -287,7 +258,7 @@ class TaskManagerUI:
             self.price_entry.insert(0, "Price")
             self.note_entry.delete(0, tk.END)
             self.note_entry.insert(0, "Note")
-            self.refresh_purchase_list()
+            self.refresh_points_list()
             self.update_stats()
         except ValueError as e:
             messagebox.showerror("Invalid Input", str(e))
@@ -320,6 +291,7 @@ class TaskManagerUI:
         if filename:
             self.task_manager.completed_tasks_filename = filename
             self.task_manager.save_completed_tasks()
+
 
 
 if __name__ == "__main__":

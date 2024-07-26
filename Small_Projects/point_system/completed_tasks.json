@@ -49,8 +49,23 @@
             "task": "do laundry",
             "points": 10,
             "timestamp": "2024-07-12 17:48"
+        },
+        {
+            "task": "overslept",
+            "points": -10,
+            "timestamp": "2024-07-26 12:46"
+        },
+        {
+            "task": "do laundry",
+            "points": 10,
+            "timestamp": "2024-07-26 12:46"
+        },
+        {
+            "task": "wash dishes",
+            "points": 10,
+            "timestamp": "2024-07-26 12:46"
         }
     ],
-    "last_completed_date": "2024-07-21",
+    "last_completed_date": "2024-07-26",
     "current_streak": 1
 }
