@@ -129,7 +129,8 @@ class TaskManager:
         if points_to_deduct > 0:
             raise ValueError("Not enough points")
 
-        self.completed_tasks.append({'task': note, 'points': -price * 10, 'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M")})
+        self.completed_tasks.append(
+            {'task': note, 'points': -price * 10, 'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M")})
         self.save_completed_tasks()
 
 
@@ -289,7 +290,6 @@ class TaskManagerUI:
         if filename:
             self.task_manager.completed_tasks_filename = filename
             self.task_manager.save_completed_tasks()
-
 
 
 if __name__ == "__main__":
