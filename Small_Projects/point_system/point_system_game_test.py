@@ -109,7 +109,6 @@ class TaskManager:
         if points_to_deduct > total_points:
             raise ValueError("Not enough points")
 
-        # Deduct from streak bonus first
         streak_bonus = min((self.current_streak - 1) * 2, 10) if self.current_streak > 1 else 0
         if streak_bonus >= points_to_deduct:
             self.current_streak = max(1, self.current_streak - (points_to_deduct // 2))
@@ -118,7 +117,6 @@ class TaskManager:
             points_to_deduct -= streak_bonus
             self.current_streak = 1
 
-        # Deduct from completed tasks
         while points_to_deduct > 0 and self.completed_tasks:
             task = self.completed_tasks.pop()
             if task['points'] > points_to_deduct:
