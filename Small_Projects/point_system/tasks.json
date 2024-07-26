@@ -6,5 +6,9 @@
     {
         "task": "do laundry",
         "points": 10
+    },
+    {
+        "task": "overslept",
+        "points": -10
     }
 ]
