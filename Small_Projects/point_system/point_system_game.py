@@ -74,7 +74,8 @@ class TaskManager:
             task = self.tasks[task_index]
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
             self.completed_tasks.append({'task': task['task'], 'points': task['points'], 'timestamp': timestamp})
-            self.update_streak()
+            if task['points'] >= 0:
+                self.update_streak()
             self.save_completed_tasks()
             return task['points']
         return 0
@@ -96,11 +97,41 @@ class TaskManager:
 
     def get_total_points(self):
         base_points = sum(task['points'] for task in self.completed_tasks)
-        streak_bonus = min((self.current_streak - 1) * 2, 10) if self.current_streak > 1 else 0
+        streak_bonus = (self.current_streak - 1) * 2 if self.current_streak > 1 else 0
         return base_points + streak_bonus
 
     def get_completed_tasks(self):
         return self.completed_tasks
+
+    def deduct_points(self, price, note):
+        points_to_deduct = price * 10
+        total_points = self.get_total_points()
+        if points_to_deduct > total_points:
+            raise ValueError("Not enough points")
+
+        streak_bonus = min((self.current_streak - 1) * 2, 10) if self.current_streak > 1 else 0
+        if streak_bonus >= points_to_deduct:
+            self.current_streak = max(1, self.current_streak - (points_to_deduct // 2))
+            points_to_deduct = 0
+        else:
+            points_to_deduct -= streak_bonus
+            self.current_streak = 1
+
+        while points_to_deduct > 0 and self.completed_tasks:
+            task = self.completed_tasks.pop()
+            if task['points'] > points_to_deduct:
+                task['points'] -= points_to_deduct
+                self.completed_tasks.append(task)
+                points_to_deduct = 0
+            else:
+                points_to_deduct -= task['points']
+
+        if points_to_deduct > 0:
+            raise ValueError("Not enough points")
+
+        self.completed_tasks.append(
+            {'task': note, 'points': -price * 10, 'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M")})
+        self.save_completed_tasks()
 
 
 class TaskManagerUI:
@@ -159,6 +190,20 @@ class TaskManagerUI:
         self.points_listbox = tk.Listbox(root, width=50, height=10, font=("Helvetica", 12))
         self.points_listbox.pack(pady=10)
 
+        self.purchase_frame = ttk.Frame(root)
+        self.purchase_frame.pack(pady=10)
+
+        self.price_entry = ttk.Entry(self.purchase_frame, width=10)
+        self.price_entry.pack(side=tk.LEFT, padx=5)
+        self.price_entry.insert(0, "Price")
+
+        self.note_entry = ttk.Entry(self.purchase_frame, width=30)
+        self.note_entry.pack(side=tk.LEFT, padx=5)
+        self.note_entry.insert(0, "Note")
+
+        self.deduct_points_button = ttk.Button(self.purchase_frame, text="Deduct Points", command=self.deduct_points)
+        self.deduct_points_button.pack(side=tk.LEFT, padx=5)
+
         self.refresh_task_list()
         self.refresh_points_list()
         self.update_stats()
@@ -202,6 +247,20 @@ class TaskManagerUI:
             messagebox.showwarning("Invalid Action", "No task selected.")
         except ValueError:
             messagebox.showwarning("Invalid Action", "No task selected.")
+
+    def deduct_points(self):
+        try:
+            price = float(self.price_entry.get())
+            note = self.note_entry.get()
+            self.task_manager.deduct_points(price, note)
+            self.price_entry.delete(0, tk.END)
+            self.price_entry.insert(0, "Price")
+            self.note_entry.delete(0, tk.END)
+            self.note_entry.insert(0, "Note")
+            self.refresh_points_list()
+            self.update_stats()
+        except ValueError as e:
+            messagebox.showerror("Invalid Input", str(e))
 
     def open_tasks_file(self):
         filename = filedialog.askopenfilename(defaultextension=".json",
