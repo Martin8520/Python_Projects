@@ -32,6 +32,7 @@ def removeNodes(head):
 
     return reverseList(new_head)
 
+
 head = ListNode(5)
 head.next = ListNode(2)
 head.next.next = ListNode(13)
