@@ -20,20 +20,34 @@ def specific_roll_probability_approx(num_dice, target_sum):
     return cumulative_prob * 100
 
 
+def probability_for_or_higher(num_dice, target_sum):
+    mean = average_roll(num_dice)
+    stddev = standard_deviation(num_dice)
+
+    cumulative_prob = norm.sf(target_sum - 0.5, mean, stddev)
+    return cumulative_prob * 100
+
+
 def calculate():
     try:
         num_dice = int(entry_num_dice.get())
-        target_sum = int(entry_target_sum.get())
+        target_input = entry_target_sum.get()
 
         if num_dice <= 0:
             messagebox.showerror("Input Error", "Number of dice must be greater than 0.")
             return
 
-        avg_roll = average_roll(num_dice)
-        specific_prob = specific_roll_probability_approx(num_dice, target_sum)
+        if target_input.endswith("+"):
+            target_sum = int(target_input[:-1])
+            specific_prob = probability_for_or_higher(num_dice, target_sum)
+            label_probability_result.config(text=f"Probability of {target_sum}+ Roll: {specific_prob:.6f}%")
+        else:
+            target_sum = int(target_input)
+            specific_prob = specific_roll_probability_approx(num_dice, target_sum)
+            label_probability_result.config(text=f"Probability of Rolling {target_sum}: {specific_prob:.6f}%")
 
+        avg_roll = average_roll(num_dice)
         label_average_result.config(text=f"Average Roll: {avg_roll:.2f}")
-        label_probability_result.config(text=f"Probability: {specific_prob:.6f}%")
 
     except ValueError:
         messagebox.showerror("Input Error", "Please enter valid integers for the number of dice and target roll total.")
@@ -47,7 +61,7 @@ label_num_dice.pack(pady=5)
 entry_num_dice = tk.Entry(root)
 entry_num_dice.pack(pady=5)
 
-label_target_sum = tk.Label(root, text="Target Roll Total:")
+label_target_sum = tk.Label(root, text="Target Roll Total (e.g., 3 or 3+):")
 label_target_sum.pack(pady=5)
 entry_target_sum = tk.Entry(root)
 entry_target_sum.pack(pady=5)
