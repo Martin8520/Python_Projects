@@ -85,14 +85,16 @@ def calculate():
 
 
 root = tk.Tk()
-root.title("Dice Roll Probability Calculator")
+root.title("Dice Roll Probability")
+
+root.geometry("300x250")
 
 label_num_dice = tk.Label(root, text="Number of D6 Dice:")
 label_num_dice.pack(pady=5)
 entry_num_dice = tk.Entry(root)
 entry_num_dice.pack(pady=5)
 
-label_target_sum = tk.Label(root, text="Target Roll Total (e.g., 7 or 7+):")
+label_target_sum = tk.Label(root, text="Target Roll Total (e.g., 3 or 3+):")
 label_target_sum.pack(pady=5)
 entry_target_sum = tk.Entry(root)
 entry_target_sum.pack(pady=5)
@@ -104,5 +106,6 @@ label_average_result = tk.Label(root, text="Average Roll: ")
 label_average_result.pack(pady=5)
 label_probability_result = tk.Label(root, text="Probability: ")
 label_probability_result.pack(pady=5)
+
 
 root.mainloop()
