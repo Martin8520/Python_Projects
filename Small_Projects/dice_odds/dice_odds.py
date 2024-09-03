@@ -6,7 +6,7 @@ def average_roll(num_dice):
     """
     Calculate the average roll of a given number of D6 dice.
     """
-    return num_dice * 3.5
+    return (num_dice * 3.5)
 
 
 def roll_probabilities(num_dice):
@@ -35,16 +35,17 @@ def specific_roll_probability(num_dice, target_sum):
 
 
 if __name__ == "__main__":
-    num_dice = 3
-    target_sum = 10
+
+    num_dice = int(input("Enter the number of D6 dice: "))
+    target_sum = int(input("Enter the roll total you're looking to get: "))
 
     avg_roll = average_roll(num_dice)
-    print(f"Average roll with {num_dice} D6 dice: {avg_roll}")
+    print(f"\nAverage roll with {num_dice} D6 dice: {avg_roll:.2f}")
 
     probabilities = roll_probabilities(num_dice)
-    print(f"Probabilities for all possible rolls with {num_dice} D6 dice:")
+    print(f"\nProbabilities for all possible rolls with {num_dice} D6 dice:")
     for roll_total, probability in sorted(probabilities.items()):
         print(f"Total {roll_total}: {probability:.2f}%")
 
     specific_prob = specific_roll_probability(num_dice, target_sum)
-    print(f"Probability of rolling a total of {target_sum} with {num_dice} D6 dice: {specific_prob:.2f}%")
+    print(f"\nProbability of rolling a total of {target_sum} with {num_dice} D6 dice: {specific_prob:.2f}%")
