@@ -57,11 +57,9 @@ def probability_for_or_higher_approx(num_dice, target_sum):
 
 
 def calculate_same_roll_probability(num_dice, target_face, num_faces):
-    # Calculate the probability of rolling `num_faces` times the `target_face`
-    p_single = 1 / 6  # Probability of rolling the target face on a single die
-    p_other = 1 - p_single  # Probability of not rolling the target face
+    p_single = 1 / 6
+    p_other = 1 - p_single
 
-    # Probability of getting exactly `num_faces` of the `target_face` in `num_dice` rolls
     probability = comb(num_dice, num_faces) * (p_single ** num_faces) * (p_other ** (num_dice - num_faces))
     return probability * 100
 
@@ -75,7 +73,6 @@ def calculate():
             messagebox.showerror("Input Error", "Number of dice must be greater than 0.")
             return
 
-        # Use exact calculation for smaller numbers of dice, and normal approximation for larger numbers
         use_exact = num_dice <= 10
 
         if target_input.endswith("+"):
@@ -114,40 +111,32 @@ def calculate_same_roll():
                              "Please enter valid integers for the number of dice, target face, and number of faces.")
 
 
-# Setting up the Tkinter window
 root = tk.Tk()
 root.title("Dice Roll Probability Calculator")
 
-# Set the geometry of the window (width x height)
-root.geometry("500x550")  # Adjust the width to make the window wider
+root.geometry("400x550")
 
-# Number of Dice Input
 label_num_dice = tk.Label(root, text="Number of D6 Dice:")
 label_num_dice.pack(pady=5)
 entry_num_dice = tk.Entry(root)
 entry_num_dice.pack(pady=5)
 
-# Target Sum Input
 label_target_sum = tk.Label(root, text="Target Roll Total (e.g., 7 or 7+):")
 label_target_sum.pack(pady=5)
 entry_target_sum = tk.Entry(root)
 entry_target_sum.pack(pady=5)
 
-# Calculate Button
 button_calculate = tk.Button(root, text="Calculate", command=calculate)
 button_calculate.pack(pady=10)
 
-# Results Labels
 label_average_result = tk.Label(root, text="Average Roll: ")
 label_average_result.pack(pady=5)
 label_probability_result = tk.Label(root, text="Probability: ")
 label_probability_result.pack(pady=5)
 
-# Divider Line
 separator = tk.Frame(root, height=2, bd=1, relief=tk.SUNKEN)
 separator.pack(fill=tk.X, pady=10)
 
-# Number of Same Faces Input
 label_num_dice_same = tk.Label(root, text="Number of D6 Dice for Specific Faces:")
 label_num_dice_same.pack(pady=5)
 entry_num_dice_same = tk.Entry(root)
@@ -163,13 +152,10 @@ label_num_faces.pack(pady=5)
 entry_num_faces = tk.Entry(root)
 entry_num_faces.pack(pady=5)
 
-# Calculate Same Roll Button
 button_same_roll = tk.Button(root, text="Calculate Same Roll Probability", command=calculate_same_roll)
 button_same_roll.pack(pady=10)
 
-# Same Roll Result Label
 label_same_roll_result = tk.Label(root, text="Probability of Rolling Same Faces: ")
 label_same_roll_result.pack(pady=5)
 
-# Run the application
 root.mainloop()
