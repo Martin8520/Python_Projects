@@ -59,7 +59,6 @@ def probability_for_or_higher_approx(num_dice, target_sum):
 def calculate_same_roll_probability(num_dice, target_face, num_faces):
     p_single = 1 / 6
     p_other = 1 - p_single
-
     probability = comb(num_dice, num_faces) * (p_single ** num_faces) * (p_other ** (num_dice - num_faces))
     return probability * 100
 
@@ -79,12 +78,12 @@ def calculate():
             target_sum = int(target_input[:-1])
             specific_prob = (probability_for_or_higher_exact(num_dice, target_sum) if use_exact
                              else probability_for_or_higher_approx(num_dice, target_sum))
-            label_probability_result.config(text=f"Probability of {target_sum}+ Roll: {specific_prob:.6f}%")
+            label_probability_result.config(text=f"Probability of {target_sum}+ Roll: {specific_prob:.2f}%")
         else:
             target_sum = int(target_input)
             specific_prob = (specific_roll_probability_exact(num_dice, target_sum) if use_exact
                              else specific_roll_probability_approx(num_dice, target_sum))
-            label_probability_result.config(text=f"Probability of Rolling {target_sum}: {specific_prob:.6f}%")
+            label_probability_result.config(text=f"Probability of Rolling {target_sum}: {specific_prob:.2f}%")
 
         avg_roll = average_roll(num_dice)
         label_average_result.config(text=f"Average Roll: {avg_roll:.2f}")
@@ -104,7 +103,7 @@ def calculate_same_roll():
             return
 
         same_roll_prob = calculate_same_roll_probability(num_dice, target_face, num_faces)
-        label_same_roll_result.config(text=f"Probability of Rolling {num_faces} x {target_face}: {same_roll_prob:.6f}%")
+        label_same_roll_result.config(text=f"Probability of Rolling {num_faces} x {target_face}: {same_roll_prob:.2f}%")
 
     except ValueError:
         messagebox.showerror("Input Error",
@@ -113,7 +112,6 @@ def calculate_same_roll():
 
 root = tk.Tk()
 root.title("Dice Roll Probability Calculator")
-
 root.geometry("400x550")
 
 label_num_dice = tk.Label(root, text="Number of D6 Dice:")
