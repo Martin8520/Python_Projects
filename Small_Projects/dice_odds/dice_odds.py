@@ -121,7 +121,7 @@ label_num_dice.pack(pady=5)
 entry_num_dice = tk.Entry(root)
 entry_num_dice.pack(pady=5)
 
-label_target_sum = tk.Label(root, text="Target Roll Total (e.g., 7 or 7+):")
+label_target_sum = tk.Label(root, text="Target Roll Total (e.g., 3 or 3+):")
 label_target_sum.pack(pady=5)
 entry_target_sum = tk.Entry(root)
 entry_target_sum.pack(pady=5)
