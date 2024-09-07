@@ -63,7 +63,6 @@ def calculate_same_roll_probability(num_dice, target_face, num_faces):
     return probability * 100
 
 
-# New Function to Calculate Probability for Given Dice Faces
 def calculate_face_probability(rolled_faces):
     num_dice = len(rolled_faces)
     possible_rolls = itertools.product(range(1, 7), repeat=num_dice)
@@ -124,7 +123,6 @@ def calculate_same_roll():
                              "Please enter valid integers for the number of dice, target face, and number of faces.")
 
 
-# New Function to handle user input for dice faces
 def calculate_face():
     try:
         num_dice = int(entry_num_dice_faces.get())
