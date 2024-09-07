@@ -192,7 +192,6 @@ label_same_roll_result.pack(pady=5)
 separator2 = tk.Frame(root, height=2, bd=1, relief=tk.SUNKEN)
 separator2.pack(fill=tk.X, pady=10)
 
-# New inputs for rolled dice faces
 label_num_dice_faces = tk.Label(root, text="Number of D6 Dice Rolled:")
 label_num_dice_faces.pack(pady=5)
 entry_num_dice_faces = tk.Entry(root)
