@@ -63,6 +63,20 @@ def calculate_same_roll_probability(num_dice, target_face, num_faces):
     return probability * 100
 
 
+# New Function to Calculate Probability for Given Dice Faces
+def calculate_face_probability(rolled_faces):
+    num_dice = len(rolled_faces)
+    possible_rolls = itertools.product(range(1, 7), repeat=num_dice)
+
+    # Count how many combinations match the rolled faces
+    matching_combinations = sum(1 for combination in possible_rolls if
+                                all(rolled_faces[i] == 0 or rolled_faces[i] == combination[i] for i in range(num_dice)))
+
+    total_combinations = 6 ** num_dice
+    probability = (matching_combinations / total_combinations) * 100
+    return probability
+
+
 def calculate():
     try:
         num_dice = int(entry_num_dice.get())
@@ -110,9 +124,28 @@ def calculate_same_roll():
                              "Please enter valid integers for the number of dice, target face, and number of faces.")
 
 
+# New Function to handle user input for dice faces
+def calculate_face():
+    try:
+        num_dice = int(entry_num_dice_faces.get())
+        rolled_faces = list(map(int, entry_dice_faces.get().split()))
+
+        if len(rolled_faces) != num_dice:
+            messagebox.showerror("Input Error",
+                                 "Please enter exactly one face value for each die (or 0 for unspecified).")
+            return
+
+        probability = calculate_face_probability(rolled_faces)
+        label_face_probability_result.config(text=f"Probability of Rolled Faces: {probability:.2f}%")
+
+    except ValueError:
+        messagebox.showerror("Input Error", "Please enter valid numbers for the dice faces.")
+
+
+# GUI Setup
 root = tk.Tk()
 root.title("Dice Roll Probability Calculator")
-root.geometry("400x550")
+root.geometry("400x650")
 
 label_num_dice = tk.Label(root, text="Number of D6 Dice:")
 label_num_dice.pack(pady=5)
@@ -155,5 +188,25 @@ button_same_roll.pack(pady=10)
 
 label_same_roll_result = tk.Label(root, text="Probability of Rolling Same Faces: ")
 label_same_roll_result.pack(pady=5)
+
+separator2 = tk.Frame(root, height=2, bd=1, relief=tk.SUNKEN)
+separator2.pack(fill=tk.X, pady=10)
+
+# New inputs for rolled dice faces
+label_num_dice_faces = tk.Label(root, text="Number of D6 Dice Rolled:")
+label_num_dice_faces.pack(pady=5)
+entry_num_dice_faces = tk.Entry(root)
+entry_num_dice_faces.pack(pady=5)
+
+label_dice_faces = tk.Label(root, text="Enter Dice Faces (0 for unknown, space-separated):")
+label_dice_faces.pack(pady=5)
+entry_dice_faces = tk.Entry(root)
+entry_dice_faces.pack(pady=5)
+
+button_face_probability = tk.Button(root, text="Calculate Face Probability", command=calculate_face)
+button_face_probability.pack(pady=10)
+
+label_face_probability_result = tk.Label(root, text="Probability of Rolled Faces: ")
+label_face_probability_result.pack(pady=5)
 
 root.mainloop()
