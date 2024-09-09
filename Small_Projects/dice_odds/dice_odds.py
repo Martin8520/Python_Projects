@@ -67,7 +67,6 @@ def calculate_face_probability(rolled_faces):
     num_dice = len(rolled_faces)
     possible_rolls = itertools.product(range(1, 7), repeat=num_dice)
 
-    # Count how many combinations match the rolled faces
     matching_combinations = sum(1 for combination in possible_rolls if
                                 all(rolled_faces[i] == 0 or rolled_faces[i] == combination[i] for i in range(num_dice)))
 
@@ -140,7 +139,6 @@ def calculate_face():
         messagebox.showerror("Input Error", "Please enter valid numbers for the dice faces.")
 
 
-# GUI Setup
 root = tk.Tk()
 root.title("Dice Roll Probability Calculator")
 root.geometry("400x650")
