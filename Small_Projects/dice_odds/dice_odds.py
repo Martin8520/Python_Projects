@@ -141,7 +141,7 @@ def calculate_face():
 
 root = tk.Tk()
 root.title("Dice Roll Probability Calculator")
-root.geometry("400x650")
+root.geometry("400x750")
 
 label_num_dice = tk.Label(root, text="Number of D6 Dice:")
 label_num_dice.pack(pady=5)
