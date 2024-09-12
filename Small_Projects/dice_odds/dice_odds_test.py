@@ -139,98 +139,98 @@ def calculate_face():
         messagebox.showerror("Input Error", "Please enter valid numbers for the dice faces.")
 
 
-def show_roll_probability_window():
-    window_roll = tk.Toplevel(root)
-    window_roll.title("Roll Probability")
-    window_roll.geometry("400x300")
-
-    global entry_num_dice, entry_target_sum, label_probability_result, label_average_result
-
-    label_num_dice = tk.Label(window_roll, text="Number of D6 Dice:")
-    label_num_dice.pack(pady=5)
-    entry_num_dice = tk.Entry(window_roll)
-    entry_num_dice.pack(pady=5)
-
-    label_target_sum = tk.Label(window_roll, text="Target Roll Total (e.g., 3 or 3+):")
-    label_target_sum.pack(pady=5)
-    entry_target_sum = tk.Entry(window_roll)
-    entry_target_sum.pack(pady=5)
-
-    button_calculate = tk.Button(window_roll, text="Calculate", command=calculate)
-    button_calculate.pack(pady=10)
-
-    label_average_result = tk.Label(window_roll, text="Average Roll: ")
-    label_average_result.pack(pady=5)
-    label_probability_result = tk.Label(window_roll, text="Probability: ")
-    label_probability_result.pack(pady=5)
+def show_roll_probability_fields():
+    hide_all_frames()
+    frame_roll_probability.pack(fill="both", expand=1)
 
 
-def show_same_roll_probability_window():
-    window_same_roll = tk.Toplevel(root)
-    window_same_roll.title("Same Roll Probability")
-    window_same_roll.geometry("400x300")
-
-    global entry_num_dice_same, entry_target_face, entry_num_faces, label_same_roll_result
-
-    label_num_dice_same = tk.Label(window_same_roll, text="Number of D6 Dice for Specific Faces:")
-    label_num_dice_same.pack(pady=5)
-    entry_num_dice_same = tk.Entry(window_same_roll)
-    entry_num_dice_same.pack(pady=5)
-
-    label_target_face = tk.Label(window_same_roll, text="Specific Face Value (1-6):")
-    label_target_face.pack(pady=5)
-    entry_target_face = tk.Entry(window_same_roll)
-    entry_target_face.pack(pady=5)
-
-    label_num_faces = tk.Label(window_same_roll, text="Number of Times This Face Should Appear:")
-    label_num_faces.pack(pady=5)
-    entry_num_faces = tk.Entry(window_same_roll)
-    entry_num_faces.pack(pady=5)
-
-    button_same_roll = tk.Button(window_same_roll, text="Calculate Same Roll Probability", command=calculate_same_roll)
-    button_same_roll.pack(pady=10)
-
-    label_same_roll_result = tk.Label(window_same_roll, text="Probability of Rolling Same Faces: ")
-    label_same_roll_result.pack(pady=5)
+def show_same_roll_probability_fields():
+    hide_all_frames()
+    frame_same_roll_probability.pack(fill="both", expand=1)
 
 
-def show_face_probability_window():
-    window_face = tk.Toplevel(root)
-    window_face.title("Face Probability")
-    window_face.geometry("400x300")
+def show_face_probability_fields():
+    hide_all_frames()
+    frame_face_probability.pack(fill="both", expand=1)
 
-    global entry_num_dice_faces, entry_dice_faces, label_face_probability_result
 
-    label_num_dice_faces = tk.Label(window_face, text="Number of D6 Dice Rolled:")
-    label_num_dice_faces.pack(pady=5)
-    entry_num_dice_faces = tk.Entry(window_face)
-    entry_num_dice_faces.pack(pady=5)
-
-    label_dice_faces = tk.Label(window_face, text="Enter Dice Faces (0 for unknown, space-separated):")
-    label_dice_faces.pack(pady=5)
-    entry_dice_faces = tk.Entry(window_face)
-    entry_dice_faces.pack(pady=5)
-
-    button_face_probability = tk.Button(window_face, text="Calculate Face Probability", command=calculate_face)
-    button_face_probability.pack(pady=10)
-
-    label_face_probability_result = tk.Label(window_face, text="Probability of Rolled Faces: ")
-    label_face_probability_result.pack(pady=5)
+def hide_all_frames():
+    frame_roll_probability.pack_forget()
+    frame_same_roll_probability.pack_forget()
+    frame_face_probability.pack_forget()
 
 
 root = tk.Tk()
 root.title("Dice Roll Probability Calculator")
-root.geometry("400x200")
+root.geometry("400x400")
 
 menu_bar = Menu(root)
 
 calculations_menu = Menu(menu_bar, tearoff=0)
-calculations_menu.add_command(label="Roll Probability", command=show_roll_probability_window)
-calculations_menu.add_command(label="Same Roll Probability", command=show_same_roll_probability_window)
-calculations_menu.add_command(label="Face Probability", command=show_face_probability_window)
+calculations_menu.add_command(label="Roll Probability", command=show_roll_probability_fields)
+calculations_menu.add_command(label="Same Roll Probability", command=show_same_roll_probability_fields)
+calculations_menu.add_command(label="Face Probability", command=show_face_probability_fields)
 
 menu_bar.add_cascade(label="Calculations", menu=calculations_menu)
-
 root.config(menu=menu_bar)
+
+frame_roll_probability = tk.Frame(root)
+frame_same_roll_probability = tk.Frame(root)
+frame_face_probability = tk.Frame(root)
+
+label_num_dice = tk.Label(frame_roll_probability, text="Number of D6 Dice:")
+label_num_dice.pack(pady=5)
+entry_num_dice = tk.Entry(frame_roll_probability)
+entry_num_dice.pack(pady=5)
+
+label_target_sum = tk.Label(frame_roll_probability, text="Target Roll Total (e.g., 3 or 3+):")
+label_target_sum.pack(pady=5)
+entry_target_sum = tk.Entry(frame_roll_probability)
+entry_target_sum.pack(pady=5)
+
+button_calculate = tk.Button(frame_roll_probability, text="Calculate", command=calculate)
+button_calculate.pack(pady=10)
+
+label_average_result = tk.Label(frame_roll_probability, text="Average Roll: ")
+label_average_result.pack(pady=5)
+label_probability_result = tk.Label(frame_roll_probability, text="Probability: ")
+label_probability_result.pack(pady=5)
+
+label_num_dice_same = tk.Label(frame_same_roll_probability, text="Number of D6 Dice for Specific Faces:")
+label_num_dice_same.pack(pady=5)
+entry_num_dice_same = tk.Entry(frame_same_roll_probability)
+entry_num_dice_same.pack(pady=5)
+
+label_target_face = tk.Label(frame_same_roll_probability, text="Specific Face Value (1-6):")
+label_target_face.pack(pady=5)
+entry_target_face = tk.Entry(frame_same_roll_probability)
+entry_target_face.pack(pady=5)
+
+label_num_faces = tk.Label(frame_same_roll_probability, text="Number of Times This Face Should Appear:")
+label_num_faces.pack(pady=5)
+entry_num_faces = tk.Entry(frame_same_roll_probability)
+entry_num_faces.pack(pady=5)
+
+button_same_roll = tk.Button(frame_same_roll_probability, text="Calculate Same Roll Probability", command=calculate_same_roll)
+button_same_roll.pack(pady=10)
+
+label_same_roll_result = tk.Label(frame_same_roll_probability, text="Probability of Rolling Same Faces: ")
+label_same_roll_result.pack(pady=5)
+
+label_num_dice_faces = tk.Label(frame_face_probability, text="Number of D6 Dice Rolled:")
+label_num_dice_faces.pack(pady=5)
+entry_num_dice_faces = tk.Entry(frame_face_probability)
+entry_num_dice_faces.pack(pady=5)
+
+label_dice_faces = tk.Label(frame_face_probability, text="Enter Dice Faces (0 for unknown, space-separated):")
+label_dice_faces.pack(pady=5)
+entry_dice_faces = tk.Entry(frame_face_probability)
+entry_dice_faces.pack(pady=5)
+
+button_face_probability = tk.Button(frame_face_probability, text="Calculate Face Probability", command=calculate_face)
+button_face_probability.pack(pady=10)
+
+label_face_probability_result = tk.Label(frame_face_probability, text="Probability of Rolled Faces: ")
+label_face_probability_result.pack(pady=5)
 
 root.mainloop()
