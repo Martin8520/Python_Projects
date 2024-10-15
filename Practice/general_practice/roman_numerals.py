@@ -18,7 +18,5 @@ def romanToInt(s):
     return total
 
 
-print(romanToInt("XIV"))
-print(romanToInt("xiv"))
-print(romanToInt("MMXXIV"))
-print(romanToInt("mmxxiv"))
+user_input = input("Enter a Roman numeral: ")
+print(romanToInt(user_input))
