@@ -4,7 +4,7 @@ total_value = Decimal('21000000')
 min_unit = Decimal('0.21')
 unit_percent = Decimal('0.000001')
 
-country_values = [
+country_vals = [
     Decimal('99839'), Decimal('74748'), Decimal('23351'), Decimal('21251'),
     Decimal('11203'), Decimal('1568'), Decimal('1376'), Decimal('1034'),
     Decimal('999'), Decimal('996'), Decimal('514'), Decimal('398'),
@@ -16,7 +16,7 @@ country_values = [
 ]
 
 percentages = []
-for value in country_values:
+for value in country_vals:
     full_units = (value // min_unit)
     percentage = full_units * unit_percent
     percentages.append(percentage)
