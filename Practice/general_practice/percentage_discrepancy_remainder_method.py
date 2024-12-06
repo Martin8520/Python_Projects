@@ -12,7 +12,7 @@ country_vals = [
     Decimal('34'), Decimal('12'), Decimal('6'), Decimal('5'),
     Decimal('4'), Decimal('4'), Decimal('2'), Decimal('2'),
     Decimal('2'), Decimal('2'), Decimal('2'), Decimal('2'),
-    Decimal('2'), Decimal('2'), Decimal('0'),
+    Decimal('2'), Decimal('2'), Decimal('0')
 ]
 
 percentages = []
