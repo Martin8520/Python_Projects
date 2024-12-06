@@ -15,7 +15,7 @@ server_leftover = Decimal('98.866746')
 
 total_percentage = sum(percentages) + server_leftover
 
-expected_total = Decimal('100.00')
+expected_total = Decimal('100.00000')
 discrepancy = total_percentage - expected_total
 
 print(f"Calculated Total Percentage: {total_percentage}")
