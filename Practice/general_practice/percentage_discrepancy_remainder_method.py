@@ -1,8 +1,8 @@
 from decimal import Decimal
 
 total_value = Decimal('21000000')
-smallest_unit = Decimal('0.21')
-unit_percentage = Decimal('0.000001')
+min_unit = Decimal('0.21')
+unit_percent = Decimal('0.000001')
 
 country_values = [
     Decimal('99839'), Decimal('74748'), Decimal('23351'), Decimal('21251'),
@@ -17,8 +17,8 @@ country_values = [
 
 percentages = []
 for value in country_values:
-    full_units = (value // smallest_unit)
-    percentage = full_units * unit_percentage
+    full_units = (value // min_unit)
+    percentage = full_units * unit_percent
     percentages.append(percentage)
 
 country_total_percentage = sum(percentages)
