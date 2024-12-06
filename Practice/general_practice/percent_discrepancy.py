@@ -8,14 +8,14 @@ percentages = [
     Decimal('0.000161'), Decimal('0.000057'), Decimal('0.000029'), Decimal('0.000024'),
     Decimal('0.000019'), Decimal('0.000019'), Decimal('0.000010'), Decimal('0.000010'),
     Decimal('0.000010'), Decimal('0.000010'), Decimal('0.000010'), Decimal('0.000010'),
-    Decimal('0.000010'), Decimal('0.000010'), Decimal('0.000001'), Decimal('0.000313')
+    Decimal('0.000010'), Decimal('0.000010'), Decimal('0.000001'), Decimal('0.002143')
 ]
 
 server_leftover = Decimal('98.866746')
 
 total_percentage = sum(percentages) + server_leftover
 
-expected_total = Decimal('100.000000')
+expected_total = Decimal('100.00')
 discrepancy = total_percentage - expected_total
 
 print(f"Calculated Total Percentage: {total_percentage}")
