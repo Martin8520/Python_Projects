@@ -1,4 +1,6 @@
-from decimal import Decimal
+from decimal import Decimal, getcontext
+
+getcontext().prec = 28
 
 total_value = Decimal('21000000')
 min_unit = Decimal('0.21')
@@ -12,12 +14,12 @@ country_vals = [
     Decimal('34'), Decimal('12'), Decimal('6'), Decimal('5'),
     Decimal('4'), Decimal('4'), Decimal('2'), Decimal('2'),
     Decimal('2'), Decimal('2'), Decimal('2'), Decimal('2'),
-    Decimal('2'), Decimal('2'), Decimal('0'), Decimal('0.000021')
+    Decimal('2'), Decimal('2'), Decimal('0'), Decimal('0.000042')
 ]
 
 percentages = []
 for value in country_vals:
-    full_units = (value // min_unit)
+    full_units = value / min_unit
     percentage = full_units * unit_percent
     percentages.append(percentage)
 
@@ -31,4 +33,4 @@ for idx, percentage in enumerate(percentages):
 
 print(f"\nTotal Percentage held by countries: {country_total_percentage:.10f}%")
 print(f"Server Leftover: {server_leftover:.10f}%")
-print(f"Server total: {total_combined:.20f}%")
+print(f"Server total: {total_combined:.10f}%")
