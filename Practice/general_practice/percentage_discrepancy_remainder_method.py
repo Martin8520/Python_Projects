@@ -32,3 +32,4 @@ for idx, percentage in enumerate(percentages):
 print(f"\nTotal Percentage held by countries: {country_total_percentage:.6f}%")
 print(f"Server Leftover: {server_leftover:.6f}%")
 print(f"Server total: {total_combined:.6f}%")
+
