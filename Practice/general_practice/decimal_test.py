@@ -14,7 +14,8 @@ country_vals = [
     Decimal('34'), Decimal('12'), Decimal('6'), Decimal('5'),
     Decimal('4'), Decimal('4'), Decimal('2'), Decimal('2'),
     Decimal('2'), Decimal('2'), Decimal('2'), Decimal('2'),
-    Decimal('2'), Decimal('2'), Decimal('0'), Decimal('0.000042')
+    Decimal('2'), Decimal('2'), Decimal('0'), Decimal('0.000042'),
+    Decimal('0.420000'), Decimal('0.210000'), Decimal('0.105000'), Decimal('0.000003')
 ]
 
 percentages = []
@@ -29,7 +30,7 @@ total_combined = country_total_percentage + server_leftover
 
 print("Calculated percentages for each country:")
 for idx, percentage in enumerate(percentages):
-    print(f"County {idx + 1}: {percentage:.10f}%")
+    print(f"County {idx + 1}: {percentage:.12f}%")
 
 print(f"\nTotal Percentage held by countries: {country_total_percentage:.10f}%")
 print(f"Server Leftover: {server_leftover:.10f}%")
