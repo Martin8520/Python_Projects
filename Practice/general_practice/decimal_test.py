@@ -4,7 +4,7 @@ getcontext().prec = 28
 
 total_value = Decimal('21000000')
 min_unit = Decimal('0.21')
-unit_percent = Decimal('0.000001')
+min_percent = Decimal('0.000001')
 
 country_vals = [
     Decimal('99839'), Decimal('74748'), Decimal('23351'), Decimal('21251'),
@@ -15,13 +15,13 @@ country_vals = [
     Decimal('4'), Decimal('4'), Decimal('2'), Decimal('2'),
     Decimal('2'), Decimal('2'), Decimal('2'), Decimal('2'),
     Decimal('2'), Decimal('2'), Decimal('0'), Decimal('0.000042'),
-    Decimal('0.420000'), Decimal('0.210000'), Decimal('0.105000'), Decimal('0.000003')
+    Decimal('0.420000'), Decimal('0.210000'), Decimal('0.105000'), Decimal('0.000001')
 ]
 
 percentages = []
 for value in country_vals:
     full_units = value / min_unit
-    percentage = full_units * unit_percent
+    percentage = full_units * min_percent
     percentages.append(percentage)
 
 country_total_percentage = sum(percentages)
@@ -32,6 +32,6 @@ print("Calculated percentages for each country:")
 for idx, percentage in enumerate(percentages):
     print(f"County {idx + 1}: {percentage:.12f}%")
 
-print(f"\nTotal Percentage held by countries: {country_total_percentage:.10f}%")
-print(f"Server Leftover: {server_leftover:.10f}%")
-print(f"Server total: {total_combined:.10f}%")
+print(f"\nTotal Percentage held by countries: {country_total_percentage:.2f}%")
+print(f"Server Leftover: {server_leftover:.2f}%")
+print(f"Server total: {total_combined:.2f}%")
