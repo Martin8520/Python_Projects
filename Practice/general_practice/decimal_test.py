@@ -29,7 +29,7 @@ total_combined = country_total_percentage + server_leftover
 
 print("Calculated percentages for each country:")
 for idx, percentage in enumerate(percentages):
-    print(f"{percentage:.6f}")
+    print(f"{percentage:.6f}%")
 
 print(f"\nTotal Percentage held by countries: {country_total_percentage:.6f}%")
 print(f"Server Leftover: {server_leftover:.6f}%")
