@@ -1,7 +1,6 @@
 from decimal import Decimal, getcontext
 
 
-
 total_value = Decimal('21000000')
 min_unit = Decimal('0.21')
 min_percent = Decimal('0.000001')
