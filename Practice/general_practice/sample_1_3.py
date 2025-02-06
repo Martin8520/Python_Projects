@@ -15,9 +15,8 @@ silver_jobs_list = [
     "Telemarketing", "UI Development", "Tax Filing", "Asset Insurance", "Estate Management", "Business Loan",
     "Ledger Data Upkeep", "Protocol Engineering", "Wi-Fi Coverage", "Animation Coding", "Small Office Network Setup",
     "Data Analysis", "Entertainment Event Coverage", "Malware Protection", "Trade Advising",
-    "Search Engine Optimization",
-    "Portfolio Management", "Motherboard Development", "Corporate Storage", "Sample 2", "Wind Turbines Construction",
-    "National Tokenization"
+    "Search Engine Optimization", "Portfolio Management", "Motherboard Development", "Corporate Storage",
+    "Sample 2", "Wind Turbines Construction", "National Tokenization"
 ]
 
 gold_jobs_list = [
@@ -35,7 +34,6 @@ gold_cycle = cycle(gold_jobs_list)
 time_step = 0.5
 total_hours = 24
 num_steps = int(total_hours / time_step)
-
 
 target_bronze = 18
 target_silver = 9
@@ -62,7 +60,6 @@ def format_time(hour_float):
 for step in range(num_steps + 1):
     current_time = step * time_step
 
-    # Remove expired jobs (those with expiry time <= current_time)
     active_bronze = [job for job in active_bronze if job[1] > current_time]
     active_silver = [job for job in active_silver if job[1] > current_time]
     active_gold = [job for job in active_gold if job[1] > current_time]
@@ -103,15 +100,24 @@ for step in range(num_steps + 1):
     if total_active != target_total:
         print(f"Warning at time {current_time}: active total = {total_active}, expected {target_total}")
 
+    active_jobs_str = "\n".join(
+        [f"Bronze: {job[0]}" for job in active_bronze] +
+        [f"Silver: {job[0]}" for job in active_silver] +
+        [f"Gold: {job[0]}" for job in active_gold]
+    )
+
     schedule.append({
         "Time": format_time(current_time),
-        "New Bronze Jobs (30 min)": "\n".join(new_bronze),
-        "New Silver Jobs (60 min)": "\n".join(new_silver),
-        "New Gold Jobs (120 min)": "\n".join(new_gold),
-        "Total New Jobs": len(new_bronze) + len(new_silver) + len(new_gold)
+        "New Bronze Jobs (30 min)": "\n".join(new_bronze) if new_bronze else "",
+        "New Silver Jobs (60 min)": "\n".join(new_silver) if new_silver else "",
+        "New Gold Jobs (120 min)": "\n".join(new_gold) if new_gold else "",
+        "Total New Jobs": len(new_bronze) + len(new_silver) + len(new_gold),
+        "Currently Active Jobs": active_jobs_str,
+        "Number of Currently Active Jobs": total_active
     })
 
 df = pd.DataFrame(schedule)
 output_file = "job_schedule_new_jobs_only.xlsx"
 df.to_excel(output_file, index=False)
 print(f"Excel file created: {output_file}")
+
