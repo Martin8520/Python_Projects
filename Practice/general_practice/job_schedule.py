@@ -31,15 +31,17 @@ bronze_cycle = cycle(bronze_jobs_list)
 silver_cycle = cycle(silver_jobs_list)
 gold_cycle = cycle(gold_jobs_list)
 
-time_step = 0.5
+time_step = 0.5  # shortest job is 30 min, so the shortest time step is 0.5 hours.
 total_hours = 24
 num_steps = int(total_hours / time_step)
 
+# Number of jobs that should be active from each type
 target_bronze = 18
 target_silver = 9
 target_gold = 3
-target_total = target_bronze + target_silver + target_gold
+target_total = target_bronze + target_silver + target_gold  # 18+9+3=30
 
+# Durations for every job type
 duration_bronze = 0.5
 duration_silver = 1.0
 duration_gold = 2.0
@@ -153,4 +155,8 @@ print(f"Excel file created: {output_file}")
 # how many gold jobs are needed per day?- 3/2h
 
 # for each hour generate jobs for each category (except gold)
-# gold should spawn 3 jobs every 2 hours.
+
+# bronze and silver jobs should spawn when a bronze and silver job expires respectively to maintain a stable number of
+# active jobs on the World Map.
+
+# gold should always spawn 3 jobs every 2 hours.
