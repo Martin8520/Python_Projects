@@ -143,3 +143,14 @@ with pd.ExcelWriter(output_file) as writer:
     job_schedule_df.to_excel(writer, sheet_name="Job Schedules", index=False)
 
 print(f"Excel file created: {output_file}")
+
+# Bronze jobs- 30 min
+# Silver jobs - 60 min
+# Gold jobs - 120 min
+
+# how  many bronze jobs are needed per day?-18/h
+# how many silver jobs are needed per day?- 9/h
+# how many gold jobs are needed per day?- 3/2h
+
+# for each hour generate jobs for each category (except gold)
+# gold should spawn 3 jobs every 2 hours.
