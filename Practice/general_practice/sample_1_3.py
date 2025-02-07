@@ -117,7 +117,7 @@ for step in range(num_steps + 1):
     })
 
 df = pd.DataFrame(schedule)
-output_file = "job_schedule_new_jobs_only.xlsx"
+output_file = "job_schedule.xlsx"
 df.to_excel(output_file, index=False)
 print(f"Excel file created: {output_file}")
 
