@@ -6,7 +6,7 @@ bronze_jobs_list = [
     "Customer Support", "NFT Artwork", "Investment Advisory", "Coin Insurance", "Estate Planning",
     "Personal Loan", "Private Ledger Services", "Blockchain Developer", "5G Installation", "Graphic Design",
     "Private Network Setup", "Account Setup", "Sports Event Coverage", "Firewall Coding", "Cold Calling",
-    "Marketing Strategy", "Manage Securities", "CPU Development", "Business Storage", "Sample 1",
+    "Marketing Strategy", "Manage Securities", "CPU Development", "Business Storage",
     "Solar Panel Installation", "Business Tokenization"
 ]
 
@@ -15,8 +15,7 @@ silver_jobs_list = [
     "Telemarketing", "UI Development", "Tax Filing", "Asset Insurance", "Estate Management", "Business Loan",
     "Ledger Data Upkeep", "Protocol Engineering", "Wi-Fi Coverage", "Animation Coding", "Small Office Network Setup",
     "Data Analysis", "Entertainment Event Coverage", "Malware Protection", "Trade Advising",
-    "Search Engine Optimization", "Portfolio Management", "Motherboard Development", "Corporate Storage",
-    "Sample 2", "Wind Turbines Construction", "National Tokenization"
+    "Search Engine Optimization", "Portfolio Management", "Motherboard Development", "Corporate Storage", "Wind Turbines Construction", "National Tokenization"
 ]
 
 gold_jobs_list = [
@@ -24,7 +23,7 @@ gold_jobs_list = [
     "Survey Campaign", "NFT Game", "Venture Capital", "Corporate Insurance", "Estate Security", "Corporate Loan",
     "Company Ledger Services", "Token Development", "Tower Management", "Game Publishing", "Corporate Network Setup",
     "Online Marketing", "VIP Event Coverage", "VPN Development", "Token Trading", "Copywriting", "Growth Funding",
-    "GPU Development", "Encryption Services", "Sample 3", "Energy Grid Optimization", "Global Tokenization"
+    "GPU Development", "Encryption Services", "Energy Grid Optimization", "Global Tokenization"
 ]
 
 bronze_cycle = cycle(bronze_jobs_list)
