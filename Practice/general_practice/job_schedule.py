@@ -34,13 +34,13 @@ time_step = 0.5  # shortest job is 30 min, so the shortest time step is 0.5 hour
 total_hours = 24
 num_steps = int(total_hours / time_step)
 
-# Number of jobs that should be active from each type
+# dumber of jobs that should be active from each type
 target_bronze = 18
 target_silver = 9
 target_gold = 3
 target_total = target_bronze + target_silver + target_gold  # 18+9+3=30
 
-# Durations for every job type
+# durations for every job type
 duration_bronze = 0.5
 duration_silver = 1.0
 duration_gold = 2.0
@@ -51,12 +51,10 @@ active_gold = []
 
 schedule = []
 
-
 def format_time(hour_float):
     hours = int(hour_float)
     minutes = int(round((hour_float - hours) * 60))
     return f"{hours:02d}:{minutes:02d}"
-
 
 for step in range(num_steps + 1):
     current_time = step * time_step
@@ -73,29 +71,30 @@ for step in range(num_steps + 1):
     new_silver = []
     new_gold = []
 
-    if count_bronze < target_bronze:
-        needed = target_bronze - count_bronze
-        for _ in range(needed):
-            job_name = next(bronze_cycle)
-            expiry = current_time + duration_bronze
-            active_bronze.append((job_name, expiry))
-            new_bronze.append(job_name)
+    if current_time < total_hours:
+        if count_bronze < target_bronze:
+            needed = target_bronze - count_bronze
+            for _ in range(needed):
+                job_name = next(bronze_cycle)
+                expiry = current_time + duration_bronze
+                active_bronze.append((job_name, expiry))
+                new_bronze.append(job_name)
 
-    if count_silver < target_silver:
-        needed = target_silver - count_silver
-        for _ in range(needed):
-            job_name = next(silver_cycle)
-            expiry = current_time + duration_silver
-            active_silver.append((job_name, expiry))
-            new_silver.append(job_name)
+        if count_silver < target_silver:
+            needed = target_silver - count_silver
+            for _ in range(needed):
+                job_name = next(silver_cycle)
+                expiry = current_time + duration_silver
+                active_silver.append((job_name, expiry))
+                new_silver.append(job_name)
 
-    if count_gold < target_gold:
-        needed = target_gold - count_gold
-        for _ in range(needed):
-            job_name = next(gold_cycle)
-            expiry = current_time + duration_gold
-            active_gold.append((job_name, expiry))
-            new_gold.append(job_name)
+        if count_gold < target_gold and current_time % duration_gold == 0:
+            needed = target_gold - count_gold
+            for _ in range(needed):
+                job_name = next(gold_cycle)
+                expiry = current_time + duration_gold
+                active_gold.append((job_name, expiry))
+                new_gold.append(job_name)
 
     total_active = len(active_bronze) + len(active_silver) + len(active_gold)
     if total_active != target_total:
