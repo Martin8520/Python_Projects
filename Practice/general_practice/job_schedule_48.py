@@ -35,9 +35,9 @@ total_hours = 24
 num_steps = int(total_hours / time_step)
 
 # dumber of jobs that should be active from each type
-target_bronze = 18
-target_silver = 9
-target_gold = 3
+target_bronze = 48
+target_silver = 48
+target_gold = 48
 target_total = target_bronze + target_silver + target_gold  # 18+9+3=30
 
 # durations for every job type
@@ -137,7 +137,7 @@ for job, times in job_schedule.items():
 
 job_schedule_df = pd.DataFrame(job_schedule_list)
 
-output_file = "job_schedule.xlsx"
+output_file = "job_schedule_48_test.xlsx"
 with pd.ExcelWriter(output_file) as writer:
     overall_schedule_df.to_excel(writer, sheet_name="Overall Schedule", index=False)
     job_schedule_df.to_excel(writer, sheet_name="Job Schedules", index=False)
