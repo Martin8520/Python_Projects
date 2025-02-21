@@ -35,9 +35,9 @@ total_hours = 24
 num_steps = int(total_hours / time_step)
 
 # dumber of jobs that should be active from each type
-target_bronze = 18
-target_silver = 9
-target_gold = 3
+target_bronze = 24
+target_silver = 12
+target_gold = 4
 target_total = target_bronze + target_silver + target_gold  # 18+9+3=30
 
 # durations for every job type
