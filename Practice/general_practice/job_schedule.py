@@ -137,7 +137,7 @@ for job, times in job_schedule.items():
 
 job_schedule_df = pd.DataFrame(job_schedule_list)
 
-output_file = "job_schedule.xlsx"
+output_file = "job_schedule_40.xlsx"
 with pd.ExcelWriter(output_file) as writer:
     overall_schedule_df.to_excel(writer, sheet_name="Overall Schedule", index=False)
     job_schedule_df.to_excel(writer, sheet_name="Job Schedules", index=False)
