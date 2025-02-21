@@ -38,7 +38,7 @@ num_steps = int(total_hours / time_step)
 target_bronze = 24
 target_silver = 12
 target_gold = 4
-target_total = target_bronze + target_silver + target_gold  # 18+9+3=30
+target_total = target_bronze + target_silver + target_gold
 
 # durations for every job type
 duration_bronze = 0.5
