@@ -148,9 +148,9 @@ print(f"Excel file created: {output_file}")
 # Silver jobs - 60 min
 # Gold jobs - 120 min
 
-# how  many bronze jobs are needed per day?-18/h
-# how many silver jobs are needed per day?- 9/h
-# how many gold jobs are needed per day?- 3/2h
+# how  many bronze jobs are needed per day?-24/h
+# how many silver jobs are needed per day?- 12/h
+# how many gold jobs are needed per day?- 4/2h
 
 # for each hour generate jobs for each category (except gold)
 
