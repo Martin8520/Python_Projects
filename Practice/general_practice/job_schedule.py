@@ -2,28 +2,93 @@ import pandas as pd
 from itertools import cycle
 
 bronze_jobs_list = [
-    "Private Courses", "User Research", "Shared Hosting", "Generic Domain", "Litigation Service",
-    "Customer Support", "NFT Artwork", "Investment Advisory", "Coin Insurance", "Estate Planning",
-    "Personal Loan", "Private Ledger Services", "Blockchain Developer", "5G Installation", "Graphic Design",
-    "Private Network Setup", "Account Setup", "Sports Event Coverage", "Firewall Coding", "Cold Calling",
-    "Marketing Strategy", "Manage Securities", "CPU Development", "Business Storage",
-    "Solar Panel Installation", "Business Tokenization"
+    "Private Courses",
+    "User Research",
+    "Shared Hosting",
+    "Generic Domain",
+    "Litigation Service",
+    "Customer Support",
+    "NFT Artwork",
+    "Investment Advisory",
+    "Coin Insurance",
+    "Estate Planning",
+    "Personal Loan",
+    "Private Ledger Services",
+    "Blockchain Developer",
+    "5G Installation",
+    "Graphic Design",
+    "Private Network Setup",
+    "Account Setup",
+    "Sports Event Coverage",
+    "Firewall Coding",
+    "Cold Calling",
+    "Marketing Strategy",
+    "Manage Securities",
+    "CPU Development",
+    "Business Storage",
+    "Solar Panel Installation",
+    "Drone Production",
+    "Business Tokenization"
 ]
 
 silver_jobs_list = [
-    "Public Courses", "Interaction Design", "Dedicated Hosting", "Top Level Domain", "Legal Consultations",
-    "Telemarketing", "UI Development", "Tax Filing", "Asset Insurance", "Estate Management", "Business Loan",
-    "Ledger Data Upkeep", "Protocol Engineering", "Wi-Fi Coverage", "Animation Coding", "Small Office Network Setup",
-    "Data Analysis", "Entertainment Event Coverage", "Malware Protection", "Trade Advising",
-    "Search Engine Optimization", "Portfolio Management", "Motherboard Development", "Corporate Storage", "Wind Turbines Construction", "National Tokenization"
+        "Public Courses",
+    "Interaction Design",
+    "Dedicated Hosting",
+    "Top Level Domain",
+    "Legal Consultations",
+    "Telemarketing",
+    "UI Development",
+    "Tax Filing",
+    "Asset Insurance",
+    "Estate Management",
+    "Business Loan",
+    "Ledger Data Upkeep",
+    "Protocol Engineering",
+    "Wi-Fi Coverage",
+    "Animation Coding",
+    "Small Office Network Setup",
+    "Data Analysis",
+    "Entertainment Event Coverage",
+    "Malware Protection",
+    "Trade Advising",
+    "Search Engine Optimization",
+    "Portfolio Management",
+    "Motherboard Development",
+    "Corporate Storage",
+    "Wind Turbines Construction",
+    "Medical Robotics",
+    "National Tokenization"
 ]
 
 gold_jobs_list = [
-    "Business Courses", "Information Architect", "Cloud Hosting", "Premium Domain", "Corporate Defense",
-    "Survey Campaign", "NFT Game", "Venture Capital", "Corporate Insurance", "Estate Security", "Corporate Loan",
-    "Company Ledger Services", "Token Development", "Tower Management", "Game Publishing", "Corporate Network Setup",
-    "Online Marketing", "VIP Event Coverage", "VPN Development", "Token Trading", "Copywriting", "Growth Funding",
-    "GPU Development", "Encryption Services", "Energy Grid Optimization", "Global Tokenization"
+     "Business Courses",
+    "Information Architect",
+    "Cloud Hosting",
+    "Premium Domain",
+    "Corporate Defense",
+    "Survey Campaign",
+    "NFT Game",
+    "Venture Capital",
+    "Corporate Insurance",
+    "Estate Security",
+    "Corporate Loan",
+    "Company Ledger Services",
+    "Token Development",
+    "Tower Management",
+    "Game Publishing",
+    "Corporate Network Setup",
+    "Online Marketing",
+    "VIP Event Coverage",
+    "VPN Development",
+    "Token Trading",
+    "Copywriting",
+    "Growth Funding",
+    "GPU Development",
+    "Encryption Services",
+    "Energy Grid Optimization",
+    "[NAME PENDING]",
+    "Global Tokenization"
 ]
 
 bronze_cycle = cycle(bronze_jobs_list)
@@ -34,7 +99,7 @@ time_step = 0.5  # shortest job is 30 min, so the shortest time step is 0.5 hour
 total_hours = 24
 num_steps = int(total_hours / time_step)
 
-# dumber of jobs that should be active from each type
+# number of jobs that should be active from each type
 target_bronze = 24
 target_silver = 12
 target_gold = 4
@@ -42,8 +107,8 @@ target_total = target_bronze + target_silver + target_gold
 
 # durations for every job type
 duration_bronze = 0.5
-duration_silver = 1.0
-duration_gold = 2.0
+duration_silver = 0.5
+duration_gold = 0.5
 
 active_bronze = []
 active_silver = []
