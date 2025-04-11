@@ -32,7 +32,7 @@ bronze_jobs_list = [
 ]
 
 silver_jobs_list = [
-        "Public Courses",
+    "Public Courses",
     "Interaction Design",
     "Dedicated Hosting",
     "Top Level Domain",
@@ -62,7 +62,7 @@ silver_jobs_list = [
 ]
 
 gold_jobs_list = [
-     "Business Courses",
+    "Business Courses",
     "Information Architect",
     "Cloud Hosting",
     "Premium Domain",
@@ -116,10 +116,12 @@ active_gold = []
 
 schedule = []
 
+
 def format_time(hour_float):
     hours = int(hour_float)
     minutes = int(round((hour_float - hours) * 60))
     return f"{hours:02d}:{minutes:02d}"
+
 
 for step in range(num_steps + 1):
     current_time = step * time_step
@@ -174,8 +176,8 @@ for step in range(num_steps + 1):
     schedule.append({
         "Time": format_time(current_time),
         "New Bronze Jobs (30 min)": "\n".join(new_bronze) if new_bronze else "",
-        "New Silver Jobs (60 min)": "\n".join(new_silver) if new_silver else "",
-        "New Gold Jobs (120 min)": "\n".join(new_gold) if new_gold else "",
+        "New Silver Jobs (30 min)": "\n".join(new_silver) if new_silver else "",
+        "New Gold Jobs (30 min)": "\n".join(new_gold) if new_gold else "",
         "Total New Jobs": len(new_bronze) + len(new_silver) + len(new_gold),
         "Currently Active Jobs": active_jobs_str,
         "Number of Currently Active Jobs": total_active
@@ -187,7 +189,7 @@ job_schedule = {}
 
 for entry in schedule:
     time_str = entry["Time"]
-    for col in ["New Bronze Jobs (30 min)", "New Silver Jobs (60 min)", "New Gold Jobs (120 min)"]:
+    for col in ["New Bronze Jobs (30 min)", "New Silver Jobs (30 min)", "New Gold Jobs (30 min)"]:
         if entry[col]:
             jobs = entry[col].split("\n")
             for job in jobs:
@@ -202,7 +204,7 @@ for job, times in job_schedule.items():
 
 job_schedule_df = pd.DataFrame(job_schedule_list)
 
-output_file = "job_schedule_40.xlsx"
+output_file = "job_schedule_40_30min.xlsx"
 with pd.ExcelWriter(output_file) as writer:
     overall_schedule_df.to_excel(writer, sheet_name="Overall Schedule", index=False)
     job_schedule_df.to_excel(writer, sheet_name="Job Schedules", index=False)
@@ -210,16 +212,10 @@ with pd.ExcelWriter(output_file) as writer:
 print(f"Excel file created: {output_file}")
 
 # Bronze jobs- 30 min
-# Silver jobs - 60 min
-# Gold jobs - 120 min
+# Silver jobs - 30 min
+# Gold jobs - 30 min
 
-# how  many bronze jobs are needed per day?-24/h
-# how many silver jobs are needed per day?- 12/h
-# how many gold jobs are needed per day?- 4/2h
-
-# for each hour generate jobs for each category (except gold)
 
 # bronze and silver jobs should spawn when a bronze and silver job expires respectively to maintain a stable number of
 # active jobs on the World Map.
 
-# gold should always spawn 3 jobs every 2 hours.
