@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import math
 
+
 def calculate_costs():
     try:
         driver_pay = float(entry_driver_pay.get())
@@ -51,15 +52,24 @@ def calculate_costs():
                 f"  Line Haul: ${lh_last:.2f}"
             )
 
-        result_text.set(result)
+        result_box.config(state='normal')
+        result_box.delete('1.0', tk.END)
+        result_box.insert(tk.END, result)
+        result_box.config(state='disabled')
 
     except ValueError:
         messagebox.showerror("Invalid Input", "Please enter valid numeric values.")
 
 
+def copy_to_clipboard():
+    root.clipboard_clear()
+    root.clipboard_append(result_box.get("1.0", tk.END))
+    root.update()
+
+
 root = tk.Tk()
 root.title("Container Cost Calculator")
-root.geometry("450x500")
+root.geometry("400x550")
 
 tk.Label(root, text="Driver Pay (USD):").pack(pady=5)
 entry_driver_pay = tk.Entry(root)
@@ -77,9 +87,12 @@ tk.Label(root, text="Number of Containers:").pack(pady=5)
 entry_num_containers = tk.Entry(root)
 entry_num_containers.pack(pady=5)
 
-tk.Button(root, text="Calculate", command=calculate_costs).pack(pady=20)
+tk.Button(root, text="Calculate", command=calculate_costs).pack(pady=15)
 
-result_text = tk.StringVar()
-tk.Label(root, textvariable=result_text, justify="left").pack(pady=10)
+result_box = tk.Text(root, height=10, width=60)
+result_box.pack(pady=10)
+result_box.config(state='disabled')
+
+tk.Button(root, text="Copy Result", command=copy_to_clipboard).pack(pady=5)
 
 root.mainloop()
