@@ -32,9 +32,9 @@ def calculate_costs():
         if dp_remainder == 0 and fs_remainder == 0 and lh_remainder == 0:
             result = (
                 f"All {number_of_containers} containers:\n"
-                f"  Driver Pay: ${dp_per:.2f}\n"
+                f"  WeLink Pay: ${dp_per:.2f}\n"
                 f"  Fuel Surcharge: ${fs_per:.2f}\n"
-                f"  Line Haul: ${lh_per:.2f}"
+                f"  Rate: ${lh_per:.2f}"
             )
         else:
             dp_last = round_down(dp_per + dp_remainder + fs_remainder)
@@ -43,13 +43,13 @@ def calculate_costs():
 
             result = (
                 f"Containers 1 to {number_of_containers - 1}:\n"
-                f"  Driver Pay: ${dp_per:.2f}\n"
+                f"  : ${dp_per:.2f}\n"
                 f"  Fuel Surcharge: ${fs_per:.2f}\n"
-                f"  Line Haul: ${lh_per:.2f}\n\n"
+                f"  : ${lh_per:.2f}\n\n"
                 f"Container {number_of_containers} (with remainders):\n"
-                f"  Driver Pay: ${dp_last:.2f}\n"
+                f"  : ${dp_last:.2f}\n"
                 f"  Fuel Surcharge: ${fs_last:.2f} (unchanged)\n"
-                f"  Line Haul: ${lh_last:.2f}"
+                f"  : ${lh_last:.2f}"
             )
 
         result_box.config(state='normal')
@@ -71,7 +71,7 @@ root = tk.Tk()
 root.title("Container Cost Calculator")
 root.geometry("400x550")
 
-tk.Label(root, text="Driver Pay (USD):").pack(pady=5)
+tk.Label(root, text=" (USD):").pack(pady=5)
 entry_driver_pay = tk.Entry(root)
 entry_driver_pay.pack(pady=5)
 
@@ -79,7 +79,7 @@ tk.Label(root, text="Fuel Surcharge (USD):").pack(pady=5)
 entry_fuel_surcharge = tk.Entry(root)
 entry_fuel_surcharge.pack(pady=5)
 
-tk.Label(root, text="Line Haul (USD):").pack(pady=5)
+tk.Label(root, text=" (USD):").pack(pady=5)
 entry_line_haul = tk.Entry(root)
 entry_line_haul.pack(pady=5)
 
